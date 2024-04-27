@@ -98,7 +98,7 @@ export default function LoginView() {
           sx={{
             p: 5,
             width: 1,
-            maxWidth: 420,
+            maxWidth: 450,
           }}
         >
           <Typography variant="h4">Sign in to The Timeless Tutor</Typography>
