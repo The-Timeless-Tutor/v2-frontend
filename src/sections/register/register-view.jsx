@@ -29,7 +29,8 @@ export default function RegisterView() {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleRegisterClick = () => {
+  const handleRegisterClick = (e) => {
+    console.log(e)
     router.push('/dashboard');
   };
 
@@ -106,7 +107,7 @@ export default function RegisterView() {
           sx={{
             p: 5,
             width: 1,
-            maxWidth: 420,
+            maxWidth: 450,
           }}
         >
           <Typography variant="h4">Get Started absolute free</Typography>
