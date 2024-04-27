@@ -9,6 +9,8 @@ import Typography from '@mui/material/Typography';
 import { products } from 'src/_mock/products';
 
 // import AppTasks from '../app-tasks';
+import { products } from 'src/_mock/products';
+
 import AppNewsUpdate from '../app-news-update';
 import AppOrderTimeline from '../app-order-timeline';
 // import AppCurrentVisits from '../app-current-visits';

@@ -20,8 +20,6 @@ import { bgGradient } from 'src/theme/css';
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
 
-// ----------------------------------------------------------------------
-
 export default function LoginView() {
   const theme = useTheme();
 

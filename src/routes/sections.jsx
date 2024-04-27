@@ -10,8 +10,6 @@ export const LoginPage = lazy(() => import('src/pages/login'));
 import RoomsPage from 'src/pages/room';
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 
-// ----------------------------------------------------------------------
-
 export default function Router() {
   const routes = useRoutes([
     {

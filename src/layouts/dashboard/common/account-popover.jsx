@@ -11,8 +11,6 @@ import IconButton from '@mui/material/IconButton';
 
 import { account } from 'src/_mock/account';
 
-// ----------------------------------------------------------------------
-
 const MENU_OPTIONS = [
   {
     label: 'Home',
@@ -27,8 +25,6 @@ const MENU_OPTIONS = [
     icon: 'eva:settings-2-fill',
   },
 ];
-
-// ----------------------------------------------------------------------
 
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);

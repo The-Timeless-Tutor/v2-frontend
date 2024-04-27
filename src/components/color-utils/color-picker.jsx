@@ -7,8 +7,6 @@ import ButtonBase from '@mui/material/ButtonBase';
 
 import Iconify from '../iconify';
 
-// ----------------------------------------------------------------------
-
 const ColorPicker = forwardRef(
   ({ colors, selected, onSelectColor, limit = 'auto', sx, ...other }, ref) => {
     const singleSelect = typeof selected === 'string';
