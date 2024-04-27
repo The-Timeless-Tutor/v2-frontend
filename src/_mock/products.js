@@ -1,64 +1,33 @@
-import { sample } from 'lodash';
+// import { sample } from 'lodash';
 import { faker } from '@faker-js/faker';
 
-// ----------------------------------------------------------------------
-
 const PRODUCT_NAME = [
-  'Nike Air Force 1 NDESTRUKT',
-  'Nike Space Hippie 04',
-  'Nike Air Zoom Pegasus 37 A.I.R. Chaz Bear',
-  'Nike Blazer Low 77 Vintage',
-  'Nike ZoomX SuperRep Surge',
-  'Zoom Freak 2',
-  'Nike Air Max Zephyr',
-  'Jordan Delta',
-  'Air Jordan XXXV PF',
-  'Nike Waffle Racer Crater',
-  'Kyrie 7 EP Sisterhood',
-  'Nike Air Zoom BB NXT',
-  'Nike Air Force 1 07 LX',
-  'Nike Air Force 1 Shadow SE',
-  'Nike Air Zoom Tempo NEXT%',
-  'Nike DBreak-Type',
-  'Nike Air Max Up',
-  'Nike Air Max 270 React ENG',
-  'NikeCourt Royale',
-  'Nike Air Zoom Pegasus 37 Premium',
-  'Nike Air Zoom SuperRep',
-  'NikeCourt Royale',
-  'Nike React Art3mis',
-  'Nike React Infinity Run Flyknit A.I.R. Chaz Bear',
+  'Frontend Development Fundamentals',
+  'Introduction to Data Science',
+  'Advanced Machine Learning',
+  'Public Speaking and Communication',
 ];
-const PRODUCT_COLOR = [
-  '#00AB55',
-  '#000000',
-  '#FFFFFF',
-  '#FFC0CB',
-  '#FF4842',
-  '#1890FF',
-  '#94D82D',
-  '#FFC107',
+const PRODUCT_DESCRIPTION = [
+  'Learn the basics of frontend development, covering HTML, CSS, and JavaScript, with hands-on exercises and projects.',
+  'Explore data science concepts and tools, including Python, Pandas, and Matplotlib, and apply them to real-world datasets.',
+  'Dive deep into machine learning algorithms, focusing on supervised and unsupervised learning techniques.',
+  'Enhance your public speaking and communication skills, with practical tips and exercises.',
 ];
 
+const PRODUCT_COVERS = [
+  'https://images.unsplash.com/photo-1531403009284-440f080d1e12?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', // Example cover image
+  'https://images.unsplash.com/photo-1599658880436-c61792e70672?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  'https://images.unsplash.com/photo-1555255707-c07966088b7b?q=80&w=2664&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+  'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=2670&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+];
 // ----------------------------------------------------------------------
 
-export const products = [...Array(24)].map((_, index) => {
-  const setIndex = index + 1;
-
+export const products = [...Array(PRODUCT_NAME.length)].map((_, index) => {
   return {
     id: faker.string.uuid(),
-    cover: `/assets/images/products/product_${setIndex}.jpg`,
+    cover: PRODUCT_COVERS[index],
     name: PRODUCT_NAME[index],
+    description: PRODUCT_DESCRIPTION[index],
     price: faker.number.int({ min: 4, max: 99, precision: 0.01 }),
-    priceSale: setIndex % 3 ? null : faker.number.int({ min: 19, max: 29, precision: 0.01 }),
-    colors:
-      (setIndex === 1 && PRODUCT_COLOR.slice(0, 2)) ||
-      (setIndex === 2 && PRODUCT_COLOR.slice(1, 3)) ||
-      (setIndex === 3 && PRODUCT_COLOR.slice(2, 4)) ||
-      (setIndex === 4 && PRODUCT_COLOR.slice(3, 6)) ||
-      (setIndex === 23 && PRODUCT_COLOR.slice(4, 6)) ||
-      (setIndex === 24 && PRODUCT_COLOR.slice(5, 6)) ||
-      PRODUCT_COLOR,
-    status: sample(['sale', 'new', '', '']),
   };
 });

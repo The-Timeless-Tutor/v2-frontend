@@ -12,8 +12,6 @@ import { bgBlur } from 'src/theme/css';
 
 import Iconify from 'src/components/iconify';
 
-// ----------------------------------------------------------------------
-
 const HEADER_MOBILE = 64;
 const HEADER_DESKTOP = 92;
 
@@ -36,8 +34,6 @@ const StyledSearchbar = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 5),
   },
 }));
-
-// ----------------------------------------------------------------------
 
 export default function Searchbar() {
   const [open, setOpen] = useState(false);

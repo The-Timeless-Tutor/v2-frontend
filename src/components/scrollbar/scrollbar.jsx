@@ -5,8 +5,6 @@ import Box from '@mui/material/Box';
 
 import { StyledScrollbar, StyledRootScrollbar } from './styles';
 
-// ----------------------------------------------------------------------
-
 const Scrollbar = forwardRef(({ children, sx, ...other }, ref) => {
   const userAgent = typeof navigator === 'undefined' ? 'SSR' : navigator.userAgent;
 

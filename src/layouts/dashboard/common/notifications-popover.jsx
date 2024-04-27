@@ -23,8 +23,6 @@ import { fToNow } from 'src/utils/format-time';
 import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 
-// ----------------------------------------------------------------------
-
 const NOTIFICATIONS = [
   {
     id: faker.string.uuid(),
@@ -178,8 +176,6 @@ export default function NotificationsPopover() {
   );
 }
 
-// ----------------------------------------------------------------------
-
 NotificationItem.propTypes = {
   notification: PropTypes.shape({
     createdAt: PropTypes.instanceOf(Date),
@@ -229,8 +225,6 @@ function NotificationItem({ notification }) {
     </ListItemButton>
   );
 }
-
-// ----------------------------------------------------------------------
 
 function renderContent(notification) {
   const title = (
