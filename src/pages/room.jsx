@@ -4,11 +4,11 @@ import { ProductsView } from 'src/sections/products/view';
 
 // ----------------------------------------------------------------------
 
-export default function ProductsPage() {
+export default function RoomsPage() {
   return (
     <>
       <Helmet>
-        <title> Products | Minimal UI </title>
+        <title> Rooms | The Timeless Tutor </title>
       </Helmet>
 
       <ProductsView />
