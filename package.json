@@ -6,16 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-<<<<<<< HEAD
     "preview": "vite preview",
     "format": "prettier --write \"src/**/*.{js,jsx}\"",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0"
-=======
-    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "init-unix": "cp .env.example .env && npm install && npm run dev",
-    "init-windows": "copy .env.example .env && npm install && npm run dev"
->>>>>>> ba555afb4c3e1961440df3c2ec4a2121ec2dc414
   },
   "dependencies": {
     "react": "^18.2.0",

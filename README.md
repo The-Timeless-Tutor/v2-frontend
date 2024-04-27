@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# Documentation
-=======
 # V2 - The Timeless Tutor
 This repo consists of version 2.0 of [The Timeless Tutor](https://github.com/p2pV1/v1) frontend application built on [Vite](https://vitejs.dev/) (React).
 
@@ -104,4 +101,3 @@ e.g. `feature: active call badge is not working on room card.`, `bug: authentica
 
 
 &copy; The Timeless Tutor, 2024. All Rights Reserved.
->>>>>>> ba555afb4c3e1961440df3c2ec4a2121ec2dc414
