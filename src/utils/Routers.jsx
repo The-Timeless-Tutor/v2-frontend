@@ -1,6 +1,8 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Layout from "../components/Layout";
 import Landing from "../pages/Landing";
+import DashboardLayout from "../components/DashboardLayout";
+import Dashboard from "../pages/Dashboard";
 //   import Layout from "../src/components/Layout";
 //   import Home from "../src/pages/Home";
 //   import ProtectedRoute from "../src/components/ProtectedRoute";
@@ -35,6 +37,14 @@ export default function Router() {
       //     <Home />
       //   </Layout>
       // ),
+    },
+    {
+      path: "/dashboard",
+      element: (
+        <DashboardLayout>
+          <Dashboard/>
+        </DashboardLayout>
+      ),
     },
     //   {
     //     path: "/dashboard",
