@@ -1,8 +1,6 @@
 import { sample } from 'lodash';
 import { faker } from '@faker-js/faker';
 
-// ----------------------------------------------------------------------
-
 const PRODUCT_NAME = [
   'Nike Air Force 1 NDESTRUKT',
   'Nike Space Hippie 04',

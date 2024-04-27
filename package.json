@@ -1,6 +1,6 @@
 {
-  "name": "@minimal/material-kit-react",
-  "author": "minimals.cc",
+  "name": "the-timeless-tutor",
+  "author": "thetimelesstutor.com",
   "licence": "MIT",
   "version": "1.8.0",
   "private": false,
@@ -8,16 +8,16 @@
     "dev": "vite",
     "start": "vite preview",
     "build": "vite build",
+    "dev:host": "vite --host",
+    "vite:start": "vite",
+    "vite:build": "vite build",
     "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "lint:fix": "eslint --fix \"src/**/*.{js,jsx,ts,tsx}\"",
     "prettier": "prettier --write \"src/**/*.{js,jsx,ts,tsx}\"",
     "rm:all": "rm -rf node_modules .next out dist build",
     "re:start": "yarn rm:all && yarn install && yarn dev",
     "re:build": "yarn rm:all && yarn install && yarn build",
-    "re:build-npm": "npm run rm:all && npm install && npm run build",
-    "dev:host": "vite --host",
-    "vite:start": "vite",
-    "vite:build": "vite build"
+    "re:build-npm": "npm run rm:all && npm install && npm run build"
   },
   "dependencies": {
     "@emotion/react": "^11.11.1",
