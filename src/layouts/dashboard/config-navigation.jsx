@@ -151,7 +151,7 @@ const navConfig = [
   },
   {
     title: 'Web3',
-    path: '/login',
+    path: '/web3',
     icon: icon('ic_lock'),
   },
   // {
