@@ -1,0 +1,24 @@
+/* RESET CSS */
+:root {
+
+  /* font-size: 10px; so, 10px / 16px = 0.625 = 62.5% */
+  font-size: 62.5%;
+}
+
+html {
+  overflow-x: hidden;
+  box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+body {
+  font-size: 1.6rem;
+  font-family: "Poppins", sans-serif;
+}
