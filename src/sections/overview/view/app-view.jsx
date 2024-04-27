@@ -6,6 +6,8 @@ import Typography from '@mui/material/Typography';
 
 // import Iconify from 'src/components/iconify';
 
+import { products } from 'src/_mock/products';
+
 // import AppTasks from '../app-tasks';
 import AppNewsUpdate from '../app-news-update';
 import AppOrderTimeline from '../app-order-timeline';
@@ -19,7 +21,6 @@ import AppWidgetSummary from '../app-widget-summary';
 // import Stack from '@mui/material/Stack';
 
 import ProductCard from '../../products/product-card';
-import { products } from 'src/_mock/products';
 
 // import ProductSort from '../product-sort';
 // import ProductFilters from '../product-filters';
