@@ -94,13 +94,17 @@ export default function UserPage() {
 
   return (
     <Container>
-      <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-        <Typography variant="h4">Users</Typography>
+      <div style={{ display: 'flex', gap: 4 }}>
+        <Typography variant="h2">🤝</Typography>
+        <Stack direction="column" mb={3}>
+          <Typography variant="h4">Mentors &amp; Friends</Typography>
+          <Typography variant="p">Yay, you made 122 friends in total.</Typography>
 
-        {/* <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
+          {/* <Button variant="contained" color="inherit" startIcon={<Iconify icon="eva:plus-fill" />}>
           New User
         </Button> */}
-      </Stack>
+        </Stack>
+      </div>
 
       <Card>
         <UserTableToolbar
