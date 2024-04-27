@@ -1,7 +1,5 @@
-import React from 'react'
+const App = () => {
+  return <h1>The timeless tutor</h1>;
+};
 
-export default function App() {
-  return (
-    <div>App</div>
-  )
-}
+export default App;
