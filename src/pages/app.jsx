@@ -6,7 +6,7 @@ export default function AppPage() {
   return (
     <>
       <Helmet>
-        <title> Dashboard | Minimal UI </title>
+        <title> Dashboard | The Timeless Tutor </title>
       </Helmet>
 
       <AppView />

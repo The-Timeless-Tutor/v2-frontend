@@ -20,30 +20,38 @@ import { bgGradient } from 'src/theme/css';
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
 
-export default function LoginView() {
+// ----------------------------------------------------------------------
+
+export default function RegisterView() {
   const theme = useTheme();
 
   const router = useRouter();
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleClick = () => {
+  const handleRegisterClick = () => {
     router.push('/dashboard');
   };
 
-  const handleSignupClick = () => {
-    router.push("/register")
+  const handleSigninClick = () => {
+    router.push('/login')
   }
 
   const renderForm = (
     <>
       <Stack spacing={3}>
-        <TextField name="email" label="Email address" />
-
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+          <TextField name="firstName" label="First Name" fullWidth />
+          <TextField name="lastName" label="Last Name" fullWidth />
+        </Stack>
+  
+        <TextField name="email" label="Email Address" fullWidth />
+  
         <TextField
           name="password"
           label="Password"
           type={showPassword ? 'text' : 'password'}
+          fullWidth
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
@@ -55,26 +63,26 @@ export default function LoginView() {
           }}
         />
       </Stack>
-
-      <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{ my: 3 }}>
-        <Link variant="subtitle2" underline="hover">
-          Forgot password?
-        </Link>
-      </Stack>
-
+  
+      <Typography variant="caption" sx={{ mt: 2, display: 'block' }}>
+        By signing up, I agree to the <Link href="/terms-of-service" sx={{ cursor: 'pointer' }}>Terms of Service</Link> and <Link href="/privacy-policy" sx={{ cursor: 'pointer' }}>Privacy Policy</Link>.
+      </Typography>
+  
       <LoadingButton
         fullWidth
         size="large"
         type="submit"
         variant="contained"
         color="inherit"
-        onClick={handleClick}
+        sx={{ mt: 3 }}
+        onClick={handleRegisterClick}
       >
-        Login
+        Create account
       </LoadingButton>
     </>
   );
-
+  
+  
   return (
     <Box
       sx={{
@@ -101,12 +109,12 @@ export default function LoginView() {
             maxWidth: 420,
           }}
         >
-          <Typography variant="h4">Sign in to The Timeless Tutor</Typography>
+          <Typography variant="h4">Get Started absolute free</Typography>
 
           <Typography variant="body2" sx={{ mt: 2, mb: 5 }}>
-            New user?
-            <Link variant="subtitle2" sx={{ ml: 0.5, cursor: "pointer" }} onClick={handleSignupClick}>
-              Create an account
+            Already have an account?
+            <Link variant="subtitle2" sx={{ ml: 0.5, cursor: 'pointer' }} onClick={handleSigninClick}>
+              Sign in
             </Link>
           </Typography>
 
