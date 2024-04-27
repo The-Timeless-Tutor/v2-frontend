@@ -10,6 +10,8 @@ export const UserPage = lazy(() => import('src/pages/user'));
 export const LoginPage = lazy(() => import('src/pages/login'));
 export const RegisterPage = lazy(() => import('src/pages/register'));
 export const ProductsPage = lazy(() => import('src/pages/products'));
+
+import Web3Page from 'src/pages/web3';
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 
 export default function Router() {
@@ -27,6 +29,7 @@ export default function Router() {
         { path: 'user', element: <UserPage /> },
         { path: 'rooms', element: <RoomsPage /> },
         { path: 'blog', element: <BlogPage /> },
+        {path: 'web3', element: <Web3Page/>}
       ],
     },
     {

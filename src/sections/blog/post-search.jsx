@@ -13,7 +13,7 @@ PostSearch.propTypes = {
 export default function PostSearch({ posts }) {
   return (
     <Autocomplete
-      sx={{ width: 280 }}
+      sx={{ width: "70%" }}
       autoHighlight
       popupIcon={null}
       slotProps={{
