@@ -44,7 +44,7 @@ export default function AppView() {
               id: faker.string.uuid(),
               title: [
                 'Sangya posted a message on announcement #job-seeker.',
-                'You have been mentioned by @Sagar on group#resume-optimization.',
+                'You have been mentioned by @Sagar on group#resume-optimization. asdbfcvjhvhhhhhhhhhhhhhhhhhhhhh',
                 'New Message from @Ashish.',
                 '@Lakhpa recently posted a blog.',
                 '@Sahir just shared some learning resources.',

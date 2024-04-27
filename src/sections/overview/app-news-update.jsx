@@ -56,7 +56,7 @@ function NewsItem({ news }) {
   const { image, title, description, postedAt } = news;
 
   return (
-    <Stack direction="row" alignItems="center" spacing={2}>
+    <Stack direction="row" alignItems="center" sx={{ whiteSpace: 'normal', paddingRight: 2.5 }} spacing={2}>
       <Box
         component="img"
         alt={title}
@@ -64,19 +64,18 @@ function NewsItem({ news }) {
         sx={{ width: 48, height: 48, borderRadius: 1.5, flexShrink: 0 }}
       />
 
-      <Box sx={{ minWidth: 240, flexGrow: 1 }}>
-        <Link color="inherit" variant="subtitle2" underline="hover" noWrap>
+      <Box component="div" sx={{ whiteSpace: 'normal' }}>
+        <Link color="inherit" variant="subtitle2" underline="hover">
           {title}
         </Link>
 
-        <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           {description}
         </Typography>
+        <Typography variant="caption" sx={{ pr: 3, flexShrink: 0, color: 'text.secondary' }}>
+          {fToNow(postedAt)}
+        </Typography>
       </Box>
-
-      <Typography variant="caption" sx={{ pr: 3, flexShrink: 0, color: 'text.secondary' }}>
-        {fToNow(postedAt)}
-      </Typography>
     </Stack>
   );
 }
