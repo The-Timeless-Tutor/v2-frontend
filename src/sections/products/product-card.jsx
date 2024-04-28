@@ -49,24 +49,24 @@ export default function ShopProductCard({ product }) {
 
   return (
     <Card>
-      <Box sx={{ pt: '100%', position: 'relative' }}>
+      <Box sx={{ pt: '50%', position: 'relative' }}>
         {/* {product.status && renderStatus} */}
 
         {renderImg}
       </Box>
 
-      <Stack spacing={2} sx={{ p: 3 }}>
-        <Link color="inherit" underline="hover" variant="subtitle2" noWrap>
+      <Stack spacing={1} sx={{p: 2 }}>
+        <Link sx={{marginTop: 0}} color="inherit" underline="hover" variant="subtitle2" noWrap>
           {product.name}
         </Link>
 
-        <Typography>{product.description}</Typography>
+        <Typography variant="body2" sx={{ color: 'text.secondary' }}>{product.description.substring(0,80) + "..."}</Typography>
 
-        <Stack direction="row" alignItems="center" justifyContent="space-between">
-          <Button variant="contained">Join Session</Button>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+        <Stack direction="row" sx={{paddingTop: 1, paddingBottom: 1}} alignItems="center" justifyContent="space-between">
+          <Button variant="contained">+ Join Session</Button>
+          <Typography variant='"body2' style={{ display: 'flex', alignItems: 'center', gap: 2, color: 'text-secondary' }}>
             Fee: {renderPrice} TTT
-          </div>
+          </Typography>
         </Stack>
       </Stack>
     </Card>

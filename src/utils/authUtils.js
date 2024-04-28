@@ -30,39 +30,39 @@ export const getSession = () => ({
 });
 
 // Attempts to refresh the access token using the refresh token
-export const refreshToken = async (backendUrl) => {
+export const refreshTokens = async (backendUrl) => {
   const { refreshToken, refreshTokenExpiry } = getSession();
 
   // Check if the refresh token is valid
   if (!refreshToken || new Date() >= new Date(refreshTokenExpiry)) {
-      clearSession();
-      throw new Error('Refresh token is expired or not available. Please log in again.');
+    clearSession();
+    throw new Error('Refresh token is expired or not available. Please log in again.');
   }
 
   try {
-      const response = await fetch(`${backendUrl}api/token_refresh`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ refresh_token: refreshToken }),
-      });
+    const response = await fetch(`${backendUrl}api/token_refresh`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ refresh_token: refreshToken }),
+    });
 
-      if (!response.ok) {
-          throw new Error('Failed to refresh access token');
-      }
+    if (!response.ok) {
+      throw new Error('Failed to refresh access token');
+    }
 
-      const data = await response.json();
+    const data = await response.json();
 
-      setSession({
-          access_token: data.data.access_token,
-          refresh_token: data.data.refresh_token, // Use new refresh token if provided
-          access_token_expiry: data.data.access_token_expiry,
-          refresh_token_expiry: data.data.refresh_token_expiry || refreshTokenExpiry, // Use existing expiry if new one isn't provided
-      });
+    setSession({
+      access_token: data.data.access_token,
+      refresh_token: data.data.refresh_token, // Use new refresh token if provided
+      access_token_expiry: data.data.access_token_expiry,
+      refresh_token_expiry: data.data.refresh_token_expiry || refreshTokenExpiry, // Use existing expiry if new one isn't provided
+    });
 
-      return data.data.access_token; // Return the new access token
+    return data.data.access_token; // Return the new access token
   } catch (error) {
-      console.error('Error refreshing token:', error);
-      clearSession(); // Clear session on failure
-      throw error; // Re-throw the error for handling elsewhere
+    console.error('Error refreshing token:', error);
+    clearSession(); // Clear session on failure
+    throw error; // Re-throw the error for handling elsewhere
   }
 };
