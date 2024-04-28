@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Form, useForm } from 'react-hook-form';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -20,25 +21,45 @@ import { bgGradient } from 'src/theme/css';
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
 
+import { loginWithEmail } from './login';
+
 export default function LoginView() {
   const theme = useTheme();
 
   const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    setError,
+    clearErrors,
+    formState: { errors },
+  } = useForm();
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleClick = () => {
+  const onSubmit = (formData) => {
+    const { email, password } = formData;
+
+    loginWithEmail(email, password);
+
     router.push('/dashboard');
   };
 
   const handleSignupClick = () => {
-    router.push("/register")
-  }
+    router.push('/register');
+  };
 
   const renderForm = (
-    <>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
-        <TextField name="email" label="Email address" />
+        <TextField
+          name="email"
+          label="Email address"
+          {...register('email', {
+            required: 'Email is required',
+          })}
+        />
+        {errors.email && <p>{errors?.email?.message}</p>}
 
         <TextField
           name="password"
@@ -53,7 +74,11 @@ export default function LoginView() {
               </InputAdornment>
             ),
           }}
+          {...register('password', {
+            required: 'Password is required',
+          })}
         />
+        {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
       </Stack>
 
       <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{ my: 3 }}>
@@ -68,11 +93,11 @@ export default function LoginView() {
         type="submit"
         variant="contained"
         color="inherit"
-        onClick={handleClick}
+        // onClick={handleClick}
       >
         Login
       </LoadingButton>
-    </>
+    </form>
   );
 
   return (
@@ -105,7 +130,11 @@ export default function LoginView() {
 
           <Typography variant="body2" sx={{ mt: 2, mb: 5 }}>
             New user?
-            <Link variant="subtitle2" sx={{ ml: 0.5, cursor: "pointer" }} onClick={handleSignupClick}>
+            <Link
+              variant="subtitle2"
+              sx={{ ml: 0.5, cursor: 'pointer' }}
+              onClick={handleSignupClick}
+            >
               Create an account
             </Link>
           </Typography>
