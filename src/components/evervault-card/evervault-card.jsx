@@ -88,7 +88,7 @@ export const CardItem = ({
   };
 
   return (
-    <Tag ref={ref} className={`w-fit transition duration-200 ease-linear ${className}`} {...rest}>
+    <Tag ref={ref} className={`w-[100%] transition duration-200 ease-linear ${className}`} {...rest}>
       {children}
     </Tag>
   );
