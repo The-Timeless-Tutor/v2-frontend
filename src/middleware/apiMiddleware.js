@@ -1,4 +1,4 @@
-import { getSession, refreshToken, isTokenExpired } from '../utils/authUtils';
+import { getSession, refreshTokens, isTokenExpired } from '../utils/authUtils';
 
 export const apiMiddleware = async (endpoint, options = {}) => {
   const backendUrl =
@@ -46,7 +46,7 @@ export const apiMiddleware = async (endpoint, options = {}) => {
 async function refreshAccessToken(backendUrl) {
   try {
     // Assume refreshToken returns true on success
-    return await refreshToken(backendUrl);
+    return await refreshTokens(backendUrl);
   } catch (error) {
     console.error('Error refreshing token:', error);
     return false;

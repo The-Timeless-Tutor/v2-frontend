@@ -16,6 +16,8 @@ import InputAdornment from '@mui/material/InputAdornment';
 
 import { useRouter } from 'src/routes/hooks';
 
+import { setSession } from 'src/utils/authUtils';
+
 import { bgGradient } from 'src/theme/css';
 
 import Logo from 'src/components/logo';
@@ -34,8 +36,53 @@ export default function RegisterView() {
   const theme = useTheme();
   const router = useRouter();
 
-  const handleSubmit = (e) => {
-    console.log(firstName, lastName, email, password);
+  const handleSubmit = async (e) => {
+    const backendUrl =
+      import.meta.env.VITE_BACKEND_URL || 'https://backend-service-rojjrgeqna-ue.a.run.app/';
+
+    const formDatatoSend = {
+      captcha_response: null,
+      name: `${firstName} ${lastName}`,
+      email,
+      password,
+      username: null,
+      profile: {
+        phone: null,
+        sub: '1',
+        verified_at: new Date().toISOString().slice(0, 10),
+      },
+    };
+
+    try {
+      const uri = `${backendUrl}api/register`;
+      console.log(uri);
+      const response = await fetch(uri, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+
+        body: JSON.stringify(formDatatoSend),
+      });
+
+      const responseData = await response.json();
+      console.log('Response data:', responseData);
+
+      if (response.ok) {
+        // Assuming responseData.data contains token information
+        setSession({
+          access_token: responseData.data.access_token,
+          refresh_token: responseData.data.refresh_token,
+          access_token_expiry: responseData.data.access_token_expiry,
+          refresh_token_expiry: responseData.data.refresh_token_expiry,
+        });
+        console.log('Signup successful, session set!');
+      } else {
+        console.error('Signup failed: ', responseData);
+      }
+    } catch (error) {
+      console.error('An error occurred during the signup process:', error.message);
+    }
   };
 
   const handleSigninClick = () => {
