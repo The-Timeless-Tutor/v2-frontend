@@ -1,10 +1,15 @@
 import { Container, Stack, Typography } from '@mui/material';
-import React from 'react';
+import React, { useState } from 'react';
 import { CardBody, CardContainer, CardItem } from 'src/components/evervault-card/evervault-card';
+import ImportWallet from 'src/components/import-wallet';
 
 export default function Web3Page() {
+  const [isImportWalletModalOpen, setIsImportWalletModalOpen] = useState(false)
   return (
     <Container>
+      {
+        isImportWalletModalOpen && <ImportWallet open={isImportWalletModalOpen} setOpen={setIsImportWalletModalOpen}/>
+      }
       <div style={{ display: 'flex', gap: 4 }}>
         <Typography variant="h2">🌍</Typography>
         <Stack direction="column" mb={3}>
@@ -13,9 +18,9 @@ export default function Web3Page() {
         </Stack>
       </div>
 
-      <div className='flex gap-4'>
-        <CardContainer className="inter-var">
-          <CardBody className="bg-gray-50 relative group/card border-black/[0.1] w-auto sm:w-[25rem] h-auto rounded-xl p-6 border  ">
+      <div className='flex gap-4 flex-wrap items-start'>
+        <CardContainer className="inter-var w-[100%]">
+          <CardBody className="bg-gray-50 relative group/card border-black/[0.1] w-[100%] h-auto rounded-xl p-6 border  ">
             <CardItem translateZ="50" className="text-xl font-bold text-neutral-600">
               💵 Import Wallet
             </CardItem>
@@ -31,28 +36,29 @@ export default function Web3Page() {
                 alt="thumbnail"
               />
             </CardItem>
-            <div className="flex justify-between items-center mt-5">
+            <div className="flex justify-between items-center mt-5 flex-wrap gap-3">
               <CardItem
                 translateZ={20}
                 as="button"
-                className="px-4 py-2 rounded-xl bg-black text-white text-xs font-bold"
+                className="px-4 py-2 rounded-xl bg-black text-white text-xs font-bold cursor-pointer"
+                onClick={() => setIsImportWalletModalOpen(true)}
               >
-                Import Account using Private Key
+                Import using Private Key
               </CardItem>
               <CardItem
                 translateZ={20}
                 as="a"
                 href="https://twitter.com/mannupaaji"
                 target="__blank"
-                className="px-4 py-2 rounded-xl text-xs font-normal"
+                className="px-4 py-2 rounded-xl text-xs font-bold bg-[#0001] text-center"
               >
                 Learn More →
               </CardItem>
             </div>
           </CardBody>
         </CardContainer>
-        <CardContainer className="inter-var">
-          <CardBody className="bg-gray-50 relative group/card border-black/[0.1] w-auto sm:w-[25rem] h-auto rounded-xl p-6 border  ">
+        <CardContainer className="inter-var w-[100%]">
+          <CardBody className="bg-gray-50 relative group/card border-black/[0.1] w-[100%] h-auto rounded-xl p-6 border  ">
             <CardItem translateZ="50" className="text-xl font-bold text-neutral-600">
               🪛 Create Wallet
             </CardItem>
@@ -68,7 +74,7 @@ export default function Web3Page() {
                 alt="thumbnail"
               />
             </CardItem>
-            <div className="flex justify-between items-center mt-5">
+            <div className="flex justify-between items-center mt-5 flex-wrap gap-3">
             <CardItem
                 translateZ={20}
                 as="button"
@@ -81,7 +87,7 @@ export default function Web3Page() {
                 as="a"
                 href="https://twitter.com/mannupaaji"
                 target="__blank"
-                className="px-4 py-2 rounded-xl text-xs font-normal"
+                className="px-4 py-2 rounded-xl text-xs font-bold bg-[#0001] text-center"
               >
                 Learn More →
               </CardItem>
