@@ -53,7 +53,7 @@ export default function NotFoundView() {
 
           <Box
             component="img"
-            src="/assets/illustrations/illustration_404.svg"
+            src="https://cdn.dribbble.com/users/285475/screenshots/2083086/dribbble_1.gif"
             sx={{
               mx: 'auto',
               height: 260,
