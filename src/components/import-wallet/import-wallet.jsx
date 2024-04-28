@@ -83,7 +83,7 @@ export default function ImportWallet({ open, setOpen, setHasWallet, setWallet })
                       <div>
                         <label
                           htmlFor="privateKey"
-                          className="block mb-2 text-sm font-semibold text-gray-900 dark:text-white mt-2"
+                          className="block mb-2 text-sm font-semibold text-gray-900 mt-2"
                         >
                           Private Key
                         </label>
@@ -92,7 +92,7 @@ export default function ImportWallet({ open, setOpen, setHasWallet, setWallet })
                           onChange={(e) => setPrivateKey(e.target.value)}
                           type="password"
                           id="privateKey"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                           placeholder="tv68bkkk985765...095"
                           required
                         />
@@ -100,7 +100,7 @@ export default function ImportWallet({ open, setOpen, setHasWallet, setWallet })
                       <div>
                         <label
                           htmlFor="password"
-                          className="block mb-2 text-sm font-semibold text-gray-900 dark:text-white mt-2"
+                          className="block mb-2 text-sm font-semibold text-gray-900 mt-2"
                         >
                           Password
                         </label>
@@ -109,7 +109,7 @@ export default function ImportWallet({ open, setOpen, setHasWallet, setWallet })
                           onChange={(e) => setPassword(e.target.value)}
                           type="password"
                           id="password"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                           placeholder="Password"
                           required
                         />
@@ -123,7 +123,7 @@ export default function ImportWallet({ open, setOpen, setHasWallet, setWallet })
                           onChange={(e) => {
                             setIsTermAccepted(e.target.checked);
                           }}
-                          className="mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                          className="mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2"
                         />
                         <p className="text-sm text-gray-500">
                           As per our{' '}
