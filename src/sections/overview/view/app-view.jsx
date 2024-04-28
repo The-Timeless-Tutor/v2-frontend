@@ -32,14 +32,14 @@ import { Button } from '@mui/material';
 export default function AppView() {
   return (
     <Container maxWidth="xl">
-      <Typography variant="h4" sx={{ mb: 5 }}>
+      <Typography variant="h4" sx={{ mb: 3 }}>
         Hi Lexy, Welcome back 👋
       </Typography>
 
       <Grid container spacing={3}>
         <Grid xs={12} md={6} lg={8}>
           <AppNewsUpdate
-            title="News Update"
+            title="🙊 News Update"
             list={[...Array(5)].map((_, index) => ({
               id: faker.string.uuid(),
               title: [
@@ -64,7 +64,7 @@ export default function AppView() {
 
         <Grid xs={12} md={6} lg={4}>
           <AppOrderTimeline
-            title="Upcoming Sessions"
+            title="🗓️ Upcoming Sessions"
             list={[...Array(5)].map((_, index) => ({
               id: faker.string.uuid(),
               title: [
@@ -83,7 +83,7 @@ export default function AppView() {
 
       <div style={{display: 'flex', alignItems:"center", justifyContent: "space-between"}}>
       <Typography variant="h4" sx={{ mb: 3, mt: 5 }}>
-        Recommended Rooms
+        🏛️ Recommended Rooms
       </Typography>
 
       <Button variant='text'>+ Explore</Button>
