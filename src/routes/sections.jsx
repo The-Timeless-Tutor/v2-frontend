@@ -2,14 +2,13 @@ import { lazy, Suspense } from 'react';
 import { Outlet, Navigate, useRoutes } from 'react-router-dom';
 
 import DashboardLayout from 'src/layouts/dashboard';
-import RoomsPage from 'src/pages/room';
 
+import RoomsPage from 'src/pages/room';
 export const IndexPage = lazy(() => import('src/pages/app'));
 export const BlogPage = lazy(() => import('src/pages/blog'));
 export const UserPage = lazy(() => import('src/pages/user'));
 export const LoginPage = lazy(() => import('src/pages/login'));
 export const RegisterPage = lazy(() => import('src/pages/register'));
-export const ProductsPage = lazy(() => import('src/pages/products'));
 
 import Web3Page from 'src/pages/web3';
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
