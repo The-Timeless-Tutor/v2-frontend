@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useForm } from 'react-hook-form';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -23,34 +24,55 @@ import Iconify from 'src/components/iconify';
 // ----------------------------------------------------------------------
 
 export default function RegisterView() {
-  const theme = useTheme();
-
-  const router = useRouter();
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleRegisterClick = (e) => {
-    console.log(e)
-    router.push('/dashboard');
+  const theme = useTheme();
+  const router = useRouter();
+
+  const handleSubmit = (e) => {
+    console.log(firstName, lastName, email, password);
   };
 
   const handleSigninClick = () => {
-    router.push('/login')
-  }
+    router.push('/login');
+  };
 
   const renderForm = (
     <>
       <Stack spacing={3}>
         <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
-          <TextField name="firstName" label="First Name" fullWidth />
-          <TextField name="lastName" label="Last Name" fullWidth />
+          <TextField
+            name="firstName"
+            label="First Name"
+            onChange={(e) => setFirstName(e.target.value)}
+            fullWidth
+          />
+          <TextField
+            name="lastName"
+            label="Last Name"
+            onChange={(e) => setLastName(e.target.value)}
+            fullWidth
+          />
         </Stack>
-  
-        <TextField name="email" label="Email Address" fullWidth />
-  
+
+        <TextField
+          name="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          label="Email Address"
+          fullWidth
+        />
+
         <TextField
           name="password"
           label="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
           type={showPassword ? 'text' : 'password'}
           fullWidth
           InputProps={{
@@ -64,26 +86,33 @@ export default function RegisterView() {
           }}
         />
       </Stack>
-  
+
       <Typography variant="caption" sx={{ mt: 2, display: 'block' }}>
-        By signing up, I agree to the <Link href="/terms-of-service" sx={{ cursor: 'pointer' }}>Terms of Service</Link> and <Link href="/privacy-policy" sx={{ cursor: 'pointer' }}>Privacy Policy</Link>.
+        By signing up, I agree to the{' '}
+        <Link href="/terms-of-service" sx={{ cursor: 'pointer' }}>
+          Terms of Service
+        </Link>{' '}
+        and{' '}
+        <Link href="/privacy-policy" sx={{ cursor: 'pointer' }}>
+          Privacy Policy
+        </Link>
+        .
       </Typography>
-  
+
       <LoadingButton
         fullWidth
         size="large"
-        type="submit"
+        type="button"
         variant="contained"
         color="inherit"
         sx={{ mt: 3 }}
-        onClick={handleRegisterClick}
+        onClick={() => handleSubmit()}
       >
         Create account
       </LoadingButton>
     </>
   );
-  
-  
+
   return (
     <Box
       sx={{
@@ -114,7 +143,11 @@ export default function RegisterView() {
 
           <Typography variant="body2" sx={{ mt: 2, mb: 5 }}>
             Already have an account?
-            <Link variant="subtitle2" sx={{ ml: 0.5, cursor: 'pointer' }} onClick={handleSigninClick}>
+            <Link
+              variant="subtitle2"
+              sx={{ ml: 0.5, cursor: 'pointer' }}
+              onClick={handleSigninClick}
+            >
               Sign in
             </Link>
           </Typography>

@@ -26,6 +26,7 @@
     "@iconify/react": "^4.1.1",
     "@mui/lab": "^5.0.0-alpha.147",
     "@mui/material": "^5.14.12",
+    "@tanstack/react-query": "^5.32.0",
     "apexcharts": "^3.43.0",
     "date-fns": "^2.30.0",
     "history": "^5.3.0",
@@ -41,6 +42,7 @@
     "simplebar-react": "^3.2.4"
   },
   "devDependencies": {
+    "@tanstack/eslint-plugin-query": "^5.28.11",
     "@vitejs/plugin-react-swc": "^3.4.0",
     "eslint": "^8.51.0",
     "eslint-config-airbnb": "^19.0.4",
