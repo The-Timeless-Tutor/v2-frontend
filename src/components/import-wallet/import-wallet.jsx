@@ -1,14 +1,51 @@
-import { Fragment, useRef } from 'react'
-import { Dialog, Transition } from '@headlessui/react'
-import { ExclamationTriangleIcon } from '@heroicons/react/24/outline'
-import './styles/style.css'
+import { Fragment, useRef, useState } from 'react';
+import { Dialog, Transition } from '@headlessui/react';
+// import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
+import { ethers } from 'ethers';
+import './styles/style.css';
+import CryptoJS from 'crypto-js';
 
-export default function ImportWallet({open, setOpen}) {
-  const cancelButtonRef = useRef(null)
+export default function ImportWallet({ open, setOpen, setHasWallet, setWallet }) {
+  const [privateKey, setPrivateKey] = useState('');
+  const [password, setPassword] = useState('');
+  const [isTermsAccepted, setIsTermAccepted] = useState(false);
+  const cancelButtonRef = useRef(null);
+
+  // Define a helper function to encrypt the private key
+  const encryptPrivateKey = (privateKey, encryptionKey) => {
+    const encryptedPrivateKey = CryptoJS.AES.encrypt(privateKey, encryptionKey).toString();
+    setHasWallet(true)
+    return encryptedPrivateKey;
+  };
+
+  const handleImportWalletUsingPrivateKey = () => {
+    if (isTermsAccepted && privateKey && password) {
+      let wallet = new ethers.Wallet(privateKey);
+
+      if (wallet?.address) {
+        const encrypted = encryptPrivateKey(privateKey, password);
+        setWallet(wallet)
+        window.localStorage.setItem(import.meta.env.VITE_WEB3_WALLET, JSON.stringify(wallet))
+        window.localStorage.setItem(import.meta.env.VITE_ENCRYPTED_PRIVATE_KEY_LOCATION, encrypted)
+        setPrivateKey("")
+        setPassword("")
+        setIsTermAccepted(false)
+        setOpen(false)
+        window.localStorage.setItem(import.meta.env.VITE_IS_WALLET_AUTHENTICATED, true)
+      }
+    }else{
+      console.log("Message: Every field is required!")
+    }
+  };
 
   return (
     <Transition.Root show={open} as={Fragment}>
-      <Dialog as="div" className="relative z-[1101]" initialFocus={cancelButtonRef} onClose={setOpen}>
+      <Dialog
+        as="div"
+        className="relative z-[1101]"
+        initialFocus={cancelButtonRef}
+        onClose={setOpen}
+      >
         <Transition.Child
           as={Fragment}
           enter="ease-in-out duration-400"
@@ -35,17 +72,66 @@ export default function ImportWallet({open, setOpen}) {
               <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
                 <div className="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
                   <div className="sm:flex sm:items-start">
-                    <div className="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-red-100 sm:mx-0 sm:h-10 sm:w-10">
-                      <ExclamationTriangleIcon className="h-6 w-6 text-red-600" aria-hidden="true" />
-                    </div>
                     <div className="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left">
-                      <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
-                        Deactivate account
+                      <Dialog.Title
+                        as="h2"
+                        className="text-xl mb-4 font-semibold leading-6 text-gray-900"
+                      >
+                        💵 Import Account
                       </Dialog.Title>
-                      <div className="mt-2">
+
+                      <div>
+                        <label
+                          htmlFor="privateKey"
+                          className="block mb-2 text-sm font-semibold text-gray-900 dark:text-white mt-2"
+                        >
+                          Private Key
+                        </label>
+                        <input
+                          value={privateKey}
+                          onChange={(e) => setPrivateKey(e.target.value)}
+                          type="password"
+                          id="privateKey"
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          placeholder="tv68bkkk985765...095"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label
+                          htmlFor="password"
+                          className="block mb-2 text-sm font-semibold text-gray-900 dark:text-white mt-2"
+                        >
+                          Password
+                        </label>
+                        <input
+                          value={password}
+                          onChange={(e) => setPassword(e.target.value)}
+                          type="password"
+                          id="password"
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                          placeholder="Password"
+                          required
+                        />
+                      </div>
+
+                      <div className="mt-2 flex items-start gap-3">
+                        <input
+                          id="default-checkbox"
+                          type="checkbox"
+                          value={isTermsAccepted}
+                          onChange={(e) => {
+                            setIsTermAccepted(e.target.checked);
+                          }}
+                          className="mt-1 w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                        />
                         <p className="text-sm text-gray-500">
-                          Are you sure you want to deactivate your account? All of your data will be permanently
-                          removed. This action cannot be undone.
+                          As per our{' '}
+                          <a className="border-b-2" href="">
+                            User Terms and Conditions
+                          </a>
+                          , we don't store any sensitive informations of users. Every wallet
+                          imported on our platform are safe and non-custodial wallet.
                         </p>
                       </div>
                     </div>
@@ -54,10 +140,10 @@ export default function ImportWallet({open, setOpen}) {
                 <div className="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
                   <button
                     type="button"
-                    className="inline-flex w-full justify-center rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 sm:ml-3 sm:w-auto"
-                    onClick={() => setOpen(false)}
+                    className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"
+                    onClick={() => handleImportWalletUsingPrivateKey()}
                   >
-                    Deactivate
+                    Import
                   </button>
                   <button
                     type="button"
@@ -74,5 +160,5 @@ export default function ImportWallet({open, setOpen}) {
         </div>
       </Dialog>
     </Transition.Root>
-  )
+  );
 }
