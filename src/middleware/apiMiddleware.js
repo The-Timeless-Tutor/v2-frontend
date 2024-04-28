@@ -1,8 +1,8 @@
-import { getSession, refreshToken, isTokenExpired } from '../utils/authUtils';
+import { getSession, refreshTokens, isTokenExpired } from '../utils/authUtils';
 
 export const apiMiddleware = async (endpoint, options = {}) => {
   const backendUrl =
-    process.env.REACT_APP_BACKEND_URL || 'https://backend-service-rojjrgeqna-ue.a.run.app/';
+    import.meta.env.VITE_BACKEND_URL || 'https://backend-service-rojjrgeqna-ue.a.run.app/';
   const url = new URL(endpoint, backendUrl);
 
   // Ensure options.headers is an object
@@ -46,7 +46,7 @@ export const apiMiddleware = async (endpoint, options = {}) => {
 async function refreshAccessToken(backendUrl) {
   try {
     // Assume refreshToken returns true on success
-    return await refreshToken(backendUrl);
+    return await refreshTokens(backendUrl);
   } catch (error) {
     console.error('Error refreshing token:', error);
     return false;

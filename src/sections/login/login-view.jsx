@@ -14,18 +14,19 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { alpha, useTheme } from '@mui/material/styles';
 import InputAdornment from '@mui/material/InputAdornment';
 
-import { useRouter } from 'src/routes/hooks';
-
 import { bgGradient } from 'src/theme/css';
+
+import { useRouter } from 'src/routes/hooks';
+import { useAuth } from 'src/contexts/AuthContext';
 
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
 
-import { loginWithEmail } from './login';
+import { loginWithEmail } from './apiLogin';
 
 export default function LoginView() {
   const theme = useTheme();
-
+  const { setIsAuthenticated } = useAuth(); // setIsAuthenticated to set authenticated state once login is successful
   const router = useRouter();
   const {
     register,
@@ -38,10 +39,10 @@ export default function LoginView() {
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = (formData) => {
+    if (!formData) return;
     const { email, password } = formData;
-
-    loginWithEmail(email, password);
-
+    loginWithEmail(email, password, setIsAuthenticated);
+    // TODO: Show toast message
     router.push('/dashboard');
   };
 

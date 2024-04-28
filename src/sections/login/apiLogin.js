@@ -1,7 +1,7 @@
 import { backendUrl } from 'src/utils/constant';
+import { getSession, setSession } from 'src/utils/authUtils';
 
 import { apiMiddleware } from 'src/middleware/apiMiddleware';
-import { setSession } from 'src/utils/authUtils';
 
 // Login with google
 export const initiateOAuthFlow = (e) => {
@@ -18,24 +18,39 @@ export const initiateOAuthFlow = (e) => {
 };
 
 // Login with email and password
-export const loginWithEmail = async (email, password) => {
+export const loginWithEmail = async (email, password, setIsAuthenticated) => {
   try {
-    console.log('loginWithEmail', backendUrl, email, password);
-    const response = await fetch(`${backendUrl}/api/login`, {
+    const response = await apiMiddleware(`api/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ login: email, password }),
     });
-    console.log('It workds here.....');
     const data = await response.json();
-    console.log('Successfully logged in', data.data);
 
     if (!response.ok) {
       throw new Error(data.message);
     }
-
+    // If successful, set the session & authenticate
     setSession(data.data);
+    setIsAuthenticated(true);
+  } catch (error) {
+    throw new Error(error.message);
+  }
+};
 
+// get user details
+export const getUserDetails = async () => {
+  try {
+    const response = await apiMiddleware(`api/user`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    if (!response.ok) {
+      throw new Error(data.message);
+    }
+    const data = await response.json();
     return data;
   } catch (error) {
     throw new Error(error.message);
