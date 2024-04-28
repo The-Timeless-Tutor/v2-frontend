@@ -1,3 +1,4 @@
+import { toast } from 'react-toastify';
 import { getSession, refreshTokens, isTokenExpired } from '../utils/authUtils';
 
 export const apiMiddleware = async (endpoint, options = {}) => {
@@ -31,7 +32,10 @@ export const apiMiddleware = async (endpoint, options = {}) => {
   // Retry once if the first attempt fails due to an expired token
   if (response.status === 401) {
     const success = await refreshAccessToken(backendUrl);
-    if (!success) throw new Error('Failed to refresh token on retry. Please log in again.');
+    if (!success) {
+      toast.error('Failed to login. Please try again.');
+      throw new Error('Failed to refresh token on retry. Please log in again.');
+    }
 
     // Refresh the session details after successful token refresh
     const newSession = getSession();
@@ -48,7 +52,7 @@ async function refreshAccessToken(backendUrl) {
     // Assume refreshToken returns true on success
     return await refreshTokens(backendUrl);
   } catch (error) {
-    console.error('Error refreshing token:', error);
+    // console.error('Error refreshing token:', error);
     return false;
   }
 }

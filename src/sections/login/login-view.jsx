@@ -42,8 +42,6 @@ export default function LoginView() {
     if (!formData) return;
     const { email, password } = formData;
     loginWithEmail(email, password, setIsAuthenticated);
-    // TODO: Show toast message
-    router.push('/dashboard');
   };
 
   const handleSignupClick = () => {

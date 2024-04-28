@@ -1,7 +1,10 @@
+import { Navigate } from 'react-router-dom';
+
 import { backendUrl } from 'src/utils/constant';
 import { getSession, setSession } from 'src/utils/authUtils';
 
 import { apiMiddleware } from 'src/middleware/apiMiddleware';
+import { toast } from 'react-toastify';
 
 // Login with google
 export const initiateOAuthFlow = (e) => {
@@ -25,14 +28,18 @@ export const loginWithEmail = async (email, password, setIsAuthenticated) => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ login: email, password }),
     });
+
     const data = await response.json();
 
     if (!response.ok) {
+      toast.error(data.message);
       throw new Error(data.message);
     }
-    // If successful, set the session & authenticate
+    // If successful, set the session & authenticate the user and redirect to app
     setSession(data.data);
     setIsAuthenticated(true);
+    // redirect to app
+    window.location.href = '/';
   } catch (error) {
     throw new Error(error.message);
   }
