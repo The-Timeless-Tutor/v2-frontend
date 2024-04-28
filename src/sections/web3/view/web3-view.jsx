@@ -1,5 +1,6 @@
 import { Avatar, Container, Grid, Stack, Typography } from '@mui/material';
 import React, { useState } from 'react';
+import CreateWallet from 'src/components/create-wallet';
 import { CardBody, CardContainer, CardItem } from 'src/components/evervault-card/evervault-card';
 import ImportWallet from 'src/components/import-wallet';
 import BalanceSlider from 'src/components/slider';
@@ -7,6 +8,7 @@ import BalanceSlider from 'src/components/slider';
 export default function Web3Page() {
   // @dev wallet collection
   const [isImportWalletModalOpen, setIsImportWalletModalOpen] = useState(false);
+  const [isCreateWalletModalOpen, setIsCreateWalletModalOpen] = useState(false);
   const [hasWallet, setHasWallet] = useState(false);
   const [wallet, setWallet] = useState();
 
@@ -38,12 +40,20 @@ export default function Web3Page() {
   }, []);
 
   return (
-    <Container className="bg-white p-4 rounded-lg">
+    <Container>
       {!hasWallet && (
         <ImportWallet
           setHasWallet={setHasWallet}
           open={isImportWalletModalOpen}
           setOpen={setIsImportWalletModalOpen}
+          setWallet={setWallet}
+        />
+      )}
+      {!hasWallet && (
+        <CreateWallet
+          setHasWallet={setHasWallet}
+          open={isCreateWalletModalOpen}
+          setOpen={setIsCreateWalletModalOpen}
           setWallet={setWallet}
         />
       )}
@@ -118,6 +128,7 @@ export default function Web3Page() {
                 <CardItem
                   translateZ={20}
                   as="button"
+                  onClick={() => setIsCreateWalletModalOpen(true)}
                   className="px-4 py-3 rounded-xl bg-black text-white text-sm font-semibold cursor-pointer"
                 >
                   Generate Wallet

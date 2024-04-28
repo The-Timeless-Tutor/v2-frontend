@@ -2,27 +2,26 @@ import { Fragment, useRef, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
 // import { ExclamationTriangleIcon } from '@heroicons/react/24/outline';
 import { ethers } from 'ethers';
-import './styles/style.css';
+// import './styles/style.css';
 import CryptoJS from 'crypto-js';
 
-export default function ImportWallet({ open, setOpen, setHasWallet, setWallet }) {
-  const [privateKey, setPrivateKey] = useState('');
+export default function CreateWallet({ open, setOpen, setHasWallet, setWallet }) {
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [isTermsAccepted, setIsTermAccepted] = useState(false);
   const cancelButtonRef = useRef(null);
 
   // Define a helper function to encrypt the private key
-  const encryptPrivateKey = (privateKey, encryptionKey) => {
+  const decryptPrivateKey = (privateKey, encryptionKey) => {
     const encryptedPrivateKey = CryptoJS.AES.encrypt(privateKey, encryptionKey).toString();
-    setHasWallet(true)
+    setHasWallet(true);
     return encryptedPrivateKey;
   };
 
-  const handleImportWalletUsingPrivateKey = () => {
-    if (isTermsAccepted && privateKey && password) {
-      let wallet = new ethers.Wallet(privateKey);
-
-      if (wallet?.address) {
+  const handleWalletCreate = () => {
+    let wallet = ethers.Wallet.createRandom();
+    
+    if (wallet?.address) {
         const encrypted = encryptPrivateKey(privateKey, password);
         setWallet(wallet)
         window.localStorage.setItem(import.meta.env.VITE_WEB3_WALLET, JSON.stringify(wallet))
@@ -33,9 +32,6 @@ export default function ImportWallet({ open, setOpen, setHasWallet, setWallet })
         setOpen(false)
         window.localStorage.setItem(import.meta.env.VITE_IS_WALLET_AUTHENTICATED, true)
       }
-    }else{
-      console.log("Message: Every field is required!")
-    }
   };
 
   return (
@@ -77,26 +73,9 @@ export default function ImportWallet({ open, setOpen, setHasWallet, setWallet })
                         as="h2"
                         className="text-xl mb-4 font-semibold leading-6 text-gray-900"
                       >
-                        💵 Import Account
+                        💵 Create Account
                       </Dialog.Title>
 
-                      <div>
-                        <label
-                          htmlFor="privateKey"
-                          className="block mb-2 text-sm font-semibold text-gray-900 mt-2"
-                        >
-                          Private Key
-                        </label>
-                        <input
-                          value={privateKey}
-                          onChange={(e) => setPrivateKey(e.target.value)}
-                          type="password"
-                          id="privateKey"
-                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                          placeholder="tv68bkkk985765...095"
-                          required
-                        />
-                      </div>
                       <div>
                         <label
                           htmlFor="password"
@@ -110,7 +89,24 @@ export default function ImportWallet({ open, setOpen, setHasWallet, setWallet })
                           type="password"
                           id="password"
                           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                          placeholder="Password"
+                          placeholder="S3cr3t@123"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label
+                          htmlFor="password"
+                          className="block mb-2 text-sm font-semibold text-gray-900 mt-2"
+                        >
+                          Confirm Password
+                        </label>
+                        <input
+                          value={confirmPassword}
+                          onChange={(e) => setConfirmPassword(e.target.value)}
+                          type="password"
+                          id="password"
+                          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                          placeholder="S3cr3t@123"
                           required
                         />
                       </div>
@@ -141,9 +137,9 @@ export default function ImportWallet({ open, setOpen, setHasWallet, setWallet })
                   <button
                     type="button"
                     className="inline-flex w-full justify-center rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 sm:ml-3 sm:w-auto"
-                    onClick={() => handleImportWalletUsingPrivateKey()}
+                    onClick={() => handleWalletCreate()}
                   >
-                    Import
+                    Create
                   </button>
                   <button
                     type="button"
