@@ -1,5 +1,8 @@
 import { Avatar, Container, Grid, Stack, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import { ethers } from 'ethers';
+import React, { useEffect, useState } from 'react';
+import TTTTokenABI from 'src/utils/TTTTokenABI.json';
+import SwapperABI from 'src/utils/SwapperABI.json';
 import CreateWallet from 'src/components/create-wallet';
 import { CardBody, CardContainer, CardItem } from 'src/components/evervault-card/evervault-card';
 import ImportWallet from 'src/components/import-wallet';
@@ -28,16 +31,69 @@ export default function Web3Page() {
   // @dev gas estimation
   const [gasInfo, setGasInfo] = useState();
 
+  // React.useEffect(() => {
+  //   fetch(
+  //     `https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=${
+  //       import.meta.env.VITE_ETHERSCAN_API_KEY
+  //     }`
+  //   )
+  //     .then((res) => res.json())
+  //     .then((res) => setGasInfo(res.result?.suggestBaseFee))
+  //     .catch((error) => console.log(error));
+  // }, []);
+
+  // State variables to hold various pieces of information
+  // const [signer, setSigner] = useState(null); // Signer object for signing transactions
+  // const [isLoading, setIsLoading] = useState(false); // Loading state for UI
+  const [tttInput, setTTTInput] = useState(1); // Input for TTT token
+  const [ethInput, setEthInput] = useState(0.001); // Input for ETH
+  const tokenAddress = '0x17A65c12a053Aa9f6EAb707684ecCD2204103B28'; // TTT token address
+  const ETHAddress = '0xd38E5c25935291fFD51C9d66C3B7384494bb099A'; // ETH token address
+  const swapperAddress = '0x1b0439C406308B52692CC0DF667874E606f0Dd7F'; // Swapper contract address
+  const [balance, setBalance] = useState(); // Token balance of the user
+  const [tokenContract, setTokenContract] = useState(null); // Contract instance for TTT token
+  const [isPurchasing, setIsPurchasing] = useState(false); // Purchasing state for UI
+
+  // Function to handle changes in the TTT input field
+  const handleTTTChange = (e) => {
+    setTTTInput(e.target.value); // Update TTT input based on user input
+    setEthInput(e.target.value * 0.001); // Update ETH input based on TTT value
+  };
+
+  // Function to handle changes in the ETH input field
+  const handleEthChange = (e) => {
+    setEthInput(e.target.value); // Update ETH input based on user input
+    setTTTInput(e.target.value / 0.001); // Update TTT input based on ETH value
+  };
+
+  // set balance
   React.useEffect(() => {
-    fetch(
-      `https://api.etherscan.io/api?module=gastracker&action=gasoracle&apikey=${
-        import.meta.env.VITE_ETHERSCAN_API_KEY
-      }`
-    )
-      .then((res) => res.json())
-      .then((res) => setGasInfo(res.result?.suggestBaseFee))
-      .catch((error) => console.log(error));
-  }, []);
+    if (wallet?.address) {
+      (async () => {
+        let _provider = ethers.getDefaultProvider('sepolia');
+        console.log(_provider);
+        // const signer = _provider.getSigner(wallet?.address);
+
+        const contract = new ethers.Contract(tokenAddress, TTTTokenABI, _provider); // Create contract instance
+
+        fetch(`https://api-sepolia.etherscan.io/api
+        ?module=account
+        &action=tokenbalance
+        &contractaddress=${ETHAddress}
+        &address=${wallet?.address}
+        &tag=latest&apikey=${import.meta.env.VITE_ETHERSCAN_API_KEY}`)
+          .then((res) => res.json())
+          .then((res) => console.log(res))
+          .catch((error) => console.log(error));
+
+        const ethContract = new ethers.Contract(ETHAddress, TTTTokenABI, _provider); // Create contract instance
+        const _balance = await contract.balanceOf(wallet?.address); // Get token balance
+        const _ethBalance = await ethContract.balanceOf(wallet?.address); // Get token balance
+        console.log(_ethBalance);
+        setBalance(ethers.formatUnits(_balance, 18));
+      })();
+    }
+  }, [wallet]);
 
   return (
     <Container>
@@ -74,9 +130,6 @@ export default function Web3Page() {
               <CardItem translateZ="50" className="text-xl font-bold text-neutral-600">
                 💵 Import Wallet
               </CardItem>
-              <CardItem as="p" translateZ="60" className="text-neutral-500 text-sm max-w-sm mt-2 ">
-                Hover over this card to unleash the power of CSS perspective
-              </CardItem>
               <CardItem translateZ="100" className="w-full mt-4">
                 <img
                   src="https://images.unsplash.com/photo-1604079628040-94301bb21b91?q=80&w=2574&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
@@ -111,9 +164,6 @@ export default function Web3Page() {
             <CardBody className="bg-gray-50 relative group/card border-black/[0.1] w-[100%] h-auto rounded-xl p-6 border  ">
               <CardItem translateZ="50" className="text-xl font-bold text-neutral-600">
                 🪛 Create Wallet
-              </CardItem>
-              <CardItem as="p" translateZ="60" className="text-neutral-500 text-sm max-w-sm mt-2 ">
-                Hover over this card to unleash the power of CSS perspective
               </CardItem>
               <CardItem translateZ="100" className="w-full mt-4">
                 <img
@@ -154,7 +204,7 @@ export default function Web3Page() {
             <Typography variant="h4" sx={{ color: 'text.secondary' }}>
               📜 TTT Swap
             </Typography>
-            <div className="flex items-center gap-2 bg-white p-4">
+            <div className="flex items-center gap-2 p-4">
               <Avatar
                 src="https://avatars.githubusercontent.com/u/135448616?s=64&v=4"
                 alt="photoURL"
@@ -197,7 +247,7 @@ export default function Web3Page() {
             </div>
           </div>
 
-          <div className="max-w-lg mx-auto p-4">
+          <div className="max-w-lg mx-auto p-4 bg-white rounded-xl mt-2">
             <div className="flex flex-col gap-1 mb-4 px-4 py-2 rounded-xl bg-[#f9f8f8] focus:outline-none focus:ring-2 focus:ring-blue-500">
               <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                 You Pay
@@ -206,8 +256,8 @@ export default function Web3Page() {
                 <input
                   id="fromAmount"
                   type="number"
-                  // value={fromAmount}
-                  // onChange={(e) => setFromAmount(e.target.value)}
+                  value={ethInput}
+                  onChange={(e) => handleEthChange(e)}
                   className="w-[80%] focus:outline-none focus:ring-0 bg-transparent text-4xl"
                   placeholder="0"
                 />
@@ -240,8 +290,8 @@ export default function Web3Page() {
                 <input
                   id="toAmount"
                   type="number"
-                  // value={toAmount}
-                  // onChange={(e) => setToAmount(e.target.value)}
+                  value={tttInput}
+                  onChange={(e) => handleTTTChange(e)}
                   className="w-[80%] focus:outline-none focus:ring-0 bg-transparent text-4xl"
                   placeholder="0"
                 />
@@ -260,11 +310,25 @@ export default function Web3Page() {
                 <Typography variant="body2" sx={{ color: 'text.secondary' }}>
                   $12
                 </Typography>
-                <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-                  Balance: 0
+                <Typography
+                  variant="div"
+                  sx={{ color: 'text.secondary' }}
+                  className="flex items-center"
+                >
+                  Balance:{' '}
+                  {balance ? (
+                    Number.parseFloat(balance).toFixed(2)
+                  ) : (
+                    <div role="status" className="max-w-sm animate-pulse">
+                      <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-8 gap-2"></div>
+                      <span className="sr-only">Loading...</span>
+                    </div>
+                  )}
                 </Typography>
               </div>
             </div>
+
+            <div className="text-right">Add TTT to Wallet</div>
 
             <BalanceSlider />
 

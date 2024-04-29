@@ -12,7 +12,7 @@ export default function CreateWallet({ open, setOpen, setHasWallet, setWallet })
   const cancelButtonRef = useRef(null);
 
   // Define a helper function to encrypt the private key
-  const decryptPrivateKey = (privateKey, encryptionKey) => {
+  const encryptPrivateKey = (privateKey, encryptionKey) => {
     const encryptedPrivateKey = CryptoJS.AES.encrypt(privateKey, encryptionKey).toString();
     setHasWallet(true);
     return encryptedPrivateKey;
@@ -20,18 +20,18 @@ export default function CreateWallet({ open, setOpen, setHasWallet, setWallet })
 
   const handleWalletCreate = () => {
     let wallet = ethers.Wallet.createRandom();
-    
+
     if (wallet?.address) {
-        const encrypted = encryptPrivateKey(privateKey, password);
-        setWallet(wallet)
-        window.localStorage.setItem(import.meta.env.VITE_WEB3_WALLET, JSON.stringify(wallet))
-        window.localStorage.setItem(import.meta.env.VITE_ENCRYPTED_PRIVATE_KEY_LOCATION, encrypted)
-        setPrivateKey("")
-        setPassword("")
-        setIsTermAccepted(false)
-        setOpen(false)
-        window.localStorage.setItem(import.meta.env.VITE_IS_WALLET_AUTHENTICATED, true)
-      }
+      const encrypted = encryptPrivateKey(wallet?.privateKey, password);
+      setWallet(wallet);
+      window.localStorage.setItem(import.meta.env.VITE_WEB3_WALLET, JSON.stringify(wallet));
+      window.localStorage.setItem(import.meta.env.VITE_ENCRYPTED_PRIVATE_KEY_LOCATION, encrypted);
+      setPrivateKey('');
+      setPassword('');
+      setIsTermAccepted(false);
+      setOpen(false);
+      window.localStorage.setItem(import.meta.env.VITE_IS_WALLET_AUTHENTICATED, true);
+    }
   };
 
   return (
