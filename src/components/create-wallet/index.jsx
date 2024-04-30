@@ -26,8 +26,6 @@ export default function CreateWallet({ open, setOpen, setHasWallet, setWallet })
       setWallet(wallet);
       window.localStorage.setItem(import.meta.env.VITE_WEB3_WALLET, JSON.stringify(wallet));
       window.localStorage.setItem(import.meta.env.VITE_ENCRYPTED_PRIVATE_KEY_LOCATION, encrypted);
-      setPrivateKey('');
-      setPassword('');
       setIsTermAccepted(false);
       setOpen(false);
       window.localStorage.setItem(import.meta.env.VITE_IS_WALLET_AUTHENTICATED, true);

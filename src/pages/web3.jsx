@@ -6,7 +6,7 @@ export default function Web3Page() {
   return (
     <>
       <Helmet>
-        <title> Web3 | Minimal UI </title>
+        <title> Web3 | The Timeless Tutor </title>
       </Helmet>
 
       <Web3View />
