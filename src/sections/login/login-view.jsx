@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Form, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -18,30 +18,55 @@ import { bgGradient } from 'src/theme/css';
 
 import { useRouter } from 'src/routes/hooks';
 import { useAuth } from 'src/contexts/AuthContext';
-
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
 
-import { loginWithEmail } from './apiLogin';
+import { useToast } from '@/components/ui/use-toast';
+
+import { useLogin } from './useLogin';
 
 export default function LoginView() {
   const theme = useTheme();
-  const { setIsAuthenticated } = useAuth(); // setIsAuthenticated to set authenticated state once login is successful
+
   const router = useRouter();
   const {
     register,
     handleSubmit,
-    setError,
-    clearErrors,
     formState: { errors },
+    reset,
   } = useForm();
+  const { toast } = useToast();
+  const { login, isLoading: isLoginLoading } = useLogin();
+  const { isLoading: isAuthLoading, isAuthenticated } = useAuth();
+
+  const isLoading = isLoginLoading || isAuthLoading;
 
   const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = (formData) => {
     if (!formData) return;
     const { email, password } = formData;
-    loginWithEmail(email, password, setIsAuthenticated);
+    login(
+      { email, password },
+      {
+        onSuccess: () => {
+          toast({
+            status: 'success',
+            description: 'Successfully logged in!',
+          });
+        },
+        onError: (error) => {
+          toast({
+            title: 'Error',
+            description: error.message,
+            variant: 'destructive',
+          });
+        },
+        onSettled: () => {
+          reset();
+        },
+      }
+    );
   };
 
   const handleSignupClick = () => {
@@ -57,8 +82,9 @@ export default function LoginView() {
           {...register('email', {
             required: 'Email is required',
           })}
+          disabled={isLoading}
         />
-        {errors.email && <p>{errors?.email?.message}</p>}
+        {errors.email && <p className="text-sm text-red-500">{errors?.email?.message}</p>}
 
         <TextField
           name="password"
@@ -76,6 +102,7 @@ export default function LoginView() {
           {...register('password', {
             required: 'Password is required',
           })}
+          disabled={isLoading}
         />
         {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
       </Stack>
@@ -92,6 +119,7 @@ export default function LoginView() {
         type="submit"
         variant="contained"
         color="inherit"
+        loading={isLoading}
         // onClick={handleClick}
       >
         Login

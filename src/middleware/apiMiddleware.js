@@ -1,4 +1,3 @@
-import { toast } from 'react-toastify';
 import { getSession, refreshTokens, isTokenExpired } from '../utils/authUtils';
 
 export const apiMiddleware = async (endpoint, options = {}) => {
@@ -33,7 +32,6 @@ export const apiMiddleware = async (endpoint, options = {}) => {
   if (response.status === 401) {
     const success = await refreshAccessToken(backendUrl);
     if (!success) {
-      toast.error('Failed to login. Please try again.');
       throw new Error('Failed to refresh token on retry. Please log in again.');
     }
 

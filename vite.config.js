@@ -3,9 +3,7 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react-swc';
 
 export default defineConfig({
-  plugins: [
-    react(),
-  ],
+  plugins: [react()],
   resolve: {
     alias: [
       {
@@ -15,6 +13,11 @@ export default defineConfig({
       {
         find: /^src(.+)/,
         replacement: path.join(process.cwd(), 'src/$1'),
+      },
+      // Allows for `import '@/*'` to work according to shadcn docs
+      {
+        find: /^@\//,
+        replacement: path.join(process.cwd(), 'src/'),
       },
     ],
   },

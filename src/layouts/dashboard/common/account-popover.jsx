@@ -11,7 +11,7 @@ import IconButton from '@mui/material/IconButton';
 
 import { account } from 'src/_mock/account';
 import { useAuth } from 'src/contexts/AuthContext';
-import { toast } from 'react-toastify';
+import { useToast } from 'src/components/ui/use-toast';
 
 const MENU_OPTIONS = [
   {
@@ -31,6 +31,7 @@ const MENU_OPTIONS = [
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
   const { logout } = useAuth();
+  const { toast } = useToast();
 
   const handleOpen = (event) => {
     setOpen(event.currentTarget);
@@ -43,7 +44,9 @@ export default function AccountPopover() {
   const handleLogout = () => {
     setOpen(null);
     logout();
-    toast.success('Logged out successfully!');
+    toast({
+      description: 'Successfully logged out!',
+    });
   };
 
   return (
