@@ -7,12 +7,15 @@ import DashboardLayout from 'src/layouts/dashboard';
 
 import PrivateRoutes from './private-routes';
 
+
+
 export const IndexPage = lazy(() => import('src/pages/app'));
 export const BlogPage = lazy(() => import('src/pages/blog'));
 export const UserPage = lazy(() => import('src/pages/user'));
 export const LoginPage = lazy(() => import('src/pages/login'));
 export const RegisterPage = lazy(() => import('src/pages/register'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
+export const OAuthCallback = lazy(() => import('src/sections/login/oauth-callback'));
 
 export default function Router() {
   const routes = useRoutes([
@@ -49,6 +52,10 @@ export default function Router() {
     {
       path: '*',
       element: <Navigate to="/404" replace />,
+    },
+    {
+      path: 'oauth-callback', // Define the OAuth callback route
+      element: <OAuthCallback />,
     },
   ]);
 
