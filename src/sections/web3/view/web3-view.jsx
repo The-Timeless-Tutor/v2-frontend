@@ -137,7 +137,7 @@ export default function Web3Page() {
             </div>
           </div>
 
-          <DexForm />
+          <DexForm wallet={wallet}/>
         </div>
       )}
     </Container>

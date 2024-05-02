@@ -1,29 +1,27 @@
 import { Typography } from '@mui/material';
-import { ethers } from 'ethers';
 import React, { useEffect, useState } from 'react';
-import TTTTokenABI from 'src/utils/TTTTokenABI.json';
-
-const tokenAddress = '0x17A65c12a053Aa9f6EAb707684ecCD2204103B28'; // TTT token address
+import Web3 from 'web3';
 
 export default function GetTTTBalance({ wallet }) {
   const [tttBalance, setTTTBalance] = useState(null);
 
+  const tokenContract = "0x17A65c12a053Aa9f6EAb707684ecCD2204103B28";
+
   useEffect(() => {
     (async () => {
       try {
-        const provider = new ethers.providers.InfuraProvider('sepolia'); // Or other provider
-        const contract = new ethers.Contract(tokenAddress, TTTTokenABI, provider); // Create contract instance
+        const web3 = new Web3(
+          new Web3.providers.HttpProvider(
+            "https://mainnet.infura.io/v3/<YOUR_API_KEY>",
+          ),
+        );
 
-        const balance = await contract.balanceOf(wallet?.address); // Get token balance
-        const formattedBalance = ethers.utils.formatUnits(balance, 18); // Format the balance with appropriate decimals
-
-        console.log('Balance:', formattedBalance); // Debug output
-        setTTTBalance(formattedBalance); // Set the formatted balance to state
+       
       } catch (error) {
-        console.error('Error fetching balance:', error); // Improved error handling
+        console.error('Error fetching balance:', error);
       }
     })();
-  }, [wallet]); // Add wallet to dependency array to ensure re-render on wallet change
+  }, []); // Add wallet to dependency array to ensure re-render on wallet change
 
   return (
     <Typography variant="div" sx={{ color: 'text.secondary' }} className="flex items-center">

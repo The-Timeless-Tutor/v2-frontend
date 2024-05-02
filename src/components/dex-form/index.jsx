@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import GetTTTBalance from '../web3-balance';
 import BalanceSlider from '../slider';
 
-export default function DexForm() {
+export default function DexForm({wallet}) {
   const [tttInput, setTTTInput] = useState(1); // Input for TTT token
   const [ethInput, setEthInput] = useState(0.001); // Input for ETH
 
@@ -95,7 +95,7 @@ export default function DexForm() {
           <Typography variant="body2" sx={{ color: 'text.secondary' }}>
             $12
           </Typography>
-          <GetTTTBalance/>
+          <GetTTTBalance wallet={wallet}/>
         </div>
       </div>
 
