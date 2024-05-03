@@ -18,6 +18,7 @@ import { account } from 'src/_mock/account';
 
 import Logo from 'src/components/logo';
 import Scrollbar from 'src/components/scrollbar';
+import { useAuth } from 'src/contexts/AuthContext';
 
 import { NAV } from './config-layout';
 import navConfig from './config-navigation';
@@ -25,6 +26,7 @@ import navConfig from './config-navigation';
 
 export default function Nav({ openNav, onCloseNav }) {
   const pathname = usePathname();
+  const { user } = useAuth();
 
   const upLg = useResponsive('up', 'lg');
 
@@ -51,12 +53,15 @@ export default function Nav({ openNav, onCloseNav }) {
       <Avatar src={account.photoURL} alt="photoURL" />
 
       <Box sx={{ ml: 1 }}>
-        <Typography variant="subtitle2">Lexy</Typography>
-        {/* <Typography variant="subtitle2">{account.displayName}</Typography> */}
+        <Typography variant="subtitle2">
+          {user && user.username ? user.username : "Lexy"}
+        </Typography>
+
 
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          not.so.lexy@gmail.com
+          {user && user.email ? user.email : "not.so.lexy@gmail.com"}
         </Typography>
+
       </Box>
     </Box>
   );

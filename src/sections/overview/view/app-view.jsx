@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 
 // import Iconify from 'src/components/iconify';
 import { products } from 'src/_mock/products';
+import { useAuth } from 'src/contexts/AuthContext';
 
 // import AppTasks from '../app-tasks';
 import AppNewsUpdate from '../app-news-update';
@@ -30,10 +31,13 @@ import { Button } from '@mui/material';
 // ----------------------------------------------------------------------
 
 export default function AppView() {
+
+  const { user } = useAuth();
+
   return (
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 3 }}>
-        Hi Lexy, Welcome back 👋
+        Hi {user && user.username ? user.username : "Lexy"} !, Welcome back 👋
       </Typography>
 
       <Grid container spacing={3}>
@@ -81,12 +85,12 @@ export default function AppView() {
         </Grid>
       </Grid>
 
-      <div style={{display: 'flex', alignItems:"center", justifyContent: "space-between"}}>
-      <Typography variant="h4" sx={{ mb: 3, mt: 5 }}>
-        🏛️ Recommended Rooms
-      </Typography>
+      <div style={{ display: 'flex', alignItems: "center", justifyContent: "space-between" }}>
+        <Typography variant="h4" sx={{ mb: 3, mt: 5 }}>
+          🏛️ Recommended Rooms
+        </Typography>
 
-      <Button variant='text'>+ Explore</Button>
+        <Button variant='text'>+ Explore</Button>
       </div>
 
       <Grid container spacing={3}>

@@ -16,6 +16,7 @@ export const LoginPage = lazy(() => import('src/pages/login'));
 export const RegisterPage = lazy(() => import('src/pages/register'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 export const OAuthCallback = lazy(() => import('src/sections/login/oauth-callback'));
+export const WOAuthCallback = lazy(() => import('src/sections/login/worldcoin-oauth-callback'));
 
 export default function Router() {
   const routes = useRoutes([
@@ -56,6 +57,10 @@ export default function Router() {
     {
       path: 'oauth-callback', // Define the OAuth callback route
       element: <OAuthCallback />,
+    },
+    {
+      path: 'worldcoin-oauth-callback', // Define the OAuth callback route
+      element: <WOAuthCallback />,
     },
   ]);
 

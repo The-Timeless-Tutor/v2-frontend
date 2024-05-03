@@ -40,6 +40,15 @@ export default function LoginView() {
     window.location.href = authUrl;
   };
 
+  const initiateWorldcoinOAuthFlow = (e) => {
+    e.preventDefault();
+    const backendUrl = import.meta.env.VITE_BACKEND_URL;
+    const redirectUri = `${window.location.origin}/worldcoin-oauth-callback`; // Adjust the redirect URI as necessary
+    const authUrl = `${backendUrl}registration/signInWC?redirect_uri=${encodeURIComponent(redirectUri)}`;
+
+    window.location.href = authUrl;
+  };
+
   const {
     register,
     handleSubmit,
@@ -168,6 +177,7 @@ export default function LoginView() {
               color="inherit"
               variant="outlined"
               sx={{ borderColor: alpha(theme.palette.grey[500], 0.16) }}
+              onClick={initiateWorldcoinOAuthFlow} // Call initiateOAuthFlow function here
             >
               <Iconify icon="arcticons:worldcoin" color="#1877F2" />
             </Button>

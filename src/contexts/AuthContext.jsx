@@ -10,12 +10,16 @@ function AuthProvider({ children }) {
   const backendUrl =
     import.meta.env.VITE_BACKEND_URL || 'https://backend-service-rojjrgeqna-ue.a.run.app/';
   const [user, setUser] = useState(null);
+
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     // Initialize isAuthenticated based on local storage to persist login state
     const sessionData = getSession();
     return sessionData ? !isTokenExpired(sessionData.accessTokenExpiry) : false;
   });
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoadingAuth, setIsLoadingAuth] = useState(true);
+  const [isLoadingUser, setIsLoadingUser] = useState(true);
+
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -68,24 +72,43 @@ function AuthProvider({ children }) {
         setIsAuthenticated(false);
         setError(err.message);
       } finally {
-        if (isMounted) setIsLoading(false);
+        if (isMounted) setIsLoadingAuth(false);
       }
     }
 
     authenticate();
 
-    // get user details
-    const fetchUserDetails = async () => {
-      const userDetails = await getUserDetails();
-      setUser(userDetails.data);
-    };
-
-    fetchUserDetails();
 
     return () => {
       isMounted = false;
     };
   }, [backendUrl]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      const fetchUserDetails = async () => {
+        setIsLoadingUser(true);
+        try {
+          const userDetails = await getUserDetails();
+          if (userDetails.data !== null) {
+            setUser(userDetails.data);
+          } else {
+            console.error("Error: User data is null");
+          }
+        } catch (error) {
+          console.error("Error fetching user details:", error);
+        } finally {
+          setIsLoadingUser(false);
+        }
+      };
+
+      fetchUserDetails();
+    }
+  }, [isAuthenticated]);
+
+  useEffect(() => {
+    setIsLoading(isLoadingAuth || isLoadingUser);
+  }, [isLoadingAuth, isLoadingUser]);
 
   const logout = () => {
     setIsLoading(true);
