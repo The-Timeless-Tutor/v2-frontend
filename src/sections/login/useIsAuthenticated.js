@@ -1,4 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
+
 import { isAuthenticated as isAuthenticatedApi } from './apiAuth';
 
 export function useIsAuthenticated() {

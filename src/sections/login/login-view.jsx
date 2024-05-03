@@ -17,56 +17,31 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { bgGradient } from 'src/theme/css';
 
 import { useRouter } from 'src/routes/hooks';
-import { useAuth } from 'src/contexts/AuthContext';
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
-
-import { useToast } from '@/components/ui/use-toast';
 
 import { useLogin } from './useLogin';
 
 export default function LoginView() {
   const theme = useTheme();
 
+  const { login, isLoading } = useLogin();
+  const [showPassword, setShowPassword] = useState(false);
+
   const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset,
   } = useForm();
-  const { toast } = useToast();
-  const { login, isLoading: isLoginLoading } = useLogin();
-  const { isLoading: isAuthLoading, isAuthenticated } = useAuth();
-
-  const isLoading = isLoginLoading || isAuthLoading;
-
-  const [showPassword, setShowPassword] = useState(false);
 
   const onSubmit = (formData) => {
     if (!formData) return;
-    const { email, password } = formData;
-    login(
-      { email, password },
-      {
-        onSuccess: () => {
-          toast({
-            status: 'success',
-            description: 'Successfully logged in!',
-          });
-        },
-        onError: (error) => {
-          toast({
-            title: 'Error',
-            description: error.message,
-            variant: 'destructive',
-          });
-        },
-        onSettled: () => {
-          reset();
-        },
-      }
-    );
+    login(formData);
+  };
+
+  const handleForgotPasswordClick = () => {
+    router.push('/forgot-password');
   };
 
   const handleSignupClick = () => {
@@ -77,14 +52,16 @@ export default function LoginView() {
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
         <TextField
+          type="email"
           name="email"
           label="Email address"
           {...register('email', {
             required: 'Email is required',
           })}
+          error={!!errors.email}
+          helperText={errors?.email?.message}
           disabled={isLoading}
         />
-        {errors.email && <p className="text-sm text-red-500">{errors?.email?.message}</p>}
 
         <TextField
           name="password"
@@ -102,13 +79,19 @@ export default function LoginView() {
           {...register('password', {
             required: 'Password is required',
           })}
+          error={!!errors.password}
+          helperText={errors?.password?.message}
           disabled={isLoading}
         />
-        {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
       </Stack>
 
       <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{ my: 3 }}>
-        <Link variant="subtitle2" underline="hover">
+        <Link
+          variant="subtitle2"
+          underline="hover"
+          sx={{ ml: 0.5, cursor: 'pointer' }}
+          onClick={handleForgotPasswordClick}
+        >
           Forgot password?
         </Link>
       </Stack>

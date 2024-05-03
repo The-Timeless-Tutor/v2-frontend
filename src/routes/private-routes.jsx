@@ -6,8 +6,8 @@ const PrivateRoutes = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) {
-    // TODO: add loading indicator
-    return <div>Loading...</div>;
+    // TODO: add loading indicator ->
+    return <div>Loading private routes...</div>;
   }
 
   if (!isAuthenticated) {
