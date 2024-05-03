@@ -12,6 +12,7 @@ export const BlogPage = lazy(() => import('src/pages/blog'));
 export const UserPage = lazy(() => import('src/pages/user'));
 export const LoginPage = lazy(() => import('src/pages/login'));
 export const RegisterPage = lazy(() => import('src/pages/register'));
+export const ForgotPasswordPage = lazy(() => import('src/pages/forgot-password'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
 
 export default function Router() {
@@ -41,6 +42,10 @@ export default function Router() {
     {
       path: 'register',
       element: <RegisterPage />,
+    },
+    {
+      path: 'forgot-password',
+      element: <ForgotPasswordPage />,
     },
     {
       path: '404',
