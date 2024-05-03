@@ -7,6 +7,8 @@ import DashboardLayout from 'src/layouts/dashboard';
 
 import PrivateRoutes from './private-routes';
 
+export const OAuthCallback = lazy(() => import('@/sections/login/oauth-callback'));
+
 export const IndexPage = lazy(() => import('src/pages/app'));
 export const BlogPage = lazy(() => import('src/pages/blog'));
 export const UserPage = lazy(() => import('src/pages/user'));
@@ -46,6 +48,10 @@ export default function Router() {
     {
       path: 'forgot-password',
       element: <ForgotPasswordPage />,
+    },
+    {
+      path: 'oauth-callback',
+      element: <OAuthCallback />,
     },
     {
       path: '404',

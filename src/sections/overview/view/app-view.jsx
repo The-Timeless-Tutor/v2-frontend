@@ -22,6 +22,7 @@ import AppOrderTimeline from '../app-order-timeline';
 
 import ProductCard from '../../products/product-card';
 import { Button } from '@mui/material';
+import { useGetUser } from '@/sections/login/useGetUser';
 
 // import ProductSort from '../product-sort';
 // import ProductFilters from '../product-filters';
@@ -30,10 +31,11 @@ import { Button } from '@mui/material';
 // ----------------------------------------------------------------------
 
 export default function AppView() {
+  const { user, isLoading } = useGetUser();
   return (
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 3 }}>
-        Hi Lexy, Welcome back 👋
+        Hi {(!isLoading && user?.name) || user?.email}, Welcome back 👋
       </Typography>
 
       <Grid container spacing={3}>
@@ -81,12 +83,12 @@ export default function AppView() {
         </Grid>
       </Grid>
 
-      <div style={{display: 'flex', alignItems:"center", justifyContent: "space-between"}}>
-      <Typography variant="h4" sx={{ mb: 3, mt: 5 }}>
-        🏛️ Recommended Rooms
-      </Typography>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Typography variant="h4" sx={{ mb: 3, mt: 5 }}>
+          🏛️ Recommended Rooms
+        </Typography>
 
-      <Button variant='text'>+ Explore</Button>
+        <Button variant="text">+ Explore</Button>
       </div>
 
       <Grid container spacing={3}>

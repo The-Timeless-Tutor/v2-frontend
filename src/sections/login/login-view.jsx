@@ -24,7 +24,6 @@ import { useLogin } from './useLogin';
 
 export default function LoginView() {
   const theme = useTheme();
-
   const { login, isLoading } = useLogin();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -46,6 +45,16 @@ export default function LoginView() {
 
   const handleSignupClick = () => {
     router.push('/register');
+  };
+
+  const handleGoogleClick = () => {
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    const redirectUri = `${window.location.origin}/oauth-callback`;
+    const scope = encodeURIComponent('openid email profile');
+    const responseType = 'code';
+    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}&access_type=offline&prompt=consent`;
+
+    window.location.href = authUrl;
   };
 
   const renderForm = (
@@ -156,6 +165,7 @@ export default function LoginView() {
               color="inherit"
               variant="outlined"
               sx={{ borderColor: alpha(theme.palette.grey[500], 0.16) }}
+              onClick={handleGoogleClick}
             >
               <Iconify icon="eva:google-fill" color="#DF3E30" />
             </Button>
