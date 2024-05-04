@@ -1,10 +1,10 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+import { useToast } from '@/components/ui/use-toast';
 import { setSession, clearSession } from 'src/utils/authUtils';
 
 import { useAuth } from 'src/contexts/AuthContext';
-import { useToast } from '@/components/ui/use-toast';
 import { useRouter } from '@/routes/hooks';
 import { apiMiddleware } from '@/middleware/apiMiddleware';
 
