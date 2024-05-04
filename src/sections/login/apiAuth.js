@@ -1,15 +1,14 @@
-import { backendUrl } from 'src/utils/constant';
-import { getSession, refreshTokens, isTokenExpired } from 'src/utils/authUtils';
-
-import { apiMiddleware } from 'src/middleware/apiMiddleware';
+import { backendUrl } from "src/utils/constant";
+import { getSession, refreshTokens, isTokenExpired } from "src/utils/authUtils";
+import { apiMiddleware } from "src/middleware/apiMiddleware";
 
 // Login with email and password
 export const login = async (email, password) => {
   try {
     const response = await apiMiddleware(`api/login`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ login: email, password }),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ login: email, password })
     });
 
     const data = await response.json();
@@ -26,10 +25,10 @@ export const login = async (email, password) => {
 export const getUser = async () => {
   try {
     const response = await apiMiddleware(`api/user`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-      },
+        "Content-Type": "application/json"
+      }
     });
     if (!response.ok) {
       throw new Error(data.message);
@@ -49,10 +48,10 @@ export const isAuthenticated = async () => {
   // check if user is authenticated
   try {
     const response = await apiMiddleware(`api/is_authenticated`, {
-      method: 'GET',
+      method: "GET",
       headers: {
-        'Content-Type': 'application/json',
-      },
+        "Content-Type": "application/json"
+      }
     });
     if (response.ok) {
       return true;
@@ -75,11 +74,11 @@ export const isAuthenticated = async () => {
 export const isTokenVerification = async (resetToken) => {
   try {
     const response = await apiMiddleware(`${backendUrl}/api/validate_token`, {
-      method: 'POST',
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json"
       },
-      body: JSON.stringify({ token: resetToken }),
+      body: JSON.stringify({ token: resetToken })
     });
 
     // return true if token is valid
@@ -88,7 +87,7 @@ export const isTokenVerification = async (resetToken) => {
     }
 
     if (response.status === 401) {
-      throw new Error('Invalid token. Please try again.');
+      throw new Error("Invalid token. Please try again.");
     }
   } catch (error) {
     throw new Error(error.message);
