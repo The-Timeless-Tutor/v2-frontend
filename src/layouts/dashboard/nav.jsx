@@ -23,15 +23,12 @@ import { NAV } from './config-layout';
 import navConfig from './config-navigation';
 
 import { useGetUser } from '@/sections/login/useGetUser';
-import { Button } from '@mui/material';
-import { toast } from '@/components/ui/use-toast';
 
 export default function Nav({ openNav, onCloseNav }) {
   const pathname = usePathname();
 
   const upLg = useResponsive('up', 'lg');
   const { user, isLoading } = useGetUser();
-  const { email, username } = user || {};
 
   useEffect(() => {
     if (openNav) {
@@ -57,27 +54,17 @@ export default function Nav({ openNav, onCloseNav }) {
 
       <Box sx={{ ml: 1 }}>
         {/* <Typography variant="subtitle2">Lexy</Typography> */}
-        <Typography variant="subtitle2">{account.displayName}</Typography>
+        <Typography variant="subtitle2">{(!isLoading && user?.name) || user?.email}</Typography>
 
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {account.email}
+          {user?.email}
         </Typography>
       </Box>
     </Box>
   );
 
-  const handleUserClick = () => {
-    toast({
-      title: 'display user details',
-      description: `email: ${email}, username: ${username}, `,
-    });
-  };
-
   const renderMenu = (
     <Stack component="nav" spacing={0.5} sx={{ px: 2 }}>
-      <Button sx={{ ml: 'auto' }} onClick={handleUserClick}>
-        display user details
-      </Button>
       {navConfig.map((item) => (
         <NavItem key={item.title} item={item} />
       ))}
