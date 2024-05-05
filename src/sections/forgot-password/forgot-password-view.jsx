@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import Stack from '@mui/material/Stack';
+import Divider from '@mui/material/Divider';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import LoadingButton from '@mui/lab/LoadingButton';
@@ -50,7 +51,7 @@ export default function ForgotPasswordView() {
         />
       </Stack>
 
-      <Typography sx={{ mt: 2, display: 'block' }} />
+      <Divider sx={{ my: 2 }} />
 
       <LoadingButton
         fullWidth
