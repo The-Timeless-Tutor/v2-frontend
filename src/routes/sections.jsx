@@ -6,6 +6,8 @@ import RoomsPage from 'src/pages/room';
 import DashboardLayout from 'src/layouts/dashboard';
 
 import PrivateRoutes from './private-routes';
+import FullPageSpinner from '@/components/ui/spinner';
+import SystemDownMessage from '@/components/ui/system-down';
 
 export const OAuthCallback = lazy(() => import('@/sections/login/oauth-callback'));
 
@@ -23,7 +25,7 @@ export default function Router() {
       element: (
         <DashboardLayout>
           <PrivateRoutes>
-            <Suspense>
+            <Suspense fallback={<FullPageSpinner />}>
               <Outlet />
             </Suspense>
           </PrivateRoutes>
@@ -34,33 +36,37 @@ export default function Router() {
         { path: 'user', element: <UserPage /> },
         { path: 'rooms', element: <RoomsPage /> },
         { path: 'blog', element: <BlogPage /> },
-        { path: 'web3', element: <Web3Page /> },
-      ],
+        { path: 'web3', element: <Web3Page /> }
+      ]
     },
     {
       path: 'login',
-      element: <LoginPage />,
+      element: <LoginPage />
     },
     {
       path: 'register',
-      element: <RegisterPage />,
+      element: <RegisterPage />
     },
     {
       path: 'forgot-password',
-      element: <ForgotPasswordPage />,
+      element: <ForgotPasswordPage />
     },
     {
       path: 'oauth-callback',
-      element: <OAuthCallback />,
+      element: <OAuthCallback />
     },
     {
       path: '404',
-      element: <Page404 />,
+      element: <Page404 />
     },
     {
       path: '*',
-      element: <Navigate to="/404" replace />,
+      element: <Navigate to="/404" replace />
     },
+    {
+      path: 'system-down',
+      element: <SystemDownMessage />
+    }
   ]);
 
   return routes;
