@@ -12,16 +12,16 @@ import { FaUniversity } from "react-icons/fa";
 
 const Categories = () => {
   return (
-    <div className="w-full bg-[#F0FBF7] py-24">
-      <div className="md:max-w-[1480px] m-auto max-w-[600px]  px-4 md:px-0">
+    <div className="w-full bg-[#f0f0f0] py-8 px-2 md:py-24 md:px-12 rounded-3xl shadow-lg">
+      <div className="md:max-w-[1480px] m-auto max-w-[600px]  px-4 md:px-0 text-center">
         <h1 className="md:leading-[72px] text-3xl font-bold">
-          Most <span className="text-[#20B486]">Popular Categories</span>
+          Most <span className="text-brand">Popular Categories</span>
         </h1>
         <p className="text-lg text-gray-600">
           Various versions have evolved over the years, sometimes by accident.
         </p>
 
-        <div className="grid lg:grid-cols-4 grid-cols-2 py-12 md:gap-4 gap-1">
+        <div className="grid lg:grid-cols-4 grid-cols-2 md:py-12 py-6 md:gap-6 gap-3">
           <CategoryCard icons={<BsVectorPen size={30} />} title={"Design"} />
           <CategoryCard icons={<TiHtml5 size={30} />} title={"Development"} />
           <CategoryCard icons={<TbMicrophone2 size={30} />} title={"Marketing"} />

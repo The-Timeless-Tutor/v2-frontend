@@ -12,7 +12,7 @@ const FeedbackCard = () => {
             <p>UI-UX Designer</p>
           </div>
         </div>
-        <img className="h-8" src={quotationMark} />
+        {/* <img className="h-8 text-brand" src={quotationMark} /> */}
       </div>
 
       <div className="py-8">

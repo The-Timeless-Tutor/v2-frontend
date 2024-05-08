@@ -1,7 +1,7 @@
 import React from "react";
 import Card from "./card";
 import Slider from "react-slick";
-import { courses } from "../_mock/Courses";
+import { courses } from "../_mock/courses";
 
 const Courses = () => {
   var settings = {

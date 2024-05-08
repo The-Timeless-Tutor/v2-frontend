@@ -7,7 +7,8 @@ import {
   Categories,
   Feedback,
   CTA,
-  Footer
+  Footer,
+  Features
 } from "../landing-page";
 
 function LandingHome() {
@@ -16,8 +17,9 @@ function LandingHome() {
       <Navbar />
       <div className="flex-1">
         <Hero />
-        <Companies />
-        <Courses />
+        <Features />
+        {/* <Companies /> */}
+        {/* <Courses /> */}
         <Achievement />
         <Categories />
         <Feedback />

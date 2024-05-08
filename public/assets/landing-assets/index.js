@@ -12,6 +12,14 @@ import achievement from "./achievement.png";
 import avatar from "./avatar.png";
 import quotationMark from "./quotationMark.png";
 import cta from "./cta.png"
+import heroImg1 from "./hero-1.png"
+import heroImg2 from "./hero-2.png"
+import heroImg3 from "./hero-3.png"
+import featureChat from "./feature-chat.png"
+import featureMentoring from "./feature-mentoring.png"
+import iconOnetoOne from "./icon-one-to-one.png"
+import iconGroup from "./icon-group.png"
+import iconIdea from "./icon-idea.png"
 
 export {
   hamburgerMenu,
@@ -27,7 +35,13 @@ export {
   achievement,
   avatar,
   quotationMark,
-  cta
-
-
+  cta, 
+  heroImg1, 
+  heroImg2, 
+  heroImg3,
+  featureChat,
+  featureMentoring,
+  iconOnetoOne,
+  iconGroup,
+  iconIdea
 };
