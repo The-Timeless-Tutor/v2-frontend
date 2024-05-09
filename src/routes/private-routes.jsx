@@ -1,3 +1,4 @@
+import FullPageSpinner from '@/components/ui/spinner';
 import { Navigate } from 'react-router-dom';
 
 import { useAuth } from 'src/contexts/AuthContext';
@@ -6,8 +7,7 @@ const PrivateRoutes = ({ children }) => {
   const { isAuthenticated, isLoading } = useAuth();
 
   if (isLoading) {
-    // TODO: add loading indicator ->
-    return <div>Loading private routes...</div>;
+    return <FullPageSpinner />;
   }
 
   if (!isAuthenticated) {

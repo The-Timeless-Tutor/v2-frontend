@@ -47,14 +47,14 @@ export default function Nav({ openNav, onCloseNav }) {
         display: 'flex',
         borderRadius: 1.5,
         alignItems: 'center',
-        bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12),
+        bgcolor: (theme) => alpha(theme.palette.grey[500], 0.12)
       }}
     >
       <Avatar src={account.photoURL} alt="photoURL" />
 
       <Box sx={{ ml: 1 }}>
         {/* <Typography variant="subtitle2">Lexy</Typography> */}
-        <Typography variant="subtitle2">{(!isLoading && user?.name) || user?.email}</Typography>
+        <Typography variant="subtitle2">{user?.name || user?.email}</Typography>
 
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
           {user?.email}
@@ -78,8 +78,8 @@ export default function Nav({ openNav, onCloseNav }) {
         '& .simplebar-content': {
           height: 1,
           display: 'flex',
-          flexDirection: 'column',
-        },
+          flexDirection: 'column'
+        }
       }}
     >
       <Logo sx={{ mt: 3, ml: 4 }} />
@@ -92,15 +92,11 @@ export default function Nav({ openNav, onCloseNav }) {
     </Scrollbar>
   );
 
-  if (isLoading) return <div>loading user...</div>;
-
-  if (!user) return <div>no user</div>;
-
   return (
     <Box
       sx={{
         flexShrink: { lg: 0 },
-        width: { lg: NAV.WIDTH },
+        width: { lg: NAV.WIDTH }
       }}
     >
       {upLg ? (
@@ -109,7 +105,7 @@ export default function Nav({ openNav, onCloseNav }) {
             height: 1,
             position: 'fixed',
             width: NAV.WIDTH,
-            borderRight: (theme) => `dashed 1px ${theme.palette.divider}`,
+            borderRight: (theme) => `dashed 1px ${theme.palette.divider}`
           }}
         >
           {renderContent}
@@ -120,8 +116,8 @@ export default function Nav({ openNav, onCloseNav }) {
           onClose={onCloseNav}
           PaperProps={{
             sx: {
-              width: NAV.WIDTH,
-            },
+              width: NAV.WIDTH
+            }
           }}
         >
           {renderContent}
@@ -133,7 +129,7 @@ export default function Nav({ openNav, onCloseNav }) {
 
 Nav.propTypes = {
   openNav: PropTypes.bool,
-  onCloseNav: PropTypes.func,
+  onCloseNav: PropTypes.func
 };
 
 function NavItem({ item }) {
@@ -157,9 +153,9 @@ function NavItem({ item }) {
           fontWeight: 'fontWeightSemiBold',
           bgcolor: (theme) => alpha(theme.palette.primary.main, 0.08),
           '&:hover': {
-            bgcolor: (theme) => alpha(theme.palette.primary.main, 0.16),
-          },
-        }),
+            bgcolor: (theme) => alpha(theme.palette.primary.main, 0.16)
+          }
+        })
       }}
     >
       <Box component="span" sx={{ width: 24, height: 24, mr: 2 }}>
@@ -172,5 +168,5 @@ function NavItem({ item }) {
 }
 
 NavItem.propTypes = {
-  item: PropTypes.object,
+  item: PropTypes.object
 };
