@@ -12,7 +12,7 @@ import { FaUniversity } from "react-icons/fa";
 
 const Categories = () => {
   return (
-    <div className="w-full bg-[#f0f0f0] py-8 px-2 md:py-24 md:px-12 rounded-3xl shadow-lg">
+    <div className="w-full bg-[#f0f0f0] py-8 px-2 md:py-16 md:px-8 shadow-lg">
       <div className="md:max-w-[1480px] m-auto max-w-[600px]  px-4 md:px-0 text-center">
         <h1 className="md:leading-[72px] text-3xl font-bold">
           Most <span className="text-brand">Popular Categories</span>

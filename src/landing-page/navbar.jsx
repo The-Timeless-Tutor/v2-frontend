@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { logo, lock, hamburgerMenu, close } from "../../public/assets/landing-assets";
+import { logo } from "../../public/assets/landing-assets";
+import { Link, NavLink } from "react-router-dom";
+import { RxCross1, RxHamburgerMenu } from "react-icons/rx";
 
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
@@ -27,32 +29,78 @@ const Navbar = () => {
 
         <div className="hidden md:flex items-center ">
           <ul className="flex gap-4 font-semibold">
-            <li>Home</li>
-            <li>About</li>
-            <li>Support</li>
-            <li>Platform</li>
-            <li>Pricing</li>
+            <li>
+              <NavLink
+                to="/home"
+                className={({ isActive }) =>
+                  `${isActive ? "text-brand" : ""} hover:text-brand hover:border-b hover:border-brand transition-colors duration-300`
+                }
+              >
+                Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/blog"
+                className={({ isActive }) =>
+                  `${isActive ? "text-brand" : ""} hover:text-brand hover:border-b hover:border-brand transition-colors duration-300`
+                }
+              >
+                Blog
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                to="/about"
+                className={({ isActive }) =>
+                  `${isActive ? "text-brand" : ""} hover:text-brand hover:border-b hover:border-brand transition-colors duration-300`
+                }
+              >
+                About
+              </NavLink>
+            </li>
           </ul>
         </div>
 
         <div className="hidden md:flex">
-          <button className="px-8 py-3 rounded-full bg-brand text-white font-bold">Login</button>
+          <Link
+            to="/login"
+            className="px-8 py-4 md:px-6 md:py-4 inline-block text-sm rounded-full bg-brand font-semibold uppercase tracking-wide text-white transition-colors duration-300 hover:bg-yellow-600 focus:bg-yellow-600 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed"
+          >
+            Login
+          </Link>
         </div>
 
         <div className="md:hidden" onClick={handleClick}>
-          <img src={toggle ? close : hamburgerMenu} />
+          {toggle ? <RxCross1 className="text-3xl" /> : <RxHamburgerMenu className="text-3xl" />}
         </div>
       </div>
 
       <div className={toggle ? "  bg-white w-full md:hidden border-b" : "hidden"}>
         <ul className="flex flex-col items-center justify-center font-semibold">
-          <li className="p-4 hover:bg-gray-100">Home</li>
-          <li className="p-4 hover:bg-gray-100">About</li>
-          <li className="p-4 hover:bg-gray-100">Support</li>
-          <li className="p-4 hover:bg-gray-100">Platform</li>
-          <li className="p-4 hover:bg-gray-100">Pricing</li>
+          <li className="p-4 hover:bg-gray-100">
+            <NavLink to="/home" className={({ isActive }) => (isActive ? "text-brand" : "")}>
+              Home
+            </NavLink>
+          </li>
+          <li className="p-4 hover:bg-gray-100">
+            <NavLink to="/blog" className={({ isActive }) => (isActive ? "text-brand" : "")}>
+              Blog
+            </NavLink>
+          </li>
+          <li className="p-4 hover:bg-gray-100">
+            <NavLink to="/about" className={({ isActive }) => (isActive ? "text-brand" : "")}>
+              About
+            </NavLink>
+          </li>
+
           <div className="flex flex-col my-4 gap-4">
-            <button className="px-6 py-3 rounded-lg bg-brand text-white font-bold ">Login</button>
+            <Link
+              to="/login"
+              className="px-8 py-4 md:px-6 md:py-4 inline-block text-sm rounded-full bg-brand font-semibold uppercase tracking-wide text-white transition-colors duration-300 hover:bg-yellow-600 focus:bg-yellow-600 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed"
+            >
+              Login
+            </Link>
           </div>
         </ul>
       </div>

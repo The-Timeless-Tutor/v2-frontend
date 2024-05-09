@@ -1,10 +1,11 @@
 import React from "react";
-import { logo } from "../../public/assets/landing-assets";
+import { Blob2, logo, WavyLines } from "../../public/assets/landing-assets";
 import { FaFacebookF, FaDribbble, FaLinkedinIn, FaInstagram, FaBehance } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <div className="w-full bg-white py-24">
+    <div className="w-full bg-white py-8 px-2 md:pt-16 md:px-8 relative">
+      <img src={WavyLines} className="w-full absolute top-0" />
       <div className="md:max-w-[1480px] m-auto grid md:grid-cols-5 max-[780px]:grid-cols-2  gap-8 max-w-[600px]  px-4 md:px-0">
         <div className="col-span-2">
           <img src={logo} className="h-[25px]" />
@@ -63,8 +64,12 @@ const Footer = () => {
             Praesent nulla massa, hendrerit <br></br> vestibulum gravida in, feugiat auctor felis.
           </h3>
           <form className="py-4">
-            <input className="bg-[#F2F3F4] p-4 w-full rounded-full" placeholder="Email here" />
-            <button className="max-[780px]:w-full my-4 px-5 py-3 rounded-full bg-brand text-white font-medium">
+            <input
+              type="email"
+              className="w-full rounded-full bg-[#f0f0f0] p-4 text-sm transition-all duration-300 placeholder:text-stone-400 focus:outline-none focus:ring focus:ring-yellow-500 focus:ring-opacity-50 "
+              placeholder="Email here"
+            />
+            <button className="w-full my-4 px-8 py-4 md:px-6 md:py-4 inline-block text-sm rounded-full bg-brand font-semibold uppercase tracking-wide text-white transition-colors duration-300 hover:bg-yellow-600 focus:bg-yellow-600 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2">
               Subscribe Now
             </button>
           </form>

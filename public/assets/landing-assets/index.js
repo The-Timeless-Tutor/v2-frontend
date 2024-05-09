@@ -1,16 +1,7 @@
-import hamburgerMenu from "./hamburgerMenu.svg";
-import close from "./close.svg";
+
 import logo from "./ttt-logo.png";
 import lock from "./lock.svg";
-import heroImg from "./heroImg.png";
-import companyLogo1 from "./company-logo-1.png";
-import companyLogo2 from "./company-logo-2.png";
-import companyLogo3 from "./company-logo-3.png";
-import companyLogo4 from "./company-logo-4.png";
-import blogImg1 from "./blog-1.png";
-import achievement from "./achievement.png";
 import avatar from "./avatar.png";
-import quotationMark from "./quotationMark.png";
 import cta from "./cta.png"
 import heroImg1 from "./hero-1.png"
 import heroImg2 from "./hero-2.png"
@@ -20,21 +11,17 @@ import featureMentoring from "./feature-mentoring.png"
 import iconOnetoOne from "./icon-one-to-one.png"
 import iconGroup from "./icon-group.png"
 import iconIdea from "./icon-idea.png"
+import WaveSVG from './wave-haikei.svg'
+import Element1 from "./ttt_element_1.png"
+import Element2 from "./ttt_element_2.png"
+import WavyLines from "./WavyLines.png"
+import Blob1 from "./blob-1.svg"
+import Blob2 from "./blob-2.svg"
 
 export {
-  hamburgerMenu,
-  close,
   logo,
   lock,
-  heroImg,
-  companyLogo1,
-  companyLogo2,
-  companyLogo3,
-  companyLogo4,
-  blogImg1,
-  achievement,
   avatar,
-  quotationMark,
   cta, 
   heroImg1, 
   heroImg2, 
@@ -43,5 +30,11 @@ export {
   featureMentoring,
   iconOnetoOne,
   iconGroup,
-  iconIdea
+  iconIdea,
+  WaveSVG,
+  Element1,
+  Element2,
+  WavyLines,
+  Blob1,
+  Blob2
 };

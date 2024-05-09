@@ -1,23 +1,10 @@
 import Navbar from "./navbar";
 import Hero from "./hero";
-import Companies from "./companies";
 import Features from "./features";
-import Courses from "./courses";
-import Achievement from "./achievement";
+import Offers from "./offers";
 import Categories from "./categories";
-import Feedback from "./feedback";
+import Testimonials from "./testimonials";
 import CTA from "./cta";
 import Footer from "./footer";
 
-export {
-  Navbar,
-  Hero,
-  Features,
-  Companies,
-  Courses,
-  Achievement,
-  Categories,
-  Feedback,
-  CTA,
-  Footer
-};
+export { Navbar, Hero, Features, Offers, Categories, Testimonials, CTA, Footer };

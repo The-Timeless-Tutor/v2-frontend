@@ -1,11 +1,9 @@
 import {
   Hero,
   Navbar,
-  Companies,
-  Courses,
-  Achievement,
+  Offers,
   Categories,
-  Feedback,
+  Testimonials,
   CTA,
   Footer,
   Features
@@ -13,16 +11,14 @@ import {
 
 function LandingHome() {
   return (
-    <div className="flex flex-col min-h-screen overflow-hidden px-6">
+    <div className="flex flex-col min-h-screen overflow-hidden px-2">
       <Navbar />
       <div className="flex-1">
         <Hero />
         <Features />
-        {/* <Companies /> */}
-        {/* <Courses /> */}
-        <Achievement />
+        <Offers />
         <Categories />
-        <Feedback />
+        <Testimonials />
         <CTA />
         <Footer />
       </div>
