@@ -61,7 +61,7 @@ export default function ForgotPasswordView() {
         color="inherit"
         loading={isLoading}
       >
-        Reset Password
+        Send
       </LoadingButton>
     </form>
   );
