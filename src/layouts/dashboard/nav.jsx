@@ -52,11 +52,21 @@ export default function Nav({ openNav, onCloseNav }) {
     >
       <Avatar src={account.photoURL} alt="photoURL" />
 
-      <Box sx={{ ml: 1 }}>
+      <Box sx={{ ml: 1, maxWidth: '160px' }}>
         {/* <Typography variant="subtitle2">Lexy</Typography> */}
-        <Typography variant="subtitle2">{user?.name || user?.email}</Typography>
+        <Typography
+          variant="subtitle2"
+          noWrap
+          sx={{ overflow: 'hidden', textOverflow: 'ellipsis' }}
+        >
+          {user?.name || user?.username}
+        </Typography>
 
-        <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+        <Typography
+          variant="body2"
+          noWrap
+          sx={{ color: 'text.secondary', overflow: 'hidden', textOverflow: 'ellipsis' }}
+        >
           {user?.email}
         </Typography>
       </Box>

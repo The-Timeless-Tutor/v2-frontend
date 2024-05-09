@@ -35,16 +35,13 @@ export default function ResetPasswordView() {
     formState: { errors }
   } = useForm();
   const { verifyToken, isLoading: verifyTokenLoading, isError } = useVerifyToken();
-  console.log('isError', isError);
   const { resetPassword, isLoading: resetPasswordLoading } = useResetPassword();
 
   const isLoading = verifyTokenLoading || resetPasswordLoading;
 
   const onSubmit = (formData) => {
-    console.log(formData);
     if (!formData) return;
     const { token, password } = formData;
-    // verifyToken({ token });
     resetPassword({ token, password });
   };
 
@@ -62,8 +59,6 @@ export default function ResetPasswordView() {
       verifyTokenAsync();
     }
   }, [token, verifyToken]);
-
-  // console.log('tokenValid', tokenValid);
 
   const renderForm = (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -115,9 +110,10 @@ export default function ResetPasswordView() {
           }}
           {...register('password', {
             required: 'Password is required',
-            minLength: {
-              value: 8,
-              message: 'Password needs a minimum of 8 characters'
+            pattern: {
+              value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[a-zA-Z\d@$!%*?&]{8,}$/,
+              message:
+                'Password must contain at least one uppercase letter, one lowercase letter, one special character and one digit (8 characters minimum)'
             }
           })}
           error={!!errors.password}
@@ -187,7 +183,7 @@ export default function ResetPasswordView() {
           sx={{
             p: 5,
             width: 1,
-            maxWidth: 450
+            maxWidth: 700
           }}
         >
           <Typography variant="h4">Forgot your Password?</Typography>
