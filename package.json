@@ -33,6 +33,7 @@
     "@tanstack/react-query": "^5.32.1",
     "@tanstack/react-query-devtools": "^5.32.1",
     "apexcharts": "^3.43.0",
+    "axios": "^1.6.8",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "crypto-js": "^4.2.0",
@@ -51,8 +52,10 @@
     "react-hook-form": "^7.47.0",
     "react-router-dom": "^6.16.0",
     "simplebar-react": "^3.2.4",
+    "swr": "^2.2.5",
     "tailwind-merge": "^2.3.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "yet-another-react-lightbox": "^3.17.5"
   },
   "devDependencies": {
     "@tanstack/eslint-plugin-query": "^5.32.1",

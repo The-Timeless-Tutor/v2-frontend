@@ -1,5 +1,5 @@
-import { sample } from 'lodash';
-import { faker } from '@faker-js/faker';
+import { sample } from "lodash";
+import { faker } from "@faker-js/faker";
 
 export const users = [...Array(24)].map((_, index) => ({
   id: faker.string.uuid(),
@@ -7,9 +7,6 @@ export const users = [...Array(24)].map((_, index) => ({
   name: faker.person.fullName(),
   company: faker.company.name(),
   isVerified: faker.datatype.boolean(),
-  status: sample(['online', 'offline']),
-  role: sample([
-    'Mentor',
-    'Member'
-  ]),
+  status: sample(["online", "offline"]),
+  role: sample(["Mentor", "Member"])
 }));
