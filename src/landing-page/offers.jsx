@@ -6,7 +6,7 @@ import {
   iconGroup,
   iconIdea,
   WavyLines
-} from "../../public/assets/landing-assets";
+} from "../assets/landing-assets";
 
 const offers = [
   {

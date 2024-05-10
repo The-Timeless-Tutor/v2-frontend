@@ -5,11 +5,10 @@ import {
   heroImg1,
   heroImg2,
   heroImg3,
-  WaveSVG,
   Element1,
   Element2,
   WavyLines
-} from "../../public/assets/landing-assets";
+} from "../assets/landing-assets";
 
 const Hero = () => {
   return (

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { logo } from "../../public/assets/landing-assets";
+// import { logo } from "../../public/assets/landing-assets";
+import { logo } from "../assets/landing-assets";
 import { Link, NavLink } from "react-router-dom";
 import { RxCross1, RxHamburgerMenu } from "react-icons/rx";
 

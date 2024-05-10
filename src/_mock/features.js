@@ -1,4 +1,4 @@
-import { featureChat } from "../../public/assets/landing-assets";
+import { featureChat } from "../assets/landing-assets";
 
 export const features = [
   {
