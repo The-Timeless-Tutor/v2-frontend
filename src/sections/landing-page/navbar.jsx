@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from "react";
-// import { logo } from "../../public/assets/landing-assets";
-import { logo } from "../assets/landing-assets";
-import { Link, NavLink } from "react-router-dom";
-import { RxCross1, RxHamburgerMenu } from "react-icons/rx";
+import React, { useEffect, useState } from 'react';
+import { logo } from '../assets/landing-assets';
+import { Link, NavLink } from 'react-router-dom';
+import { RxCross1, RxHamburgerMenu } from 'react-icons/rx';
 
 const Navbar = () => {
   const [toggle, setToggle] = useState(false);
@@ -13,8 +12,8 @@ const Navbar = () => {
     const scrollHandler = () => {
       window.pageYOffset > 10 ? setTop(false) : setTop(true);
     };
-    window.addEventListener("scroll", scrollHandler);
-    return () => window.removeEventListener("scroll", scrollHandler);
+    window.addEventListener('scroll', scrollHandler);
+    return () => window.removeEventListener('scroll', scrollHandler);
   }, [top]);
 
   const handleClick = () => setToggle(!toggle);
@@ -22,7 +21,7 @@ const Navbar = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-30 px-6 md:bg-opacity-90  h-[80px] transition duration-300 ease-in-out ${
-        !top && "bg-white backdrop-blur-sm shadow-lg"
+        !top && 'bg-white backdrop-blur-sm shadow-lg'
       }`}
     >
       <div className="md:max-w-[1480px] max-w-[600px] mx-auto w-full h-full flex justify-between items-center ">
@@ -34,7 +33,7 @@ const Navbar = () => {
               <NavLink
                 to="/home"
                 className={({ isActive }) =>
-                  `${isActive ? "text-brand" : ""} hover:text-brand hover:border-b hover:border-brand transition-colors duration-300`
+                  `${isActive ? 'text-brand' : ''} hover:text-brand hover:border-b hover:border-brand transition-colors duration-300`
                 }
               >
                 Home
@@ -44,7 +43,7 @@ const Navbar = () => {
               <NavLink
                 to="/blog"
                 className={({ isActive }) =>
-                  `${isActive ? "text-brand" : ""} hover:text-brand hover:border-b hover:border-brand transition-colors duration-300`
+                  `${isActive ? 'text-brand' : ''} hover:text-brand hover:border-b hover:border-brand transition-colors duration-300`
                 }
               >
                 Blog
@@ -54,7 +53,7 @@ const Navbar = () => {
               <NavLink
                 to="/about"
                 className={({ isActive }) =>
-                  `${isActive ? "text-brand" : ""} hover:text-brand hover:border-b hover:border-brand transition-colors duration-300`
+                  `${isActive ? 'text-brand' : ''} hover:text-brand hover:border-b hover:border-brand transition-colors duration-300`
                 }
               >
                 About
@@ -77,20 +76,20 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className={toggle ? "  bg-white w-full md:hidden border-b" : "hidden"}>
+      <div className={toggle ? '  bg-white w-full md:hidden border-b' : 'hidden'}>
         <ul className="flex flex-col items-center justify-center font-semibold">
           <li className="p-4 hover:bg-gray-100">
-            <NavLink to="/home" className={({ isActive }) => (isActive ? "text-brand" : "")}>
+            <NavLink to="/home" className={({ isActive }) => (isActive ? 'text-brand' : '')}>
               Home
             </NavLink>
           </li>
           <li className="p-4 hover:bg-gray-100">
-            <NavLink to="/blog" className={({ isActive }) => (isActive ? "text-brand" : "")}>
+            <NavLink to="/blog" className={({ isActive }) => (isActive ? 'text-brand' : '')}>
               Blog
             </NavLink>
           </li>
           <li className="p-4 hover:bg-gray-100">
-            <NavLink to="/about" className={({ isActive }) => (isActive ? "text-brand" : "")}>
+            <NavLink to="/about" className={({ isActive }) => (isActive ? 'text-brand' : '')}>
               About
             </NavLink>
           </li>

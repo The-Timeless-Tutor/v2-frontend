@@ -1,6 +1,6 @@
-import React from "react";
-import { Blob2, logo, WavyLines } from "../assets/landing-assets";
-import { FaFacebookF, FaDribbble, FaLinkedinIn, FaInstagram, FaBehance } from "react-icons/fa";
+import React from 'react';
+import { Blob2, logo, WavyLines } from '../assets/landing-assets';
+import { FaFacebookF, FaDribbble, FaLinkedinIn, FaInstagram, FaBehance } from 'react-icons/fa';
 
 const Footer = () => {
   return (
@@ -17,19 +17,19 @@ const Footer = () => {
           <h3 className="py-2 text-[#363A3D]">Email: example@mail.com</h3>
           <div className="flex gap-4 py-4">
             <div className="p-4 bg-[#f0f0f0] rounded-xl">
-              <FaFacebookF size={25} style={{ color: "#F99C1D" }} />
+              <FaFacebookF size={25} style={{ color: '#F99C1D' }} />
             </div>
             <div className="p-4 bg-[#f0f0f0] rounded-xl">
-              <FaDribbble size={25} style={{ color: "#F99C1D" }} />
+              <FaDribbble size={25} style={{ color: '#F99C1D' }} />
             </div>
             <div className="p-4 bg-[#f0f0f0] rounded-xl">
-              <FaLinkedinIn size={25} style={{ color: "#F99C1D" }} />
+              <FaLinkedinIn size={25} style={{ color: '#F99C1D' }} />
             </div>
             <div className="p-4 bg-[#f0f0f0] rounded-xl">
-              <FaInstagram size={25} style={{ color: "#F99C1D" }} />
+              <FaInstagram size={25} style={{ color: '#F99C1D' }} />
             </div>
             <div className="p-4 bg-[#f0f0f0] rounded-xl">
-              <FaBehance size={25} style={{ color: "#F99C1D" }} />
+              <FaBehance size={25} style={{ color: '#F99C1D' }} />
             </div>
           </div>
         </div>

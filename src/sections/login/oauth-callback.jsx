@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { useToast } from '@/components/ui/use-toast';
@@ -7,71 +7,91 @@ import { setSession, clearSession } from 'src/utils/authUtils';
 import { useAuth } from 'src/contexts/AuthContext';
 import { useRouter } from '@/routes/hooks';
 import { apiMiddleware } from '@/middleware/apiMiddleware';
+import FullPageSpinner from '@/components/ui/spinner';
 
 const OAuthCallback = () => {
-  const backendUrl = import.meta.env.VITE_BACKEND_URL;
+  const [loading, setLoading] = useState(true);
 
   const location = useLocation();
-  const navigate = useNavigate();
   const router = useRouter();
   const { toast } = useToast();
   const { setIsAuthenticated } = useAuth();
+
   useEffect(() => {
-    const exchangeCodeForToken = async () => {
-      const code = new URLSearchParams(location.search).get('code');
-      if (!code) {
-        console.error('Authorization code not found.');
+    const code = new URLSearchParams(location.search).get('code');
+    if (code) {
+      exchangeCodeForToken(code);
+    } else {
+      setLoading(false);
+    }
+  }, [location.search]);
+
+  const exchangeCodeForToken = async (code, retryCount = 0) => {
+    try {
+      const response = await apiMiddleware(`api/google_login`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ code })
+      });
+
+      if (!navigator.onLine) {
         toast({
           title: 'Error',
-          description: 'Authorization code not found',
-          variant: 'destructive',
+          description:
+            'You are currently offline. Please check your internet connection and try again.',
+          variant: 'destructive'
         });
+        clearSession();
         router.push('/signup', { replace: true });
         return;
       }
-      try {
-        const response = await apiMiddleware(`api/google_login`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ code }),
-        });
 
-        if (!response.ok) {
-          console.error('Failed to exchange code for token.');
-          toast({
-            title: 'Error',
-            description: 'Failed to exchange code for token',
-            variant: 'destructive',
-          });
-          clearSession(); // Ensure session is clear on failure
-          router.push('/signup', { replace: true });
-          return;
-        }
+      if (response.ok) {
         const data = await response.json();
         toast({
           title: 'Success',
           description: 'Successfully logged in. Welcome to The Timeless Tutor!',
-          variant: 'success',
+          variant: 'success'
         });
-        // Save the session details using setSession
         setSession({
           access_token: data.data.access_token,
           refresh_token: data.data.refresh_token,
           access_token_expiry: data.data.access_token_expiry,
-          refresh_token_expiry: data.data.refresh_token_expiry,
+          refresh_token_expiry: data.data.refresh_token_expiry
         });
-        setIsAuthenticated(true); // Set isAuthenticated to true on successful login
-        router.push('/'); // Navigate to a welcome or dashboard page
-      } catch (error) {
-        console.error('Error exchanging code for token:', error);
-        clearSession(); // Ensure session is clear on error
+        setIsAuthenticated(true);
+        router.push('/');
+      } else {
+        const errorData = await response.json();
+        toast({
+          title: 'Error',
+          description: errorData.error || 'Failed to exchange code for token',
+          variant: 'destructive'
+        });
+        clearSession();
         router.push('/signup', { replace: true });
       }
-    };
-    exchangeCodeForToken();
-  }, [location, navigate, backendUrl, setIsAuthenticated, router, toast]);
-  return <div>Processing OAuth callback. Please wait...</div>;
+    } catch (error) {
+      console.error('Error exchanging code for token:', error);
+      if (retryCount < 3) {
+        console.warn('Failed to exchange code for token, retrying...');
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await exchangeCodeForToken(code, retryCount + 1);
+      } else {
+        toast({
+          title: 'Error',
+          description: 'An unexpected error occurred. Please try again later.',
+          variant: 'destructive'
+        });
+        clearSession();
+        router.push('/signup', { replace: true });
+      }
+    }
+  };
+
+  return loading ? <FullPageSpinner /> : null;
 };
+
 export default OAuthCallback;

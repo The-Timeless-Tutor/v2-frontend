@@ -1,7 +1,7 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-import { cta, Blob1 } from "../assets/landing-assets";
+import { cta, Blob1 } from '../assets/landing-assets';
 
 const CTA = () => {
   return (

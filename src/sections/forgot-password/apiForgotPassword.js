@@ -1,8 +1,10 @@
 import { apiMiddleware } from '@/middleware/apiMiddleware';
 
 export const forgotPassword = async (email) => {
+  const backendUrl =
+    import.meta.env.VITE_BACKEND_URL || 'https://backend-service-rojjrgeqna-ue.a.run.app/';
   try {
-    const response = await apiMiddleware(`api/forgot_password`, {
+    const response = await fetch(`${backendUrl}api/forgot_password`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
