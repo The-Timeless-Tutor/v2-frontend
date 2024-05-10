@@ -81,7 +81,7 @@ export default function ChatView() {
         overflow: 'hidden'
       }}
     >
-      <ChatMessageList messages={conversation?.messages} participants={participants} />
+      <ChatMessageList messages={conversation?.messages} participants={participants} user={user} />
       <ChatMessageInput
         recipients={recipients}
         onAddRecipients={handleAddRecipients}

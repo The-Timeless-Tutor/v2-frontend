@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useContext } from 'react';
 
 import Box from '@mui/material/Box';
 import { Card, CardActionArea, CardContent, Typography } from '@mui/material';
@@ -24,10 +25,12 @@ import ChatNavItem from './chat-nav-item';
 import ChatNavAccount from './chat-nav-account';
 import { ChatNavItemSkeleton } from './chat-skeleton';
 import ChatNavSearchResults from './chat-nav-search-results';
+import ChatMessageList from './chat-message-list';
 
 import useRoom from '@/hooks/useRoom';
 import useUser from '@/hooks/useUser';
 import useMessage from '@/hooks/useMessage';
+import { ChatRoomsContext } from '@/contexts/ChatRoomsContext';
 
 const NAV_WIDTH = 320;
 const NAV_COLLAPSE_WIDTH = 96;
@@ -44,6 +47,12 @@ export default function ChatNav({ loading, contacts, conversations, selectedConv
   const [selectedRoom, setSelectedRoom] = useState('');
 
   const { messages } = useMessage(selectedRoom || '');
+
+  const { setChatRoomData } = useContext(ChatRoomsContext);
+
+  useEffect(() => {
+    setChatRoomData(messages);
+  }, [selectedRoom]);
 
   const handleSelectRoom = (room) => {
     setSelectedRoom(room);

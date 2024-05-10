@@ -8,6 +8,7 @@ import DashboardLayout from 'src/layouts/dashboard';
 import PrivateRoutes from './private-routes';
 import FullPageSpinner from '@/components/ui/spinner';
 import SystemDownMessage from '@/components/ui/system-down';
+import ChatRoomDataProvider from '@/contexts/ChatRoomsContext';
 
 // Import pages dynamically when needed, to reduce the initial loading time
 export const OAuthCallback = lazy(() => import('@/sections/login/oauth-callback'));
@@ -38,7 +39,14 @@ export default function Router() {
         { path: 'user', element: <UserPage /> },
         { path: 'rooms', element: <RoomsPage /> },
         { path: 'blog', element: <BlogPage /> },
-        { path: 'chat', element: <ChatPage /> },
+        {
+          path: 'chat',
+          element: (
+            <ChatRoomDataProvider>
+              <ChatPage />
+            </ChatRoomDataProvider>
+          )
+        },
         { path: 'web3', element: <Web3Page /> }
       ]
     },
