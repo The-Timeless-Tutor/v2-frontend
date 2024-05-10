@@ -16,6 +16,9 @@ export const LoginPage = lazy(() => import('src/pages/login'));
 export const RegisterPage = lazy(() => import('src/pages/register'));
 export const ForgotPasswordPage = lazy(() => import('src/pages/forgot-password'));
 export const Page404 = lazy(() => import('src/pages/page-not-found'));
+export const AssessmentPage = lazy(() => import('src/pages/assessment'));
+export const CreateRoom = lazy(() => import('src/pages/create-rooms'));
+
 
 export default function Router() {
   const routes = useRoutes([
@@ -35,6 +38,8 @@ export default function Router() {
         { path: 'rooms', element: <RoomsPage /> },
         { path: 'blog', element: <BlogPage /> },
         { path: 'web3', element: <Web3Page /> },
+        { path: 'assessment/:slug', element: <AssessmentPage /> },
+        { path: 'create-room', element: <CreateRoom /> },
       ],
     },
     {
