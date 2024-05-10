@@ -38,14 +38,19 @@ export default function ChatNav({ loading, contacts, conversations, selectedConv
   const mdUp = useResponsive('up', 'md');
 
   const { user } = useUser();
-  const { messages } = useMessage('test');
-
   const { room: rooms = [], isLoading: isRoomLoading, isError: isRoomError } = useRoom(user.email);
 
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedRoom, setSelectedRoom] = useState('');
+
+  // Fetch messages only when a room is selected
+  const { messages } = useMessage(selectedRoom || '');
+
+  const handleSelectRoom = (room) => {
+    setSelectedRoom(room);
+  };
 
   const filteredRooms = useMemo(() => {
-    if (!rooms) return [];
     return rooms.filter((room) => room.toLowerCase().includes(searchQuery));
   }, [rooms, searchQuery]);
 
@@ -58,7 +63,7 @@ export default function ChatNav({ loading, contacts, conversations, selectedConv
         <>
           {filteredRooms.map((room) => (
             <Card key={room} sx={{ mb: 2, mx: 2, borderRadius: 1 }}>
-              <CardActionArea onClick={() => console.log(`Click`)}>
+              <CardActionArea onClick={() => handleSelectRoom(room)}>
                 <CardContent>
                   <Typography variant="subtitle2" noWrap>
                     {room}
@@ -102,16 +107,10 @@ export default function ChatNav({ loading, contacts, conversations, selectedConv
     collapseDesktop,
     onCloseDesktop,
     onCollapseDesktop,
-    //
     openMobile,
     onOpenMobile,
     onCloseMobile
   } = useCollapseNav();
-
-  const [searchRooms, setsearchRooms] = useState({
-    query: '',
-    results: []
-  });
 
   useEffect(() => {
     if (!mdUp) {
@@ -133,96 +132,6 @@ export default function ChatNav({ loading, contacts, conversations, selectedConv
     }
     router.push(paths.dashboard.chat);
   }, [mdUp, onCloseMobile, router]);
-
-  const handlesearchRooms = useCallback(
-    (inputValue) => {
-      setsearchRooms((prevState) => ({
-        ...prevState,
-        query: inputValue
-      }));
-
-      if (inputValue) {
-        const results = contacts.filter((contact) =>
-          contact.name.toLowerCase().includes(inputValue)
-        );
-
-        setsearchRooms((prevState) => ({
-          ...prevState,
-          results
-        }));
-      }
-    },
-    [contacts]
-  );
-
-  const handleClickAwaySearch = useCallback(() => {
-    setsearchRooms({
-      query: '',
-      results: []
-    });
-  }, []);
-
-  const handleClickResult = useCallback(
-    (result) => {
-      handleClickAwaySearch();
-
-      router.push(`${paths.dashboard.chat}?id=${result.id}`);
-    },
-    [handleClickAwaySearch, router]
-  );
-
-  const renderToggleBtn = (
-    <IconButton
-      onClick={onOpenMobile}
-      sx={{
-        left: 0,
-        top: 84,
-        zIndex: 9,
-        width: 32,
-        height: 32,
-        position: 'absolute',
-        borderRadius: `0 12px 12px 0`,
-        bgcolor: theme.palette.primary.main,
-        boxShadow: theme.customShadows.primary,
-        color: theme.palette.primary.contrastText,
-        '&:hover': {
-          bgcolor: theme.palette.primary.darker
-        }
-      }}
-    >
-      <Iconify width={16} icon="solar:users-group-rounded-bold" />
-    </IconButton>
-  );
-
-  const renderSkeleton = (
-    <>
-      {[...Array(12)].map((_, index) => (
-        <ChatNavItemSkeleton key={index} />
-      ))}
-    </>
-  );
-
-  const renderList = (
-    <>
-      {conversations.allIds.map((conversationId) => (
-        <ChatNavItem
-          key={conversationId}
-          collapse={collapseDesktop}
-          conversation={conversations.byId[conversationId]}
-          selected={conversationId === selectedConversationId}
-          onCloseMobile={onCloseMobile}
-        />
-      ))}
-    </>
-  );
-
-  const renderListResults = (
-    <ChatNavSearchResults
-      query={searchRooms.query}
-      results={searchRooms.results}
-      onClickResult={handleClickResult}
-    />
-  );
 
   const renderContent = (
     <>
@@ -249,13 +158,34 @@ export default function ChatNav({ loading, contacts, conversations, selectedConv
 
       <Box sx={{ p: 2.5, pt: 0 }}>{!collapseDesktop && renderSearchInput}</Box>
 
-      <Scrollbar sx={{ pb: 1 }}>{renderRooms}</Scrollbar>
+      <Scrollbar sx={{ pb: 1 }}>{renderRooms()}</Scrollbar>
     </>
   );
 
   return (
     <>
-      {!mdUp && renderToggleBtn}
+      {!mdUp && (
+        <IconButton
+          onClick={onOpenMobile}
+          sx={{
+            left: 0,
+            top: 84,
+            zIndex: 9,
+            width: 32,
+            height: 32,
+            position: 'absolute',
+            borderRadius: `0 12px 12px 0`,
+            bgcolor: theme.palette.primary.main,
+            boxShadow: theme.customShadows.primary,
+            color: theme.palette.primary.contrastText,
+            '&:hover': {
+              bgcolor: theme.palette.primary.darker
+            }
+          }}
+        >
+          <Iconify width={16} icon="solar:users-group-rounded-bold" />
+        </IconButton>
+      )}
 
       {mdUp ? (
         <Stack

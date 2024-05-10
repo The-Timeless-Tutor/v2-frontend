@@ -1,10 +1,13 @@
 import { apiMiddleware } from '@/middleware/apiMiddleware';
 
 const fetchMessage = async (room, lastMessageId = null) => {
-  const token = sessionStorage.getItem('accessToken');
+  console.log('Room being fetched: ', room);
+
   const url = lastMessageId
     ? `api/room/rooms/${room}/messages/?last_message_id=${lastMessageId}&limit=50`
-    : `api/room/rooms/test/messages/?limit=50`;
+    : `api/room/rooms/${room}/messages/?limit=50`;
+
+  const token = sessionStorage.getItem('accessToken');
 
   const response = await apiMiddleware(url, {
     method: 'GET',
@@ -19,7 +22,8 @@ const fetchMessage = async (room, lastMessageId = null) => {
   }
 
   const data = await response.json();
-  return response.json();
+  console.log(data);
+  return data;
 };
 
 export default fetchMessage;
