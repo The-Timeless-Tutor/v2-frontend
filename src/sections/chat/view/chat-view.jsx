@@ -10,7 +10,6 @@ import { useRouter, useSearchParams } from 'src/routes/hooks';
 import { useGetContacts, useGetConversation, useGetConversations } from '@/api/chat';
 import { useSettingsContext } from '@/components/settings';
 
-// Hooks
 import useUser from '@/hooks/useUser';
 
 import ChatNav from '../chat-nav';
@@ -21,9 +20,7 @@ import ChatHeaderDetail from '../chat-header-detail';
 import ChatHeaderCompose from '../chat-header-compose';
 
 export default function ChatView() {
-  // Read Data
   const { user } = useUser();
-
   const router = useRouter();
   const settings = useSettingsContext();
   const searchParams = useSearchParams();
@@ -49,48 +46,7 @@ export default function ChatView() {
 
   const details = !!conversation;
 
-  const renderHead = (
-    <Stack
-      direction="row"
-      alignItems="center"
-      flexShrink={0}
-      sx={{ pr: 1, pl: 2.5, py: 1, minHeight: 72 }}
-    >
-      {selectedConversationId ? (
-        <>{details && <ChatHeaderDetail participants={participants} />}</>
-      ) : (
-        <ChatHeaderCompose contacts={contacts} onAddRecipients={handleAddRecipients} />
-      )}
-    </Stack>
-  );
-
-  const renderNav = (
-    <ChatNav
-      contacts={contacts}
-      conversations={conversations}
-      loading={conversationsLoading}
-      selectedConversationId={selectedConversationId}
-    />
-  );
-
-  const renderMessages = (
-    <Stack
-      sx={{
-        width: 1,
-        height: 1,
-        overflow: 'hidden'
-      }}
-    >
-      <ChatMessageList messages={conversation?.messages} participants={participants} user={user} />
-      <ChatMessageInput
-        recipients={recipients}
-        onAddRecipients={handleAddRecipients}
-        //
-        selectedConversationId={selectedConversationId}
-        disabled={!recipients.length && !selectedConversationId}
-      />
-    </Stack>
-  );
+  const [selectedRoom, setSelectedRoom] = useState('');
 
   return (
     <Container maxWidth={settings.themeStretch ? false : 'xl'}>
@@ -100,11 +56,17 @@ export default function ChatView() {
           mb: { xs: 3, md: 5 }
         }}
       >
-        Chat
+        💬 Chat
       </Typography>
 
       <Stack component={Card} direction="row" sx={{ height: '72vh' }}>
-        {renderNav}
+        <ChatNav
+          contacts={contacts}
+          conversations={conversations}
+          loading={conversationsLoading}
+          selectedConversationId={selectedConversationId}
+          setSelectedRoom={setSelectedRoom}
+        />
 
         <Stack
           sx={{
@@ -113,7 +75,18 @@ export default function ChatView() {
             overflow: 'hidden'
           }}
         >
-          {renderHead}
+          <Stack
+            direction="row"
+            alignItems="center"
+            flexShrink={0}
+            sx={{ pr: 1, pl: 2.5, py: 1, minHeight: 72 }}
+          >
+            {selectedConversationId ? (
+              <>{details && <ChatHeaderDetail participants={participants} />}</>
+            ) : (
+              <ChatHeaderCompose selectedRoom={selectedRoom} username={user?.username} />
+            )}
+          </Stack>
 
           <Stack
             direction="row"
@@ -124,7 +97,27 @@ export default function ChatView() {
               borderTop: (theme) => `solid 1px ${theme.palette.divider}`
             }}
           >
-            {renderMessages}
+            <Stack
+              sx={{
+                width: 1,
+                height: 1,
+                overflow: 'hidden'
+              }}
+            >
+              <ChatMessageList
+                messages={conversation?.messages}
+                participants={participants}
+                user={user}
+                selectedRoom={selectedRoom}
+              />
+              <ChatMessageInput
+                selectedRoom={selectedRoom}
+                recipients={recipients}
+                onAddRecipients={handleAddRecipients}
+                selectedConversationId={selectedConversationId}
+                disabled={!recipients.length && !selectedConversationId}
+              />
+            </Stack>
 
             {details && <ChatRoom conversation={conversation} participants={participants} />}
           </Stack>

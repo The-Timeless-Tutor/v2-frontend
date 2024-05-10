@@ -20,6 +20,8 @@
     "re:build-npm": "npm run rm:all && npm install && npm run build"
   },
   "dependencies": {
+    "@dicebear/collection": "^8.0.1",
+    "@dicebear/core": "^8.0.1",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@faker-js/faker": "^8.1.0",
@@ -55,9 +57,10 @@
     "react-icons": "^4.12.0",
     "react-router-dom": "^6.16.0",
     "react-slick": "^0.29.0",
+    "remixicon": "^4.2.0",
     "simplebar-react": "^3.2.4",
-    "swr": "^2.2.5",
     "slick-carousel": "^1.8.1",
+    "swr": "^2.2.5",
     "tailwind-merge": "^2.3.0",
     "tailwindcss-animate": "^1.0.7",
     "yet-another-react-lightbox": "^3.17.5"

@@ -31,10 +31,9 @@ export default function ChatRoom({ participants, conversation }) {
     collapseDesktop,
     onCloseDesktop,
     onCollapseDesktop,
-    //
     openMobile,
     onOpenMobile,
-    onCloseMobile,
+    onCloseMobile
   } = useCollapseNav();
 
   useEffect(() => {
@@ -84,13 +83,13 @@ export default function ChatRoom({ participants, conversation }) {
         bgcolor: theme.palette.background.paper,
         border: `solid 1px ${theme.palette.divider}`,
         '&:hover': {
-          bgcolor: theme.palette.background.neutral,
+          bgcolor: theme.palette.background.neutral
         },
         ...(lgUp && {
           ...(!collapseDesktop && {
-            right: NAV_WIDTH,
-          }),
-        }),
+            right: NAV_WIDTH
+          })
+        })
       }}
     >
       {lgUp ? (
@@ -116,11 +115,11 @@ export default function ChatRoom({ participants, conversation }) {
             width: NAV_WIDTH,
             borderLeft: `solid 1px ${theme.palette.divider}`,
             transition: theme.transitions.create(['width'], {
-              duration: theme.transitions.duration.shorter,
+              duration: theme.transitions.duration.shorter
             }),
             ...(collapseDesktop && {
-              width: 0,
-            }),
+              width: 0
+            })
           }}
         >
           {!collapseDesktop && renderContent}
@@ -131,10 +130,10 @@ export default function ChatRoom({ participants, conversation }) {
           open={openMobile}
           onClose={onCloseMobile}
           slotProps={{
-            backdrop: { invisible: true },
+            backdrop: { invisible: true }
           }}
           PaperProps={{
-            sx: { width: NAV_WIDTH },
+            sx: { width: NAV_WIDTH }
           }}
         >
           {renderContent}
@@ -146,5 +145,5 @@ export default function ChatRoom({ participants, conversation }) {
 
 ChatRoom.propTypes = {
   conversation: PropTypes.object,
-  participants: PropTypes.array,
+  participants: PropTypes.array
 };

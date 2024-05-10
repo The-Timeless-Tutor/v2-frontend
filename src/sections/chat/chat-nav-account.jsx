@@ -24,45 +24,8 @@ export default function ChatNavAccount() {
     setStatus(event.target.value);
   }, []);
 
-  // Function to determine badge color based on status
-  const getBadgeColor = (status) => {
-    switch (status) {
-      case 'online':
-        return 'green';
-      case 'busy':
-        return 'red';
-      case 'offline':
-        return 'gray';
-      default:
-        return 'gray';
-    }
-  };
-
   return (
     <>
-      <Badge
-        overlap="circular"
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-        badgeContent=" "
-        sx={{
-          '& .MuiBadge-badge': {
-            backgroundColor: getBadgeColor(status),
-            width: 18,
-            height: 18,
-            borderRadius: '50%'
-          }
-        }}
-      >
-        <Avatar
-          src={user?.image}
-          alt={user?.username}
-          onClick={popover.onOpen}
-          sx={{ cursor: 'pointer', width: 48, height: 48 }}
-        >
-          {user?.username?.charAt(0).toUpperCase()}
-        </Avatar>
-      </Badge>
-
       <CustomPopover open={popover.open} onClose={popover.onClose} arrow="top-left" sx={{ p: 0 }}>
         <Stack
           direction="row"

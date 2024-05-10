@@ -1,37 +1,33 @@
-import { sub } from "date-fns";
-import PropTypes from "prop-types";
-import { useRef, useMemo, useState, useCallback } from "react";
+import { sub } from 'date-fns';
+import PropTypes from 'prop-types';
+import { useRef, useMemo, useState, useCallback, useEffect } from 'react';
 
-import Stack from "@mui/material/Stack";
-import InputBase from "@mui/material/InputBase";
-import IconButton from "@mui/material/IconButton";
+import Stack from '@mui/material/Stack';
+import InputBase from '@mui/material/InputBase';
+import IconButton from '@mui/material/IconButton';
 
-import { paths } from "@/routes/path";
+import { paths } from '@/routes/path';
 
-import { useRouter } from "src/routes/hooks";
+import { useRouter } from 'src/routes/hooks';
 
-import { useMockedUser } from "@/hooks/use-mocked-user";
+import { useMockedUser } from '@/hooks/use-mocked-user';
 
-import { sendMessage, createConversation } from "@/api/chat";
+import { sendMessage, createConversation } from '@/api/chat';
 
-import Iconify from "src/components/iconify";
+import Iconify from 'src/components/iconify';
 
 // ----------------------------------------------------------------------
 
 export default function ChatMessageInput({
+  selectedRoom,
   recipients,
   onAddRecipients,
-  //
-  disabled,
   selectedConversationId
 }) {
   const router = useRouter();
-
   const { user } = useMockedUser();
-
   const fileRef = useRef(null);
-
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState('');
 
   const myContact = useMemo(
     () => ({
@@ -43,7 +39,7 @@ export default function ChatMessageInput({
       lastActivity: new Date(),
       avatarUrl: `${user?.photoURL}`,
       phoneNumber: `${user?.phoneNumber}`,
-      status: "online"
+      status: 'online'
     }),
     [user]
   );
@@ -53,7 +49,7 @@ export default function ChatMessageInput({
       id: 1,
       attachments: [],
       body: message,
-      contentType: "text",
+      contentType: 'text',
       createdAt: sub(new Date(), { minutes: 1 }),
       senderId: myContact.id
     }),
@@ -65,7 +61,7 @@ export default function ChatMessageInput({
       id: 1,
       messages: [messageData],
       participants: [...recipients, myContact],
-      type: recipients.length > 1 ? "GROUP" : "ONE_TO_ONE",
+      type: recipients.length > 1 ? 'GROUP' : 'ONE_TO_ONE',
       unreadCount: 0
     }),
     [messageData, myContact, recipients]
@@ -81,48 +77,19 @@ export default function ChatMessageInput({
     setMessage(event.target.value);
   }, []);
 
-  const handleSendMessage = useCallback(
-    async (event) => {
-      try {
-        if (event.key === "Enter") {
-          if (message) {
-            if (selectedConversationId) {
-              await sendMessage(selectedConversationId, messageData);
-            } else {
-              const res = await createConversation(conversationData);
-
-              router.push(`${paths.dashboard.chat}?id=${res.conversation.id}`);
-
-              onAddRecipients([]);
-            }
-          }
-          setMessage("");
-        }
-      } catch (error) {
-        console.error(error);
-      }
-    },
-    [conversationData, message, messageData, onAddRecipients, router, selectedConversationId]
-  );
-
   return (
     <>
       <InputBase
         value={message}
-        onKeyUp={handleSendMessage}
         onChange={handleChangeMessage}
-        placeholder="Type a message"
-        // disabled={disabled}
+        placeholder="Message..."
         startAdornment={
-          <IconButton>
-            <Iconify icon="eva:smiling-face-fill" />
+          <IconButton onClick={handleAttach}>
+            <Iconify icon="solar:gallery-add-bold" />
           </IconButton>
         }
         endAdornment={
           <Stack direction="row" sx={{ flexShrink: 0 }}>
-            <IconButton onClick={handleAttach}>
-              <Iconify icon="solar:gallery-add-bold" />
-            </IconButton>
             <IconButton onClick={handleAttach}>
               <Iconify icon="eva:attach-2-fill" />
             </IconButton>
@@ -139,7 +106,7 @@ export default function ChatMessageInput({
         }}
       />
 
-      <input type="file" ref={fileRef} style={{ display: "none" }} />
+      <input type="file" ref={fileRef} style={{ display: 'none' }} />
     </>
   );
 }

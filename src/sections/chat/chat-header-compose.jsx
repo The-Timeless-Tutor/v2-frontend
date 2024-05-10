@@ -1,108 +1,52 @@
-import PropTypes from "prop-types";
-import { useState, useCallback } from "react";
-
-import Box from "@mui/material/Box";
-import Chip from "@mui/material/Chip";
-import Stack from "@mui/material/Stack";
-import Avatar from "@mui/material/Avatar";
-import { alpha } from "@mui/material/styles";
-import TextField from "@mui/material/TextField";
-import Typography from "@mui/material/Typography";
-import Autocomplete from "@mui/material/Autocomplete";
-
-import Iconify from "src/components/iconify";
-import SearchNotFound from "@/components/search-not-found/search-not-found";
+import PropTypes from 'prop-types';
+import 'remixicon/fonts/remixicon.css';
 
 // ----------------------------------------------------------------------
 
-export default function ChatHeaderCompose({ contacts, onAddRecipients }) {
-  const [searchRecipients, setSearchRecipients] = useState("");
-
-  const handleAddRecipients = useCallback(
-    (selected) => {
-      setSearchRecipients("");
-      onAddRecipients(selected);
-    },
-    [onAddRecipients]
-  );
+export default function ChatHeaderCompose({ selectedRoom, username }) {
+  // web rtc
+  const redirectToJoinPage = () => {
+    if (selectedRoom)
+      window.location.href =
+        'https://call.thetimelesstutor.com/join/' +
+        selectedRoom +
+        '?name=' +
+        username +
+        '&video=0&notify=0';
+  };
+  const redirectToJoinPageWithVideo = () => {
+    if (selectedRoom)
+      window.location.href =
+        'https://call.thetimelesstutor.com/join/' +
+        selectedRoom +
+        '?name=' +
+        username +
+        '&notify=0';
+  };
 
   return (
-    <>
-      <Typography variant="subtitle2" sx={{ color: "text.primary", mr: 2 }}>
-        To:
-      </Typography>
+    <div className="flex w-full items-center justify-between">
+      {selectedRoom === '' && (
+        <div className="animate-pulse flex items-center space-x-4">
+          <div className="rounded-lg bg-slate-200 h-10 w-10"></div>
+          <div className="h-5 w-40 bg-slate-200 rounded col-span-2"></div>
+        </div>
+      )}
+      {selectedRoom && (
+        <div className="flex items-center gap-3">
+          <p className="px-4 py-2 bg-gray-100">{selectedRoom.substring(0, 1)}</p>
+          <div className="text-sm font-medium">{selectedRoom}</div>
+        </div>
+      )}
 
-      <Autocomplete
-        sx={{ minWidth: 320 }}
-        multiple
-        limitTags={3}
-        popupIcon={null}
-        defaultValue={[]}
-        disableCloseOnSelect
-        noOptionsText={<SearchNotFound query={searchRecipients} />}
-        onChange={(event, newValue) => handleAddRecipients(newValue)}
-        onInputChange={(event, newValue) => setSearchRecipients(newValue)}
-        options={contacts}
-        getOptionLabel={(recipient) => recipient.name}
-        isOptionEqualToValue={(option, value) => option.id === value.id}
-        renderInput={(params) => <TextField {...params} placeholder="+ Recipients" />}
-        renderOption={(props, recipient, { selected }) => (
-          <li {...props} key={recipient.id}>
-            <Box
-              key={recipient.id}
-              sx={{
-                mr: 1,
-                width: 32,
-                height: 32,
-                overflow: "hidden",
-                borderRadius: "50%",
-                position: "relative"
-              }}
-            >
-              <Avatar alt={recipient.name} src={recipient.avatarUrl} sx={{ width: 1, height: 1 }} />
-              <Stack
-                alignItems="center"
-                justifyContent="center"
-                sx={{
-                  top: 0,
-                  left: 0,
-                  width: 1,
-                  height: 1,
-                  opacity: 0,
-                  position: "absolute",
-                  bgcolor: (theme) => alpha(theme.palette.grey[900], 0.8),
-                  transition: (theme) =>
-                    theme.transitions.create(["opacity"], {
-                      easing: theme.transitions.easing.easeInOut,
-                      duration: theme.transitions.duration.shorter
-                    }),
-                  ...(selected && {
-                    opacity: 1,
-                    color: "primary.main"
-                  })
-                }}
-              >
-                <Iconify icon="eva:checkmark-fill" />
-              </Stack>
-            </Box>
-
-            {recipient.name}
-          </li>
-        )}
-        renderTags={(selected, getTagProps) =>
-          selected.map((recipient, index) => (
-            <Chip
-              {...getTagProps({ index })}
-              key={recipient.id}
-              label={recipient.name}
-              avatar={<Avatar alt={recipient.name} src={recipient.avatarUrl} />}
-              size="small"
-              variant="soft"
-            />
-          ))
-        }
-      />
-    </>
+      <div className="px-5 flex items-center text-xl gap-3">
+        <i className="ri-phone-fill cursor-pointer" onClick={() => redirectToJoinPage()}></i>
+        <i
+          className="ri-vidicon-fill cursor-pointer "
+          onClick={() => redirectToJoinPageWithVideo()}
+        ></i>
+      </div>
+    </div>
   );
 }
 

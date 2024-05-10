@@ -1,15 +1,11 @@
 import PropTypes from 'prop-types';
-import { useState, useEffect, useCallback, useMemo } from 'react';
-import { useContext } from 'react';
-
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import Box from '@mui/material/Box';
-import { Card, CardActionArea, CardContent, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import Stack from '@mui/material/Stack';
 import Drawer from '@mui/material/Drawer';
 import { useTheme } from '@mui/material/styles';
-import TextField from '@mui/material/TextField';
 import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
 import ClickAwayListener from '@mui/material/ClickAwayListener';
 
 import { paths } from '@/routes/path';
@@ -21,21 +17,14 @@ import Iconify from 'src/components/iconify';
 import Scrollbar from 'src/components/scrollbar';
 
 import { useCollapseNav } from './hooks';
-import ChatNavItem from './chat-nav-item';
-import ChatNavAccount from './chat-nav-account';
 import { ChatNavItemSkeleton } from './chat-skeleton';
-import ChatNavSearchResults from './chat-nav-search-results';
-import ChatMessageList from './chat-message-list';
-
 import useRoom from '@/hooks/useRoom';
 import useUser from '@/hooks/useUser';
-import useMessage from '@/hooks/useMessage';
-import { ChatRoomsContext } from '@/contexts/ChatRoomsContext';
 
 const NAV_WIDTH = 320;
 const NAV_COLLAPSE_WIDTH = 96;
 
-export default function ChatNav({ loading, contacts, conversations, selectedConversationId }) {
+export default function ChatNav({ setSelectedRoom }) {
   const theme = useTheme();
   const router = useRouter();
   const mdUp = useResponsive('up', 'md');
@@ -44,15 +33,6 @@ export default function ChatNav({ loading, contacts, conversations, selectedConv
   const { room: rooms = [], isLoading: isRoomLoading, isError: isRoomError } = useRoom(user.email);
 
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedRoom, setSelectedRoom] = useState('');
-
-  const { messages } = useMessage(selectedRoom || '');
-
-  const { setChatRoomData } = useContext(ChatRoomsContext);
-
-  useEffect(() => {
-    setChatRoomData(messages);
-  }, [selectedRoom]);
 
   const handleSelectRoom = (room) => {
     setSelectedRoom(room);
@@ -62,31 +42,6 @@ export default function ChatNav({ loading, contacts, conversations, selectedConv
     return rooms.filter((room) => room.toLowerCase().includes(searchQuery));
   }, [rooms, searchQuery]);
 
-  const renderRooms = () => {
-    if (isRoomLoading) return <ChatNavItemSkeleton count={5} />;
-    if (isRoomError) return <Typography sx={{ mx: 2, my: 1 }}>Failed to load rooms</Typography>;
-
-    if (filteredRooms.length > 0) {
-      return (
-        <>
-          {filteredRooms.map((room) => (
-            <Card key={room} sx={{ mb: 2, mx: 2, borderRadius: 1 }}>
-              <CardActionArea onClick={() => handleSelectRoom(room)}>
-                <CardContent>
-                  <Typography variant="subtitle2" noWrap>
-                    {room}
-                  </Typography>
-                </CardContent>
-              </CardActionArea>
-            </Card>
-          ))}
-        </>
-      );
-    }
-
-    return <Typography sx={{ mx: 2, my: 1, textAlign: 'center' }}>No rooms available</Typography>;
-  };
-
   const handleSearchRooms = useCallback((event) => {
     const query = event.target.value;
     setSearchQuery(query.toLowerCase());
@@ -94,19 +49,13 @@ export default function ChatNav({ loading, contacts, conversations, selectedConv
 
   const renderSearchInput = (
     <ClickAwayListener onClickAway={() => setSearchQuery('')}>
-      <TextField
+      <input
+        className="text-sm w-full p-2 border mt-2"
         fullWidth
         value={searchQuery}
+        sdfcds
         onChange={handleSearchRooms}
-        placeholder="Search Rooms..."
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
-            </InputAdornment>
-          )
-        }}
-        sx={{ mt: 2.5 }}
+        placeholder="🛎️ Search Rooms..."
       />
     </ClickAwayListener>
   );
@@ -143,14 +92,7 @@ export default function ChatNav({ loading, contacts, conversations, selectedConv
 
   const renderContent = (
     <>
-      <Stack direction="row" alignItems="center" justifyContent="center" sx={{ p: 2.5, pb: 0 }}>
-        {!collapseDesktop && (
-          <>
-            <ChatNavAccount />
-            <Box sx={{ flexGrow: 1 }} />
-          </>
-        )}
-
+      <Stack direction="row" alignItems="start" justifyContent="start" sx={{ p: 2.5, pb: 0 }}>
         <IconButton onClick={handleToggleNav}>
           <Iconify
             icon={collapseDesktop ? 'eva:arrow-ios-forward-fill' : 'eva:arrow-ios-back-fill'}
@@ -164,9 +106,28 @@ export default function ChatNav({ loading, contacts, conversations, selectedConv
         )}
       </Stack>
 
-      <Box sx={{ p: 2.5, pt: 0 }}>{!collapseDesktop && renderSearchInput}</Box>
+      <Box sx={{ p: 2.5, pt: 0, pb: 0 }}>{!collapseDesktop && renderSearchInput}</Box>
 
-      <Scrollbar sx={{ pb: 1 }}>{renderRooms()}</Scrollbar>
+      <Scrollbar sx={{ pb: 1 }}>
+        {isRoomLoading && <ChatNavItemSkeleton count={5} />}
+        {isRoomError && <Typography sx={{ mx: 2, my: 1 }}>Failed to load rooms</Typography>}
+        {filteredRooms.length > 0 && (
+          <div className="cursor-pointer">
+            {filteredRooms.map((room, index) => (
+              <div
+                key={index}
+                onClick={() => handleSelectRoom(room)}
+                className="cursor-pointer mt-2 px-6 py-2 text-sm flex gap-3 items-center hover:bg-gray-100"
+              >
+                <p className="bg-gray-50 px-4 py-2 rounded-lg text-sm  font-medium">
+                  {room.substring(0, 1)}
+                </p>
+                <p className="font-medium">{room}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </Scrollbar>
     </>
   );
 
