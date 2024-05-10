@@ -12,7 +12,6 @@ import { useSettingsContext } from '@/components/settings';
 
 // Hooks
 import useUser from '@/hooks/useUser';
-import useMessage from '@/hooks/useMessage';
 
 import ChatNav from '../chat-nav';
 import ChatRoom from '../chat-room';
@@ -24,7 +23,6 @@ import ChatHeaderCompose from '../chat-header-compose';
 export default function ChatView() {
   // Read Data
   const { user } = useUser();
-  const { messages, prependMessages, hasMoreMessages } = useMessage();
 
   const router = useRouter();
   const settings = useSettingsContext();

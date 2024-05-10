@@ -9,12 +9,8 @@ import Lightbox from '@/components/lightbox/lightbox';
 import { useMessagesScroll } from './hooks';
 import ChatMessageItem from './chat-message-item';
 
-import useMessage from '@/hooks/useMessage';
-
 export default function ChatMessageList({ messages = [], participants }) {
   const { messagesEndRef } = useMessagesScroll(messages);
-
-  const message = useMessage('');
 
   const slides = messages
     .filter((message) => message.contentType === 'image')

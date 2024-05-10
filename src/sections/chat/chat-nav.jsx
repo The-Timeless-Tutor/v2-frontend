@@ -43,7 +43,6 @@ export default function ChatNav({ loading, contacts, conversations, selectedConv
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedRoom, setSelectedRoom] = useState('');
 
-  // Fetch messages only when a room is selected
   const { messages } = useMessage(selectedRoom || '');
 
   const handleSelectRoom = (room) => {
