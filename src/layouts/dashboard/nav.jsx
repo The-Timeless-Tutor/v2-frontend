@@ -53,11 +53,10 @@ export default function Nav({ openNav, onCloseNav }) {
       <Avatar src={account.photoURL} alt="photoURL" />
 
       <Box sx={{ ml: 1 }}>
-        {/* <Typography variant="subtitle2">Lexy</Typography> */}
-        <Typography variant="subtitle2">{user?.name || user?.email}</Typography>
+        <Typography variant="subtitle2">{user?.name || "New User"}</Typography>
 
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {user?.email}
+          {user?.email.split('@')[0]}
         </Typography>
       </Box>
     </Box>
