@@ -4,6 +4,9 @@
 
 @layer base {
   :root {
+    --brand: 35 95% 55%;
+    --brand-foreground: 0 0% 100%;
+
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
@@ -73,15 +76,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
-
-/* Hide scrollbar for Chrome, Safari and Opera */
-*::-webkit-scrollbar {
-  display: none;
-}
-
-/* Hide scrollbar for IE, Edge and Firefox */
-* {
-  -ms-overflow-style: none; /* IE and Edge */
-  scrollbar-width: none; /* Firefox */
 }

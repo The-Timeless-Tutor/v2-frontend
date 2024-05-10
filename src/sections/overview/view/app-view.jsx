@@ -24,6 +24,8 @@ import ProductCard from '../../products/product-card';
 import { Button } from '@mui/material';
 import { useGetUser } from '@/sections/login/useGetUser';
 import ExploreRooms from '@/sections/rooms/explore-rooms';
+import { useGetFeeds } from './useFeeds';
+import { useEffect, useState } from 'react';
 
 // import ProductSort from '../product-sort';
 // import ProductFilters from '../product-filters';
@@ -32,7 +34,33 @@ import ExploreRooms from '@/sections/rooms/explore-rooms';
 // ----------------------------------------------------------------------
 
 export default function AppView() {
-  const { user, isLoading } = useGetUser();
+  const { user, isLoading: isLoadingUser } = useGetUser();
+  const { feeds, isLoading: isLoadingFeeds } = useGetFeeds();
+  const { rooms, blogs } = feeds || {};
+  const isLoading = isLoadingUser || isLoadingFeeds;
+  const [newsUpdates, setNewsUpdates] = useState([]);
+
+  useEffect(() => {
+    if (rooms) {
+      const updates = rooms
+        .sort((a, b) => new Date(b.created_at) - new Date(a.created_at))
+        .slice(0, 3)
+        .map((room) => ({
+          id: room.slug,
+          title: `${room.host_details.username} created a scheduled session for "${room.name}" group`,
+          description: room.description,
+          image: `/assets/images/covers/cover_${Math.floor(Math.random() * 5) + 1}.jpg`,
+          postedAt: new Date(room.created_at),
+        }));
+      setNewsUpdates(updates);
+    }
+  }, [rooms]);
+
+  if (isLoading) {
+    // TODO: add loading indicator
+    return <div>Loading Feeds...</div>;
+  }
+
   return (
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 3 }}>
@@ -41,28 +69,7 @@ export default function AppView() {
 
       <Grid container spacing={3}>
         <Grid xs={12} md={6} lg={8}>
-          <AppNewsUpdate
-            title="🙊 News Update"
-            list={[...Array(5)].map((_, index) => ({
-              id: faker.string.uuid(),
-              title: [
-                'Sangya posted a message on announcement #job-seeker.',
-                'You have been mentioned by @Sagar on group#resume-optimization.',
-                'New Message from @Ashish.',
-                '@Lakhpa recently posted a blog.',
-                '@Sahir just shared some learning resources.',
-              ][index],
-              description: [
-                'Message: Someone I got a reference job, kudos to me.',
-                '@not.so.lexy please check the new version of The Timeless Tutor, its sicko!',
-                'Hello Bhai, Kata xau? Call lagdeina ta!',
-                "Let's create your own Google Photos with JavaScript.",
-                'resume.pdf',
-              ][index],
-              image: `/assets/images/covers/cover_${index + 1}.jpg`,
-              postedAt: faker.date.recent(),
-            }))}
-          />
+          <AppNewsUpdate title="🙊 News Update" list={newsUpdates} />
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
