@@ -23,7 +23,7 @@ export default function ForgotPasswordView() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm();
   const { forgotPassword, isLoading } = useForgotPassword();
 
@@ -43,7 +43,7 @@ export default function ForgotPasswordView() {
           name="email"
           label="Email address"
           {...register('email', {
-            required: 'Email is required',
+            required: 'Email is required'
           })}
           error={!!errors.email}
           helperText={errors?.email?.message}
@@ -61,7 +61,7 @@ export default function ForgotPasswordView() {
         color="inherit"
         loading={isLoading}
       >
-        Reset Password
+        Send
       </LoadingButton>
     </form>
   );
@@ -71,16 +71,16 @@ export default function ForgotPasswordView() {
       sx={{
         ...bgGradient({
           color: alpha(theme.palette.background.default, 0.9),
-          imgUrl: '/assets/background/overlay_4.jpg',
+          imgUrl: '/assets/background/overlay_4.jpg'
         }),
-        height: 1,
+        height: 1
       }}
     >
       <Logo
         sx={{
           position: 'fixed',
           top: { xs: 16, md: 24 },
-          left: { xs: 16, md: 24 },
+          left: { xs: 16, md: 24 }
         }}
       />
 
@@ -89,7 +89,7 @@ export default function ForgotPasswordView() {
           sx={{
             p: 5,
             width: 1,
-            maxWidth: 450,
+            maxWidth: 700
           }}
         >
           <Typography variant="h4">Forgot your Password?</Typography>

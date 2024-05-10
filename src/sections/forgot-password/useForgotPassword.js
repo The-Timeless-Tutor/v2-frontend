@@ -13,7 +13,7 @@ export function useForgotPassword() {
     mutationFn: (credentials) => forgotPasswordApi(credentials.email),
     onSuccess: (forgotPasswordData) => {
       queryClient.setQueryData(['forgotPassword'], forgotPasswordData);
-      router.push('/', { replace: true });
+      router.push('/reset-password', { replace: true });
       toast({
         description:
           'Password reset link sent! Please check your email for password reset instructions',

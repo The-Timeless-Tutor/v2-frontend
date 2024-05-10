@@ -1,15 +1,13 @@
-import { apiMiddleware } from '@/middleware/apiMiddleware';
-
-export const forgotPassword = async (email) => {
+export const verifyToken = async (verifyToken) => {
   const backendUrl =
     import.meta.env.VITE_BACKEND_URL || 'https://backend-service-rojjrgeqna-ue.a.run.app/';
   try {
-    const response = await fetch(`${backendUrl}api/forgot_password`, {
+    const response = await fetch(`${backendUrl}api/validate_token`, {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ email }),
+      body: JSON.stringify({ token: verifyToken })
     });
     const data = await response.json();
     if (!data.status) {

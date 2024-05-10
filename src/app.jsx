@@ -1,10 +1,10 @@
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
-import "./app.css";
-import "src/global.css";
+import './app.css';
+import 'src/global.css';
 
-import { useScrollToTop } from "src/hooks/use-scroll-to-top";
+import { useScrollToTop } from 'src/hooks/use-scroll-to-top';
 import Router from 'src/routes/sections';
 import ThemeProvider from 'src/theme';
 import { AuthProvider } from './contexts/AuthContext';
@@ -16,6 +16,7 @@ const queryClient = new QueryClient({
     queries: {
       // staleTime: 60 * 1000, // 1 minute
       staleTime: 0,
+      refetchOnWindowFocus: false,
       retry: 1
     }
   }
