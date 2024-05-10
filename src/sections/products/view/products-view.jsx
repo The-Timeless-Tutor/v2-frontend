@@ -36,19 +36,19 @@ export default function ProductsView() {
       </Typography>
 
       <OutlinedInput
-          value={filterName}
-          onChange={e => setFilterName(e.target.value)}
-          placeholder="Search Rooms by name, category, etc."
-          sx={{ width: '100%', marginBottom: 2 }}
-          startAdornment={
-            <InputAdornment position="start">
-              <Iconify
-                icon="eva:search-fill"
-                sx={{ color: 'text.disabled', width: 20, height: 20 }}
-              />
-            </InputAdornment>
-          }
-        />
+        value={filterName}
+        onChange={e => setFilterName(e.target.value)}
+        placeholder="Search Rooms by name, category, etc."
+        sx={{ width: '100%', marginBottom: 2 }}
+        startAdornment={
+          <InputAdornment position="start">
+            <Iconify
+              icon="eva:search-fill"
+              sx={{ color: 'text.disabled', width: 20, height: 20 }}
+            />
+          </InputAdornment>
+        }
+      />
 
       <Grid container spacing={3}>
         {products.map((product) => (

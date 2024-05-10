@@ -6,7 +6,7 @@ import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
 
 // import Iconify from 'src/components/iconify';
-import { products } from 'src/_mock/products';
+
 
 // import AppTasks from '../app-tasks';
 import AppNewsUpdate from '../app-news-update';
@@ -23,6 +23,7 @@ import AppOrderTimeline from '../app-order-timeline';
 import ProductCard from '../../products/product-card';
 import { Button } from '@mui/material';
 import { useGetUser } from '@/sections/login/useGetUser';
+import ExploreRooms from '@/sections/rooms/explore-rooms';
 import { useGetFeeds } from './useFeeds';
 import { useEffect, useState } from 'react';
 
@@ -99,11 +100,9 @@ export default function AppView() {
       </div>
 
       <Grid container spacing={3}>
-        {products.map((product) => (
-          <Grid key={product.id} xs={12} sm={6} md={3}>
-            <ProductCard product={product} />
-          </Grid>
-        ))}
+
+        <ExploreRooms />
+
       </Grid>
     </Container>
   );
