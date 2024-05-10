@@ -1,6 +1,6 @@
-import React from "react";
-import { features } from "../_mock/features";
-import FeatureCard from "./feature-card";
+import React from 'react';
+import { features } from '../../_mock/features';
+import FeatureCard from './feature-card';
 
 const Features = () => {
   return (

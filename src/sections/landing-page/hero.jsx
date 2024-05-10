@@ -1,5 +1,5 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 import {
   heroImg1,
@@ -9,7 +9,7 @@ import {
   Element1,
   Element2,
   WavyLines
-} from "../../public/assets/landing-assets";
+} from '../../../public/assets/landing-assets';
 
 const Hero = () => {
   return (
@@ -25,21 +25,21 @@ const Hero = () => {
               src={heroImg3}
               alt="Left Card"
               className="absolute left-0 transform rotate-[-5deg] z-10 hover:rotate-[-5deg] hover:scale-105 transition-all duration-300 ease-in-out"
-              style={{ width: "40%" }}
+              style={{ width: '40%' }}
             />
             {/* Center Image */}
             <img
               src={heroImg1}
               alt="Center Card"
               className="relative z-20 hover:scale-110 transition-all duration-300 ease-in-out mt-20"
-              style={{ width: "75%" }}
+              style={{ width: '75%' }}
             />
             {/* Right Image */}
             <img
               src={heroImg2}
               alt="Right Card"
               className="absolute right-0 transform rotate-[5deg] z-10 hover:rotate-[5deg] hover:scale-105 transition-all duration-300 ease-in-out"
-              style={{ width: "40%" }}
+              style={{ width: '40%' }}
             />
           </div>
         </div>
@@ -54,7 +54,7 @@ const Hero = () => {
 
           <div className="flex justify-center items-center">
             <Link
-              to={"/register"}
+              to={'/register'}
               className="px-8 py-4 md:px-6 md:py-4 inline-block text-sm rounded-full bg-brand font-semibold uppercase tracking-wide text-white transition-colors duration-300 hover:bg-yellow-600 focus:bg-yellow-600 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed"
             >
               Get Started
