@@ -1,5 +1,5 @@
-import { useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useMemo } from "react";
+import { useNavigate } from "react-router-dom";
 
 export function useRouter() {
   const navigate = useNavigate();
@@ -10,7 +10,7 @@ export function useRouter() {
       forward: () => navigate(1),
       reload: () => window.location.reload(),
       push: (href) => navigate(href),
-      replace: (href) => navigate(href, { replace: true }),
+      replace: (href) => navigate(href, { replace: true })
     }),
     [navigate]
   );

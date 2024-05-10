@@ -7,7 +7,7 @@ import {
   CTA,
   Footer,
   Features
-} from "../landing-page";
+} from '../sections/landing-page';
 
 function LandingHome() {
   return (

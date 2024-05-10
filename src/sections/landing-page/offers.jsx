@@ -1,34 +1,34 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link } from 'react-router-dom';
 import {
   featureMentoring,
   iconOnetoOne,
   iconGroup,
   iconIdea,
   WavyLines
-} from "../../public/assets/landing-assets";
+} from '../../../public/assets/landing-assets';
 
 const offers = [
   {
     id: 1,
     icon: iconOnetoOne,
-    title: "1:1 Sessions",
+    title: '1:1 Sessions',
     description:
-      "1:1 Sessions helps you to have a more interactive session with your mentor for an in-depth discussion about a sub-topic."
+      '1:1 Sessions helps you to have a more interactive session with your mentor for an in-depth discussion about a sub-topic.'
   },
   {
     id: 2,
     icon: iconGroup,
-    title: "Group Sessions",
+    title: 'Group Sessions',
     description:
-      "Group Sessions is our primary way to disseminate huge amount of information to all the interested people."
+      'Group Sessions is our primary way to disseminate huge amount of information to all the interested people.'
   },
   {
     id: 3,
     icon: iconIdea,
-    title: "Like-Minded Peers",
+    title: 'Like-Minded Peers',
     description:
-      "Since everybody have similar interest in their groups, discussions will be more fruitful with more insights."
+      'Since everybody have similar interest in their groups, discussions will be more fruitful with more insights.'
   }
 ];
 
@@ -50,7 +50,7 @@ const Achievement = () => {
           </p>
           <div className="flex justify-center items-center gap-4 mt-6">
             <Link
-              to={"/register"}
+              to={'/register'}
               className="px-8 py-4 md:px-6 md:py-4 inline-block text-sm rounded-full bg-brand font-semibold uppercase tracking-wide text-white transition-colors duration-300 hover:bg-yellow-600 focus:bg-yellow-600 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed"
             >
               Get Started
