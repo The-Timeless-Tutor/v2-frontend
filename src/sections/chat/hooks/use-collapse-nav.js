@@ -1,7 +1,5 @@
 import { useState, useCallback } from 'react';
 
-// ----------------------------------------------------------------------
-
 export default function useCollapseNav() {
   const [openMobile, setOpenMobile] = useState(false);
 
@@ -26,10 +24,10 @@ export default function useCollapseNav() {
   return {
     openMobile,
     collapseDesktop,
-    //
+
     onOpenMobile,
     onCloseMobile,
     onCloseDesktop,
-    onCollapseDesktop,
+    onCollapseDesktop
   };
 }

@@ -1,44 +1,65 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback } from 'react';
 
-import Stack from "@mui/material/Stack";
-import Avatar from "@mui/material/Avatar";
-import Select from "@mui/material/Select";
-import Divider from "@mui/material/Divider";
-import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
-import InputBase from "@mui/material/InputBase";
-import IconButton from "@mui/material/IconButton";
-import ListItemText from "@mui/material/ListItemText";
-import Badge, { badgeClasses } from "@mui/material/Badge";
+import Stack from '@mui/material/Stack';
+import Avatar from '@mui/material/Avatar';
+import Select from '@mui/material/Select';
+import Divider from '@mui/material/Divider';
+import MenuItem from '@mui/material/MenuItem';
+import InputBase from '@mui/material/InputBase';
+import ListItemText from '@mui/material/ListItemText';
+import Badge from '@mui/material/Badge';
 
-import { useMockedUser } from "@/hooks/use-mocked-user";
-
-import Iconify from "src/components/iconify";
-import CustomPopover, { usePopover } from "src/components/custom-popover";
-
-// ----------------------------------------------------------------------
+import Iconify from 'src/components/iconify';
+import CustomPopover, { usePopover } from 'src/components/custom-popover';
+import useUser from '@/hooks/useUser';
 
 export default function ChatNavAccount() {
-  const { user } = useMockedUser();
+  const { user } = useUser();
 
   const popover = usePopover();
 
-  const [status, setStatus] = useState("online");
+  const [status, setStatus] = useState('online');
 
   const handleChangeStatus = useCallback((event) => {
     setStatus(event.target.value);
   }, []);
 
+  // Function to determine badge color based on status
+  const getBadgeColor = (status) => {
+    switch (status) {
+      case 'online':
+        return 'green';
+      case 'busy':
+        return 'red';
+      case 'offline':
+        return 'gray';
+      default:
+        return 'gray';
+    }
+  };
+
   return (
     <>
-      <Badge variant={status} anchorOrigin={{ vertical: "bottom", horizontal: "right" }}>
+      <Badge
+        overlap="circular"
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+        badgeContent=" "
+        sx={{
+          '& .MuiBadge-badge': {
+            backgroundColor: getBadgeColor(status),
+            width: 18,
+            height: 18,
+            borderRadius: '50%'
+          }
+        }}
+      >
         <Avatar
-          src={user?.photoURL}
-          alt={user?.displayName}
+          src={user?.image}
+          alt={user?.username}
           onClick={popover.onOpen}
-          sx={{ cursor: "pointer", width: 48, height: 48 }}
+          sx={{ cursor: 'pointer', width: 48, height: 48 }}
         >
-          {user?.displayName?.charAt(0).toUpperCase()}
+          {user?.username?.charAt(0).toUpperCase()}
         </Avatar>
       </Badge>
 
@@ -54,46 +75,29 @@ export default function ChatNavAccount() {
           }}
         >
           <ListItemText
-            primary={user?.displayName}
+            primary={user?.username}
             secondary={user?.email}
-            secondaryTypographyProps={{ component: "span" }}
+            secondaryTypographyProps={{ component: 'span' }}
           />
-
-          <Tooltip title="Log out">
-            <IconButton color="error">
-              <Iconify icon="ic:round-power-settings-new" />
-            </IconButton>
-          </Tooltip>
         </Stack>
 
-        <Divider sx={{ borderStyle: "dashed" }} />
+        <Divider sx={{ borderStyle: 'dashed' }} />
 
         <Stack sx={{ p: 1 }}>
           <MenuItem>
-            <Badge
-              variant={status}
-              sx={{
-                [`& .${badgeClasses.badge}`]: {
-                  position: "static",
-                  m: 0.75,
-                  width: 12,
-                  height: 12,
-                  flexShrink: 0
-                }
-              }}
-            />
+            <Iconify icon="eva:checkmark-fill" width={24} />
 
             <Select
               native
               fullWidth
               value={status}
               onChange={handleChangeStatus}
-              input={<InputBase sx={{ pl: 2 }} />}
+              input={<InputBase sx={{ pl: 0, pr: 2 }} />}
               inputProps={{
-                sx: { textTransform: "capitalize" }
+                sx: { textTransform: 'capitalize' }
               }}
             >
-              {["online", "alway", "busy", "offline"].map((option) => (
+              {['online', 'busy', 'offline'].map((option) => (
                 <option key={option} value={option}>
                   {option}
                 </option>

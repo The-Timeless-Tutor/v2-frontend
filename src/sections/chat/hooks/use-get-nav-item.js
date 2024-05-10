@@ -1,5 +1,3 @@
-// ----------------------------------------------------------------------
-
 export default function useGetNavItem({ currentUserId, conversation }) {
   const { messages, participants } = conversation;
 
@@ -33,6 +31,6 @@ export default function useGetNavItem({ currentUserId, conversation }) {
     displayText,
     participants: participantsInConversation,
     lastActivity: lastMessage.createdAt,
-    hasOnlineInGroup,
+    hasOnlineInGroup
   };
 }

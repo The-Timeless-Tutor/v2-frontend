@@ -1,10 +1,10 @@
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import Avatar from "@mui/material/Avatar";
-import Typography from "@mui/material/Typography";
-import ListItemButton from "@mui/material/ListItemButton";
+import Avatar from '@mui/material/Avatar';
+import Typography from '@mui/material/Typography';
+import ListItemButton from '@mui/material/ListItemButton';
 
-import SearchNotFound from "@/components/search-not-found/search-not-found";
+import SearchNotFound from '@/components/search-not-found/search-not-found';
 
 // ----------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ export default function ChatNavSearchResults({ query, results, onClickResult }) 
           mb: 2
         }}
       >
-        Contacts ({totalResults})
+        Rooms ({totalResults})
       </Typography>
 
       {notFound ? (
@@ -30,9 +30,9 @@ export default function ChatNavSearchResults({ query, results, onClickResult }) 
           query={query}
           sx={{
             p: 3,
-            mx: "auto",
+            mx: 'auto',
             width: `calc(100% - 40px)`,
-            bgcolor: "background.neutral"
+            bgcolor: 'background.neutral'
           }}
         />
       ) : (
@@ -44,7 +44,7 @@ export default function ChatNavSearchResults({ query, results, onClickResult }) 
               sx={{
                 px: 2.5,
                 py: 1.5,
-                typography: "subtitle2"
+                typography: 'subtitle2'
               }}
             >
               <Avatar alt={result.name} src={result.avatarUrl} sx={{ mr: 2 }} />

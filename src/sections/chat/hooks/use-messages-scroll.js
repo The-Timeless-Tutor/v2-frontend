@@ -1,7 +1,5 @@
 import { useRef, useEffect, useCallback } from 'react';
 
-// ----------------------------------------------------------------------
-
 export default function useMessagesScroll(messages) {
   const messagesEndRef = useRef(null);
 
@@ -28,6 +26,6 @@ export default function useMessagesScroll(messages) {
   );
 
   return {
-    messagesEndRef,
+    messagesEndRef
   };
 }

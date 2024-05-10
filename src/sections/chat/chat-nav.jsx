@@ -1,41 +1,102 @@
-import PropTypes from "prop-types";
-import { useState, useEffect, useCallback } from "react";
+import PropTypes from 'prop-types';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 
-import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import Drawer from "@mui/material/Drawer";
-import { useTheme } from "@mui/material/styles";
-import TextField from "@mui/material/TextField";
-import IconButton from "@mui/material/IconButton";
-import InputAdornment from "@mui/material/InputAdornment";
-import ClickAwayListener from "@mui/material/ClickAwayListener";
+import Box from '@mui/material/Box';
+import { Card, CardActionArea, CardContent, Typography } from '@mui/material';
+import Stack from '@mui/material/Stack';
+import Drawer from '@mui/material/Drawer';
+import { useTheme } from '@mui/material/styles';
+import TextField from '@mui/material/TextField';
+import IconButton from '@mui/material/IconButton';
+import InputAdornment from '@mui/material/InputAdornment';
+import ClickAwayListener from '@mui/material/ClickAwayListener';
 
-import { paths } from "@/routes/path";
-import { useRouter } from "src/routes/hooks";
+import { paths } from '@/routes/path';
+import { useRouter } from 'src/routes/hooks';
 
-import { useResponsive } from "src/hooks/use-responsive";
+import { useResponsive } from 'src/hooks/use-responsive';
 
-import Iconify from "src/components/iconify";
-import Scrollbar from "src/components/scrollbar";
+import Iconify from 'src/components/iconify';
+import Scrollbar from 'src/components/scrollbar';
 
-import { useCollapseNav } from "./hooks";
-import ChatNavItem from "./chat-nav-item";
-import ChatNavAccount from "./chat-nav-account";
-import { ChatNavItemSkeleton } from "./chat-skeleton";
-import ChatNavSearchResults from "./chat-nav-search-results";
+import { useCollapseNav } from './hooks';
+import ChatNavItem from './chat-nav-item';
+import ChatNavAccount from './chat-nav-account';
+import { ChatNavItemSkeleton } from './chat-skeleton';
+import ChatNavSearchResults from './chat-nav-search-results';
 
-// ----------------------------------------------------------------------
+import useRoom from '@/hooks/useRoom';
+import useUser from '@/hooks/useUser';
+import useMessage from '@/hooks/useMessage';
 
 const NAV_WIDTH = 320;
-
 const NAV_COLLAPSE_WIDTH = 96;
 
 export default function ChatNav({ loading, contacts, conversations, selectedConversationId }) {
   const theme = useTheme();
-
   const router = useRouter();
+  const mdUp = useResponsive('up', 'md');
 
-  const mdUp = useResponsive("up", "md");
+  const { user } = useUser();
+  const { messages } = useMessage('test');
+
+  const { room: rooms = [], isLoading: isRoomLoading, isError: isRoomError } = useRoom(user.email);
+
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const filteredRooms = useMemo(() => {
+    if (!rooms) return [];
+    return rooms.filter((room) => room.toLowerCase().includes(searchQuery));
+  }, [rooms, searchQuery]);
+
+  const renderRooms = () => {
+    if (isRoomLoading) return <ChatNavItemSkeleton count={5} />;
+    if (isRoomError) return <Typography sx={{ mx: 2, my: 1 }}>Failed to load rooms</Typography>;
+
+    if (filteredRooms.length > 0) {
+      return (
+        <>
+          {filteredRooms.map((room) => (
+            <Card key={room} sx={{ mb: 2, mx: 2, borderRadius: 1 }}>
+              <CardActionArea onClick={() => console.log(`Click`)}>
+                <CardContent>
+                  <Typography variant="subtitle2" noWrap>
+                    {room}
+                  </Typography>
+                </CardContent>
+              </CardActionArea>
+            </Card>
+          ))}
+        </>
+      );
+    }
+
+    return <Typography sx={{ mx: 2, my: 1, textAlign: 'center' }}>No rooms available</Typography>;
+  };
+
+  const handleSearchRooms = useCallback((event) => {
+    const query = event.target.value;
+    setSearchQuery(query.toLowerCase());
+  }, []);
+
+  const renderSearchInput = (
+    <ClickAwayListener onClickAway={() => setSearchQuery('')}>
+      <TextField
+        fullWidth
+        value={searchQuery}
+        onChange={handleSearchRooms}
+        placeholder="Search Rooms..."
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <Iconify icon="eva:search-fill" sx={{ color: 'text.disabled' }} />
+            </InputAdornment>
+          )
+        }}
+        sx={{ mt: 2.5 }}
+      />
+    </ClickAwayListener>
+  );
 
   const {
     collapseDesktop,
@@ -47,8 +108,8 @@ export default function ChatNav({ loading, contacts, conversations, selectedConv
     onCloseMobile
   } = useCollapseNav();
 
-  const [searchContacts, setSearchContacts] = useState({
-    query: "",
+  const [searchRooms, setsearchRooms] = useState({
+    query: '',
     results: []
   });
 
@@ -73,9 +134,9 @@ export default function ChatNav({ loading, contacts, conversations, selectedConv
     router.push(paths.dashboard.chat);
   }, [mdUp, onCloseMobile, router]);
 
-  const handleSearchContacts = useCallback(
+  const handlesearchRooms = useCallback(
     (inputValue) => {
-      setSearchContacts((prevState) => ({
+      setsearchRooms((prevState) => ({
         ...prevState,
         query: inputValue
       }));
@@ -85,7 +146,7 @@ export default function ChatNav({ loading, contacts, conversations, selectedConv
           contact.name.toLowerCase().includes(inputValue)
         );
 
-        setSearchContacts((prevState) => ({
+        setsearchRooms((prevState) => ({
           ...prevState,
           results
         }));
@@ -95,8 +156,8 @@ export default function ChatNav({ loading, contacts, conversations, selectedConv
   );
 
   const handleClickAwaySearch = useCallback(() => {
-    setSearchContacts({
-      query: "",
+    setsearchRooms({
+      query: '',
       results: []
     });
   }, []);
@@ -119,12 +180,12 @@ export default function ChatNav({ loading, contacts, conversations, selectedConv
         zIndex: 9,
         width: 32,
         height: 32,
-        position: "absolute",
+        position: 'absolute',
         borderRadius: `0 12px 12px 0`,
         bgcolor: theme.palette.primary.main,
         boxShadow: theme.customShadows.primary,
         color: theme.palette.primary.contrastText,
-        "&:hover": {
+        '&:hover': {
           bgcolor: theme.palette.primary.darker
         }
       }}
@@ -157,29 +218,10 @@ export default function ChatNav({ loading, contacts, conversations, selectedConv
 
   const renderListResults = (
     <ChatNavSearchResults
-      query={searchContacts.query}
-      results={searchContacts.results}
+      query={searchRooms.query}
+      results={searchRooms.results}
       onClickResult={handleClickResult}
     />
-  );
-
-  const renderSearchInput = (
-    <ClickAwayListener onClickAway={handleClickAwaySearch}>
-      <TextField
-        fullWidth
-        value={searchContacts.query}
-        onChange={(event) => handleSearchContacts(event.target.value)}
-        placeholder="Search contacts..."
-        InputProps={{
-          startAdornment: (
-            <InputAdornment position="start">
-              <Iconify icon="eva:search-fill" sx={{ color: "text.disabled" }} />
-            </InputAdornment>
-          )
-        }}
-        sx={{ mt: 2.5 }}
-      />
-    </ClickAwayListener>
   );
 
   const renderContent = (
@@ -194,7 +236,7 @@ export default function ChatNav({ loading, contacts, conversations, selectedConv
 
         <IconButton onClick={handleToggleNav}>
           <Iconify
-            icon={collapseDesktop ? "eva:arrow-ios-forward-fill" : "eva:arrow-ios-back-fill"}
+            icon={collapseDesktop ? 'eva:arrow-ios-forward-fill' : 'eva:arrow-ios-back-fill'}
           />
         </IconButton>
 
@@ -207,13 +249,7 @@ export default function ChatNav({ loading, contacts, conversations, selectedConv
 
       <Box sx={{ p: 2.5, pt: 0 }}>{!collapseDesktop && renderSearchInput}</Box>
 
-      <Scrollbar sx={{ pb: 1 }}>
-        {searchContacts.query && renderListResults}
-
-        {loading && renderSkeleton}
-
-        {!searchContacts.query && !!conversations.allIds.length && renderList}
-      </Scrollbar>
+      <Scrollbar sx={{ pb: 1 }}>{renderRooms}</Scrollbar>
     </>
   );
 
@@ -228,7 +264,7 @@ export default function ChatNav({ loading, contacts, conversations, selectedConv
             flexShrink: 0,
             width: NAV_WIDTH,
             borderRight: `solid 1px ${theme.palette.divider}`,
-            transition: theme.transitions.create(["width"], {
+            transition: theme.transitions.create(['width'], {
               duration: theme.transitions.duration.shorter
             }),
             ...(collapseDesktop && {
