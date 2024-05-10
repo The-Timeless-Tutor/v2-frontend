@@ -31,10 +31,10 @@ import { useGetCategories, useCreateRoom } from 'src/sections/rooms/view/useRoom
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#F99E1F', // Set the primary color for other buttons
+            main: '#1877F2', // Set the primary color for other buttons
         },
         createRoom: {
-            main: '#ffba5abd', // Set the primary color for "Create Room" button
+            main: '#E9EFF9', // Set the primary color for "Create Room" button
         },
     },
 });
