@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Form, useForm } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
@@ -17,48 +17,60 @@ import InputAdornment from '@mui/material/InputAdornment';
 import { bgGradient } from 'src/theme/css';
 
 import { useRouter } from 'src/routes/hooks';
-import { useAuth } from 'src/contexts/AuthContext';
-
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
 
-import { loginWithEmail } from './apiLogin';
+import { useLogin } from './useLogin';
 
 export default function LoginView() {
   const theme = useTheme();
-  const { setIsAuthenticated } = useAuth(); // setIsAuthenticated to set authenticated state once login is successful
+  const { login, isLoading } = useLogin();
+  const [showPassword, setShowPassword] = useState(false);
+
   const router = useRouter();
   const {
     register,
     handleSubmit,
-    setError,
-    clearErrors,
     formState: { errors },
   } = useForm();
 
-  const [showPassword, setShowPassword] = useState(false);
-
   const onSubmit = (formData) => {
     if (!formData) return;
-    const { email, password } = formData;
-    loginWithEmail(email, password, setIsAuthenticated);
+    login(formData);
+  };
+
+  const handleForgotPasswordClick = () => {
+    router.push('/forgot-password');
   };
 
   const handleSignupClick = () => {
     router.push('/register');
   };
 
+  const handleGoogleClick = () => {
+    const clientId = import.meta.env.VITE_GOOGLE_CLIENT_ID;
+    const redirectUri = `${window.location.origin}/oauth-callback`;
+    const scope = encodeURIComponent('openid email profile');
+    const responseType = 'code';
+    const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=${responseType}&scope=${scope}&access_type=offline&prompt=consent`;
+
+    window.location.href = authUrl;
+  };
+
   const renderForm = (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
         <TextField
+          type="email"
           name="email"
           label="Email address"
           {...register('email', {
             required: 'Email is required',
           })}
+          error={!!errors.email}
+          helperText={errors?.email?.message}
+          disabled={isLoading}
         />
-        {errors.email && <p>{errors?.email?.message}</p>}
 
         <TextField
           name="password"
@@ -76,12 +88,19 @@ export default function LoginView() {
           {...register('password', {
             required: 'Password is required',
           })}
+          error={!!errors.password}
+          helperText={errors?.password?.message}
+          disabled={isLoading}
         />
-        {errors.password && <p className="text-sm text-red-500">{errors.password.message}</p>}
       </Stack>
 
       <Stack direction="row" alignItems="center" justifyContent="flex-end" sx={{ my: 3 }}>
-        <Link variant="subtitle2" underline="hover">
+        <Link
+          variant="subtitle2"
+          underline="hover"
+          sx={{ ml: 0.5, cursor: 'pointer' }}
+          onClick={handleForgotPasswordClick}
+        >
           Forgot password?
         </Link>
       </Stack>
@@ -92,6 +111,7 @@ export default function LoginView() {
         type="submit"
         variant="contained"
         color="inherit"
+        loading={isLoading}
         // onClick={handleClick}
       >
         Login
@@ -145,6 +165,7 @@ export default function LoginView() {
               color="inherit"
               variant="outlined"
               sx={{ borderColor: alpha(theme.palette.grey[500], 0.16) }}
+              onClick={handleGoogleClick}
             >
               <Iconify icon="eva:google-fill" color="#DF3E30" />
             </Button>
