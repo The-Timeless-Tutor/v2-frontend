@@ -11,8 +11,6 @@ import { alpha, useTheme } from '@mui/material/styles';
 
 import { bgGradient } from 'src/theme/css';
 
-import Logo from 'src/components/logo';
-
 import { useForgotPassword } from './useForgotPassword';
 
 // ----------------------------------------------------------------------
@@ -61,7 +59,7 @@ export default function ForgotPasswordView() {
         color="inherit"
         loading={isLoading}
       >
-        Send
+        {isLoading ? 'Sending...' : 'Send'}
       </LoadingButton>
     </form>
   );
@@ -73,23 +71,15 @@ export default function ForgotPasswordView() {
           color: alpha(theme.palette.background.default, 0.9),
           imgUrl: '/assets/background/overlay_4.jpg'
         }),
-        height: 1
+        height: '90dvh'
       }}
     >
-      <Logo
-        sx={{
-          position: 'fixed',
-          top: { xs: 16, md: 24 },
-          left: { xs: 16, md: 24 }
-        }}
-      />
-
       <Stack alignItems="center" justifyContent="center" sx={{ height: 1 }}>
         <Card
           sx={{
             p: 5,
             width: 1,
-            maxWidth: 700
+            maxWidth: 600
           }}
         >
           <Typography variant="h4">Forgot your Password?</Typography>

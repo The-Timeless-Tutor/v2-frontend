@@ -20,13 +20,14 @@ const Navbar = () => {
 
   return (
     <header
-      className={`border border-red-500 fixed top-0 left-0 right-0 z-30 px-6 md:bg-opacity-90  h-[80px] transition duration-300 ease-in-out ${
+      className={`fixed top-0 left-0 right-0 z-30 px-6 md:bg-opacity-90  h-[80px] transition duration-300 ease-in-out ${
         !top && 'bg-white backdrop-blur-sm shadow-lg'
       }`}
     >
       <div className="md:max-w-[1480px] max-w-[600px] mx-auto w-full h-full flex justify-between items-center ">
-        <img src={logo} className="h-[30px]" />
-
+        <Link to="/home">
+          <img src={logo} className="h-[30px]" />
+        </Link>
         <div className="hidden md:flex items-center ">
           <ul className="flex gap-4 font-semibold">
             <li>
@@ -65,7 +66,7 @@ const Navbar = () => {
         <div className="hidden md:flex">
           <Link
             to="/login"
-            className="px-8 py-4 md:px-6 md:py-4 inline-block text-sm rounded-full bg-brand font-semibold uppercase tracking-wide text-white transition-colors duration-300 hover:bg-yellow-600 focus:bg-yellow-600 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed"
+            className="px-8 py-3 md:px-6 md:py-3 inline-block text-sm rounded-lg bg-brand font-semibold uppercase tracking-wide text-white transition-colors duration-300 hover:bg-yellow-600 focus:bg-yellow-600 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed"
           >
             Login
           </Link>
@@ -76,7 +77,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className={toggle ? '  bg-white w-full md:hidden border-b' : 'hidden'}>
+      <div className={toggle ? 'bg-white w-full md:hidden border-b' : 'hidden'}>
         <ul className="flex flex-col items-center justify-center font-semibold">
           <li className="p-4 hover:bg-gray-100">
             <NavLink to="/home" className={({ isActive }) => (isActive ? 'text-brand' : '')}>
@@ -97,7 +98,7 @@ const Navbar = () => {
           <div className="flex flex-col my-4 gap-4">
             <Link
               to="/login"
-              className="px-8 py-4 md:px-6 md:py-4 inline-block text-sm rounded-full bg-brand font-semibold uppercase tracking-wide text-white transition-colors duration-300 hover:bg-yellow-600 focus:bg-yellow-600 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed"
+              className="px-8 py-3 inline-block text-sm rounded-lg bg-brand font-semibold uppercase tracking-wide text-white transition-colors duration-300 hover:bg-yellow-600 focus:bg-yellow-600 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed"
             >
               Login
             </Link>

@@ -295,10 +295,7 @@ export default function RegisterView() {
           color: alpha(theme.palette.background.default, 0.9),
           imgUrl: '/assets/background/overlay_4.jpg'
         }),
-        minHeight: '100vh', // Ensures full screen height
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center'
+        height: '90dvh'
       }}
     >
       <Stack alignItems="center" justifyContent="center" sx={{ height: 1 }}>
@@ -307,7 +304,7 @@ export default function RegisterView() {
             p: 5,
             width: 1,
             height: 1,
-            maxWidth: 700,
+            maxWidth: 600,
             overflowY: 'auto'
           }}
         >

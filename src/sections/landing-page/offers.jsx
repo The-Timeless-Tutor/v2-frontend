@@ -51,7 +51,7 @@ const Achievement = () => {
           <div className="flex justify-center items-center gap-4 mt-6">
             <Link
               to={'/register'}
-              className="px-8 py-4 md:px-6 md:py-4 inline-block text-sm rounded-full bg-brand font-semibold uppercase tracking-wide text-white transition-colors duration-300 hover:bg-yellow-600 focus:bg-yellow-600 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed"
+              className="px-8 py-3 inline-block text-sm rounded-lg bg-brand font-semibold uppercase tracking-wide text-white transition-colors duration-300 hover:bg-yellow-600 focus:bg-yellow-600 focus:outline-none focus:ring focus:ring-yellow-300 focus:ring-offset-2 disabled:cursor-not-allowed"
             >
               Get Started
             </Link>

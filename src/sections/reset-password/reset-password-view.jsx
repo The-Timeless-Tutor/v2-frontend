@@ -14,8 +14,6 @@ import Iconify from '@/components/iconify';
 
 import { bgGradient } from 'src/theme/css';
 
-import Logo from 'src/components/logo';
-
 import { useResetPassword } from './useResetPassword';
 import { useVerifyToken } from '../verify-token/useVerifyToken';
 
@@ -25,7 +23,6 @@ export default function ResetPasswordView() {
   const theme = useTheme();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  // const [tokenValid, setTokenValid] = useState(null);
 
   const {
     register,
@@ -167,23 +164,15 @@ export default function ResetPasswordView() {
           color: alpha(theme.palette.background.default, 0.9),
           imgUrl: '/assets/background/overlay_4.jpg'
         }),
-        height: 1
+        height: '90dvh'
       }}
     >
-      <Logo
-        sx={{
-          position: 'fixed',
-          top: { xs: 16, md: 24 },
-          left: { xs: 16, md: 24 }
-        }}
-      />
-
       <Stack alignItems="center" justifyContent="center" sx={{ height: 1 }}>
         <Card
           sx={{
             p: 5,
             width: 1,
-            maxWidth: 700
+            maxWidth: 600
           }}
         >
           <Typography variant="h4">Forgot your Password?</Typography>
