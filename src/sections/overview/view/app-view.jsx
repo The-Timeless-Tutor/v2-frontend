@@ -49,26 +49,22 @@ export default function AppView() {
           title: `${room.host_details.username} created a scheduled session for "${room.name}" group`,
           description: room.description,
           image: `/assets/images/covers/cover_${Math.floor(Math.random() * 5) + 1}.jpg`,
-          postedAt: new Date(room.created_at),
+          postedAt: new Date(room.created_at)
         }));
       setNewsUpdates(updates);
     }
   }, [rooms]);
 
-  if (isLoading) {
-    // TODO: add loading indicator
-    return <div>Loading Feeds...</div>;
-  }
-
   return (
     <Container maxWidth="xl">
       <Typography variant="h4" sx={{ mb: 3 }}>
-        Hi {(!isLoading && user?.name) || user?.email}, Welcome back 👋
+        Hi {user?.name || user?.email}, Welcome back 👋
       </Typography>
 
       <Grid container spacing={3}>
         <Grid xs={12} md={6} lg={8}>
-          <AppNewsUpdate title="🙊 News Update" list={newsUpdates} />
+          {}
+          <AppNewsUpdate title="🙊 News Update" list={newsUpdates} isLoading={isLoading} />
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
@@ -81,10 +77,10 @@ export default function AppView() {
                 'Server Setup using Ngrok',
                 'Resume Optimization Session',
                 'SEO Marketing Expert',
-                'Job Seekers',
+                'Job Seekers'
               ][index],
               type: `order${index + 1}`,
-              time: faker.date.future(),
+              time: faker.date.future()
             }))}
           />
         </Grid>
