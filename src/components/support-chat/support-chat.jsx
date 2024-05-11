@@ -8,11 +8,11 @@ import {
   Typography,
   Divider,
   Slide,
-  Stack,
+  Stack
 } from '@mui/material';
-import CloseIcon from '@mui/icons-material/Close';
-import KeyboardArrowDownRoundedIcon from '@mui/icons-material/KeyboardArrowDownRounded';
-import ChatIcon from '@mui/icons-material/Chat';
+
+import { IoIosArrowDown } from 'react-icons/io';
+import { IoChatboxEllipsesOutline } from 'react-icons/io5';
 
 import { apiMiddleware } from '@/middleware/apiMiddleware';
 import { useAccessToken } from './useAccessToken';
@@ -27,7 +27,7 @@ export default function SupportChat() {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
+    formState: { errors }
   } = useForm();
 
   const chatboxToggleHandler = () => {
@@ -47,7 +47,11 @@ export default function SupportChat() {
           onClick={chatboxToggleHandler}
           sx={{ borderRadius: '50%', minWidth: 56, height: 56 }}
         >
-          {isChatOpen ? <KeyboardArrowDownRoundedIcon /> : <ChatIcon />}
+          {isChatOpen ? (
+            <IoIosArrowDown className="text-2xl" />
+          ) : (
+            <IoChatboxEllipsesOutline className="text-2xl" />
+          )}
         </Button>
         <Slide direction="up" in={isChatOpen} mountOnEnter unmountOnExit>
           <Box
@@ -60,7 +64,7 @@ export default function SupportChat() {
               borderColor: 'grey.300',
               borderRadius: 2,
               bgcolor: 'background.paper',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)'
             }}
           >
             <Box
@@ -70,7 +74,7 @@ export default function SupportChat() {
                 justifyContent: 'space-between',
                 p: 2,
                 borderTopLeftRadius: 8,
-                borderTopRightRadius: 8,
+                borderTopRightRadius: 8
               }}
             >
               <Stack direction="column" spacing={2}>

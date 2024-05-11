@@ -1,5 +1,5 @@
 import React from 'react';
-import { Blob2, logo, WavyLines } from '../assets/landing-assets';
+import { Blob2, logo, WavyLines } from '../../assets/landing-assets';
 import { FaFacebookF, FaDribbble, FaLinkedinIn, FaInstagram, FaBehance } from 'react-icons/fa';
 
 const Footer = () => {

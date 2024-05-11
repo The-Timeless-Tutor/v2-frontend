@@ -16,21 +16,21 @@ import { useToast } from 'src/components/ui/use-toast';
 const MENU_OPTIONS = [
   {
     label: 'Home',
-    icon: 'eva:home-fill',
+    icon: 'eva:home-fill'
   },
   {
     label: 'Profile',
-    icon: 'eva:person-fill',
+    icon: 'eva:person-fill'
   },
   {
     label: 'Settings',
-    icon: 'eva:settings-2-fill',
-  },
+    icon: 'eva:settings-2-fill'
+  }
 ];
 
 export default function AccountPopover() {
   const [open, setOpen] = useState(null);
-  const { logout } = useAuth();
+  const { user, logout } = useAuth();
   const { toast } = useToast();
 
   const handleOpen = (event) => {
@@ -45,7 +45,7 @@ export default function AccountPopover() {
     setOpen(null);
     logout();
     toast({
-      description: 'Successfully logged out!',
+      description: 'Successfully logged out!'
     });
   };
 
@@ -59,20 +59,20 @@ export default function AccountPopover() {
           background: (theme) => alpha(theme.palette.grey[500], 0.08),
           ...(open && {
             background: (theme) =>
-              `linear-gradient(135deg, ${theme.palette.primary.light} 0%, ${theme.palette.primary.main} 100%)`,
-          }),
+              `linear-gradient(135deg, ${theme.palette.primary.light} 0%, ${theme.palette.primary.main} 100%)`
+          })
         }}
       >
         <Avatar
-          src={account.photoURL}
-          alt={account.displayName}
+          src={user?.image}
+          alt={user?.name}
           sx={{
             width: 36,
             height: 36,
-            border: (theme) => `solid 2px ${theme.palette.background.default}`,
+            border: (theme) => `solid 2px ${theme.palette.background.default}`
           }}
         >
-          {account.displayName.charAt(0).toUpperCase()}
+          {user?.email.charAt(0)}
         </Avatar>
       </IconButton>
 
@@ -87,16 +87,16 @@ export default function AccountPopover() {
             p: 0,
             mt: 1,
             ml: 0.75,
-            width: 200,
-          },
+            width: 200
+          }
         }}
       >
         <Box sx={{ my: 1.5, px: 2 }}>
           <Typography variant="subtitle2" noWrap>
-            {account.displayName}
+            {user?.name}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {account.email}
+            {user?.email}
           </Typography>
         </Box>
 

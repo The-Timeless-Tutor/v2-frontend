@@ -15,6 +15,8 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { alpha, useTheme } from '@mui/material/styles';
 import InputAdornment from '@mui/material/InputAdornment';
 import Checkbox from '@mui/material/Checkbox';
+import { useMediaQuery } from '@mui/material';
+import { FcGoogle } from 'react-icons/fc';
 
 import { useRouter } from 'src/routes/hooks';
 
@@ -24,11 +26,13 @@ import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
 import { useRegister } from './useRegister';
 import { generateUniqueUsername } from '@/utils/helpers';
+import { WorldcoinLogo } from '@/assets/landing-assets';
 
 // ----------------------------------------------------------------------
 
 export default function RegisterView() {
   const theme = useTheme();
+  const mdUp = useMediaQuery(theme.breakpoints.up('md'));
   const { registerUser, isLoading } = useRegister();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -299,20 +303,44 @@ export default function RegisterView() {
               size="large"
               color="inherit"
               variant="outlined"
-              sx={{ borderColor: alpha(theme.palette.grey[500], 0.16) }}
+              sx={{
+                borderColor: alpha(theme.palette.grey[500], 0.16),
+                transition: 'all 0.3s ease-in-out',
+                ':hover': {
+                  transform: 'scale(1.05)'
+                }
+              }}
               onClick={handleGoogleClick}
             >
-              <Iconify icon="eva:google-fill" color="#DF3E30" />
+              <FcGoogle size={40} />
+              {mdUp && <Typography sx={{ ml: 1 }}>Sign up with Google</Typography>}
             </Button>
-
             <Button
               fullWidth
               size="large"
               color="inherit"
               variant="outlined"
-              sx={{ borderColor: alpha(theme.palette.grey[500], 0.16) }}
+              sx={{
+                borderColor: alpha(theme.palette.grey[500], 0.16),
+                backgroundColor: '#221d1d',
+                color: '#fff',
+                width: '50',
+                height: 60,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.3s ease-in-out',
+                ':hover': {
+                  color: '#fff',
+                  backgroundColor: '#221d1d',
+                  transform: 'scale(1.05)'
+                }
+              }}
             >
-              <Iconify icon="arcticons:worldcoin" color="#1877F2" />
+              <img src={WorldcoinLogo} alt="Worldcoin Logo" style={{ width: 60, height: 60 }} />
+              {mdUp && (
+                <Typography sx={{ ml: 1, whiteSpace: 'nowrap' }}>Sign up with Worldcoin</Typography>
+              )}
             </Button>
           </Stack>
 

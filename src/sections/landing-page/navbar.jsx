@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { logo } from '../assets/landing-assets';
+import { logo } from '../../assets/landing-assets';
 import { Link, NavLink } from 'react-router-dom';
 import { RxCross1, RxHamburgerMenu } from 'react-icons/rx';
 
@@ -20,7 +20,7 @@ const Navbar = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-30 px-6 md:bg-opacity-90  h-[80px] transition duration-300 ease-in-out ${
+      className={`border border-red-500 fixed top-0 left-0 right-0 z-30 px-6 md:bg-opacity-90  h-[80px] transition duration-300 ease-in-out ${
         !top && 'bg-white backdrop-blur-sm shadow-lg'
       }`}
     >

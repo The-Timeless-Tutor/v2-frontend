@@ -8,7 +8,7 @@ import {
   Element1,
   Element2,
   WavyLines
-} from '../assets/landing-assets';
+} from '../../assets/landing-assets';
 
 const Hero = () => {
   return (
