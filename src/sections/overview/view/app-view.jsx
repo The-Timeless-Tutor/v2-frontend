@@ -1,6 +1,5 @@
 // eslint-disable-next-line no-console
 import { faker } from '@faker-js/faker';
-
 import Container from '@mui/material/Container';
 import Grid from '@mui/material/Unstable_Grid2';
 import Typography from '@mui/material/Typography';
@@ -25,6 +24,8 @@ import { Button } from '@mui/material';
 import { useGetUser } from '@/sections/login/useGetUser';
 import { useGetFeeds } from './useFeeds';
 import { useEffect, useState } from 'react';
+import { useSession } from './useSessions';
+import CreateSessionForm from '../app-create-session-form';
 
 // import ProductSort from '../product-sort';
 // import ProductFilters from '../product-filters';
@@ -33,10 +34,12 @@ import { useEffect, useState } from 'react';
 // ----------------------------------------------------------------------
 
 export default function AppView() {
+  const [open, setOpen] = useState(false);
   const { user, isLoading: isLoadingUser } = useGetUser();
   const { feeds, isLoading: isLoadingFeeds } = useGetFeeds();
+  const { session, isLoading: isLoadingSession } = useSession();
   const { rooms, blogs } = feeds || {};
-  const isLoading = isLoadingUser || isLoadingFeeds;
+  const isLoading = isLoadingUser || isLoadingFeeds || isLoadingSession;
   const [newsUpdates, setNewsUpdates] = useState([]);
 
   useEffect(() => {
@@ -49,16 +52,15 @@ export default function AppView() {
           title: `${room.host_details.username} created a scheduled session for "${room.name}" group`,
           description: room.description,
           image: `/assets/images/covers/cover_${Math.floor(Math.random() * 5) + 1}.jpg`,
-          postedAt: new Date(room.created_at),
+          postedAt: new Date(room.created_at)
         }));
       setNewsUpdates(updates);
     }
   }, [rooms]);
 
-  if (isLoading) {
-    // TODO: add loading indicator
-    return <div>Loading Feeds...</div>;
-  }
+  const handleToggle = () => {
+    setOpen(!open);
+  };
 
   return (
     <Container maxWidth="xl">
@@ -69,6 +71,10 @@ export default function AppView() {
       <Grid container spacing={3}>
         <Grid xs={12} md={6} lg={8}>
           <AppNewsUpdate title="🙊 News Update" list={newsUpdates} />
+          <Button variant="contained" color="primary" onClick={handleToggle} sx={{ mb: 2 }}>
+            Create Session
+          </Button>
+          <CreateSessionForm open={open} handleToggle={handleToggle} />
         </Grid>
 
         <Grid xs={12} md={6} lg={4}>
@@ -81,15 +87,14 @@ export default function AppView() {
                 'Server Setup using Ngrok',
                 'Resume Optimization Session',
                 'SEO Marketing Expert',
-                'Job Seekers',
+                'Job Seekers'
               ][index],
               type: `order${index + 1}`,
-              time: faker.date.future(),
+              time: faker.date.future()
             }))}
           />
         </Grid>
       </Grid>
-
       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Typography variant="h4" sx={{ mb: 3, mt: 5 }}>
           🏛️ Recommended Rooms
@@ -97,7 +102,6 @@ export default function AppView() {
 
         <Button variant="text">+ Explore</Button>
       </div>
-
       <Grid container spacing={3}>
         {products.map((product) => (
           <Grid key={product.id} xs={12} sm={6} md={3}>
