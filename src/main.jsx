@@ -2,6 +2,7 @@ import { Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import 'remixicon/fonts/remixicon.css'
 
 import App from './app';
 import FullPageSpinner from './components/ui/spinner';
