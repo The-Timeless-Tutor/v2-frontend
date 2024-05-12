@@ -1,21 +1,21 @@
 import { apiMiddleware } from '@/middleware/apiMiddleware';
 
-export const session = async () => {
+export const session = async (formData) => {
+  console.log(formData);
   try {
     const response = await apiMiddleware(`api/call/call_rooms/`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'
-      }
+      },
+      body: JSON.stringify(formData)
     });
 
     if (!response.ok) {
       throw new Error(data.message);
     }
-
     const data = await response.json();
     console.log(data);
-
     return data.data;
   } catch (error) {
     throw new Error(error.message);

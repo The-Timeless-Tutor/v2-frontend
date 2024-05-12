@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 
 // import Iconify from 'src/components/iconify';
 
-
 // import AppTasks from '../app-tasks';
 import AppNewsUpdate from '../app-news-update';
 import AppOrderTimeline from '../app-order-timeline';
@@ -25,7 +24,7 @@ import { useGetUser } from '@/sections/login/useGetUser';
 import ExploreRooms from '@/sections/rooms/explore-rooms';
 import { useGetFeeds } from './useFeeds';
 import { useEffect, useState } from 'react';
-import { useSession } from './useSessions';
+import { useSession } from '../../rooms/view/useSession';
 import CreateSessionForm from '../app-create-session-form';
 
 // import ProductSort from '../product-sort';
@@ -104,9 +103,7 @@ export default function AppView() {
         <Button variant="text">+ Explore</Button>
       </div>
       <Grid container spacing={3}>
-
         <ExploreRooms />
-
       </Grid>
     </Container>
   );

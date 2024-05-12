@@ -10,19 +10,19 @@ export function useSession() {
   const { toast } = useToast();
 
   const { mutate: session, isLoading } = useMutation({
-    mutationFn: (credentials) => sessionApi(credentials.email, credentials.password),
+    mutationFn: (credentials) => sessionApi(credentials),
     onSuccess: (data) => {
       queryClient.setQueryData(['sessions'], data);
       //   setSession(data);
       router.push('/', { replace: true });
       toast({
-        description: 'You have successfully logged in. Welcome to The Timeless Tutor!'
+        description: 'You have successfully created a session.'
       });
     },
     onError: () => {
       toast({
         title: 'Error',
-        description: 'Invalid email or password! Please try again.',
+        description: 'Failed to create session. Please try again.',
         variant: 'destructive'
       });
     }
