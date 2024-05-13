@@ -12,19 +12,22 @@ import CardHeader from '@mui/material/CardHeader';
 import { fToNow } from 'src/utils/format-time';
 
 import Iconify from 'src/components/iconify';
+import { Skeleton } from '@mui/material';
 
 // ----------------------------------------------------------------------
 
-export default function AppNewsUpdate({ title, subheader, list, ...other }) {
+export default function AppNewsUpdate({ title, subheader, list, isLoading, ...other }) {
   return (
     <Card {...other}>
       <CardHeader title={title} subheader={subheader} />
 
-        <Stack spacing={3} sx={{ p: 3, pr: 0 }}>
-          {list.map((news) => (
-            <NewsItem key={news.id} news={news} />
-          ))}
-        </Stack>
+      <Stack spacing={3} sx={{ p: 3, pr: 0 }}>
+        {list.length === 0 && isLoading
+          ? Array.from({ length: 3 }).map((_, index) => (
+              <NewsItem key={index} news={{}} isLoading={true} />
+            ))
+          : list.map((news) => <NewsItem key={news.id} news={news} isLoading={isLoading} />)}
+      </Stack>
 
       <Divider sx={{ borderStyle: 'dashed' }} />
 
@@ -44,16 +47,38 @@ export default function AppNewsUpdate({ title, subheader, list, ...other }) {
 AppNewsUpdate.propTypes = {
   title: PropTypes.string,
   subheader: PropTypes.string,
-  list: PropTypes.array.isRequired,
+  list: PropTypes.array.isRequired
 };
 
 // ----------------------------------------------------------------------
 
-function NewsItem({ news }) {
+function NewsItem({ news, isLoading }) {
+  if (isLoading) {
+    return (
+      <Stack
+        direction="row"
+        alignItems="center"
+        sx={{ whiteSpace: 'normal', paddingRight: 2.5 }}
+        spacing={2}
+      >
+        <Skeleton variant="rectangular" width={48} height={48} />
+        <Box sx={{ width: '100%' }}>
+          <Skeleton width="70%" />
+          <Skeleton width="50%" />
+          <Skeleton width="30%" />
+        </Box>
+      </Stack>
+    );
+  }
   const { image, title, description, postedAt } = news;
 
   return (
-    <Stack direction="row" alignItems="center" sx={{ whiteSpace: 'normal', paddingRight: 2.5 }} spacing={2}>
+    <Stack
+      direction="row"
+      alignItems="center"
+      sx={{ whiteSpace: 'normal', paddingRight: 2.5 }}
+      spacing={2}
+    >
       <Box
         component="img"
         alt={title}
@@ -82,6 +107,6 @@ NewsItem.propTypes = {
     image: PropTypes.string,
     title: PropTypes.string,
     description: PropTypes.string,
-    postedAt: PropTypes.instanceOf(Date),
-  }),
+    postedAt: PropTypes.instanceOf(Date)
+  })
 };
