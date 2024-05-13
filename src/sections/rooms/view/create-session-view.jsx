@@ -4,39 +4,25 @@ import {
   Checkbox,
   FormControlLabel,
   FormGroup,
-  Grid,
-  Select,
-  MenuItem,
-  FormControl,
-  Container,
   Button,
-  Chip,
-  InputLabel,
-  OutlinedInput,
   Box,
   Typography,
-  Input,
   Stack,
-  Card,
-  Divider,
   InputAdornment,
   IconButton,
   useMediaQuery
 } from '@mui/material';
+import { DateTimePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { Icon } from '@iconify/react';
 import { Link } from 'react-router-dom';
-import roomIcon from '@iconify/icons-mdi/home-group';
-import categoryIcon from '@iconify/icons-mdi/tag-multiple';
 import lockIcon from '@iconify/icons-mdi/lock';
 import lockOpenIcon from '@iconify/icons-mdi/lock-open';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import arrowBackIcon from '@iconify/icons-mdi/arrow-left';
-import { useGetCategories, useCreateRoom } from 'src/sections/rooms/view/useRooms';
 import { useSession } from './useSession';
-import { useRouter } from '@/routes/hooks';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import { LoadingButton } from '@mui/lab';
-import { alpha, useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 import Iconify from '@/components/iconify';
 
 const CreateSession = () => {
@@ -44,18 +30,18 @@ const CreateSession = () => {
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   const { session, isLoading } = useSession();
-  const router = useRouter();
-
   const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
     handleSubmit,
     watch,
+    control,
     formState: { errors },
     setValue
   } = useForm({
     defaultValues: {
+      startDate: new Date(),
       isPrivate: false,
       password: ''
     }
@@ -65,18 +51,16 @@ const CreateSession = () => {
 
   const onSubmit = (formData) => {
     if (!formData) return;
-    console.log(formData);
+
+    // TODO: slug will be based on room, for now use test
     let slug = 'test';
     formData.slug = slug;
     session(formData);
   };
 
   const glassStyle = {
-    border: '1px solid rgba(255, 255, 255, 0.3)',
-    marginTop: '2rem',
     padding: isMobile ? '2rem' : '5rem',
-    borderRadius: '16px',
-    background: 'rgba(255, 255, 255, 0.2)',
+    borderRadius: '10px',
     boxShadow: '0 4px 30px rgba(0, 0, 0, 0.1)',
     backdropFilter: 'blur(5px)',
     WebkitBackdropFilter: 'blur(5px)',
@@ -123,19 +107,28 @@ const CreateSession = () => {
           helperText={errors.description?.message}
           disabled={isLoading}
         />
-        <TextField
-          label="Start Date"
-          type="datetime-local"
-          fullWidth
-          InputLabelProps={{ shrink: true }}
-          variant="outlined"
-          {...register('startDate', {
-            required: 'Start date is required'
-          })}
-          error={!!errors.startDate}
-          helperText={errors.startDate?.message}
-          disabled={isLoading}
-        />
+
+        <LocalizationProvider dateAdapter={AdapterDateFns}>
+          <Controller
+            name="startDate"
+            control={control}
+            rules={{ required: 'Start date is required' }}
+            render={({ field: { ref, ...restField } }) => (
+              <DateTimePicker
+                label="Start Date"
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    error={!!errors.startDate}
+                    helperText={errors.startDate?.message}
+                    disabled={isLoading}
+                  />
+                )}
+                {...restField}
+              />
+            )}
+          />
+        </LocalizationProvider>
 
         <TextField
           type="number"
@@ -143,7 +136,8 @@ const CreateSession = () => {
           label="Expected Session Hours"
           fullWidth
           {...register('duration', {
-            required: 'Session duration is required'
+            required: 'Session duration is required',
+            valueAsNumber: true
           })}
           error={!!errors.duration}
           helperText={errors?.duration?.message}
@@ -204,7 +198,11 @@ const CreateSession = () => {
   );
 
   return (
-    <Stack alignItems="center" justifyContent="center" sx={{ height: '100vh' }}>
+    <Stack
+      alignItems="center"
+      justifyContent="center"
+      sx={{ height: '100dvh', margin: isMobile ? '1rem' : '3rem' }}
+    >
       <Box sx={glassStyle}>
         <Button
           component={Link}
@@ -218,6 +216,9 @@ const CreateSession = () => {
         >
           Return to Rooms
         </Button>
+        <Typography variant="h6" gutterBottom sx={{ mb: 2 }} align="center">
+          Create a New Session
+        </Typography>
         {renderForm}
       </Box>
     </Stack>
