@@ -50,7 +50,6 @@ const OAuthCallback = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log('Token exchange successful:', data);
         toast({
           title: 'Success',
           description: 'Successfully logged in. Welcome to The Timeless Tutor!',

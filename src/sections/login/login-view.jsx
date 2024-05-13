@@ -31,7 +31,7 @@ export default function LoginView() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm();
 
   const onSubmit = (formData) => {
@@ -65,7 +65,7 @@ export default function LoginView() {
           name="email"
           label="Email address"
           {...register('email', {
-            required: 'Email is required',
+            required: 'Email is required'
           })}
           error={!!errors.email}
           helperText={errors?.email?.message}
@@ -83,10 +83,10 @@ export default function LoginView() {
                   <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
                 </IconButton>
               </InputAdornment>
-            ),
+            )
           }}
           {...register('password', {
-            required: 'Password is required',
+            required: 'Password is required'
           })}
           error={!!errors.password}
           helperText={errors?.password?.message}
@@ -112,7 +112,6 @@ export default function LoginView() {
         variant="contained"
         color="inherit"
         loading={isLoading}
-        // onClick={handleClick}
       >
         Login
       </LoadingButton>
@@ -124,16 +123,16 @@ export default function LoginView() {
       sx={{
         ...bgGradient({
           color: alpha(theme.palette.background.default, 0.9),
-          imgUrl: '/assets/background/overlay_4.jpg',
+          imgUrl: '/assets/background/overlay_4.jpg'
         }),
-        height: 1,
+        height: 1
       }}
     >
       <Logo
         sx={{
           position: 'fixed',
           top: { xs: 16, md: 24 },
-          left: { xs: 16, md: 24 },
+          left: { xs: 16, md: 24 }
         }}
       />
 
@@ -142,7 +141,7 @@ export default function LoginView() {
           sx={{
             p: 5,
             width: 1,
-            maxWidth: 450,
+            maxWidth: 700
           }}
         >
           <Typography variant="h4">Sign in to The Timeless Tutor</Typography>
