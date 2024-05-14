@@ -6,7 +6,7 @@ const Features = () => {
   return (
     <div className="w-full bg-white py-8 px-2 md:py-16 md:px-8 relative">
       <div className="md:max-w-[1370px] m-auto max-w-[600px] px-4 py-8 md:py-14 border shadow-md rounded-3xl relative z-10 backdrop-blur-3xl bg-white/50">
-        <div className="absolute inset-0 bg-[url('/public/assets/landing-assets/ttt-logo.png')] bg-cover bg-center opacity-5"></div>
+        <div className="absolute inset-0 bg-[url('/src/assets/landing-assets/ttt-logo.webp')] bg-cover bg-center opacity-5"></div>
         <div className="py-4 text-center max-w-[700px] m-auto">
           <h1 className="py-3 text-3xl md:text-4xl font-bold">Why Timeless Tutor?</h1>
           <p className="text-primary pt-2">

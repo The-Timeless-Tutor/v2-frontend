@@ -13,17 +13,22 @@ import IconButton from '@mui/material/IconButton';
 import LoadingButton from '@mui/lab/LoadingButton';
 import { alpha, useTheme } from '@mui/material/styles';
 import InputAdornment from '@mui/material/InputAdornment';
+import { useMediaQuery } from '@mui/material';
+
+import { FcGoogle } from 'react-icons/fc';
 
 import { bgGradient } from 'src/theme/css';
 
 import { useRouter } from 'src/routes/hooks';
 import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
+import { WorldcoinLogo } from '@/assets/landing-assets';
 
 import { useLogin } from './useLogin';
 
 export default function LoginView() {
   const theme = useTheme();
+  const mdUp = useMediaQuery(theme.breakpoints.up('md'));
   const { login, isLoading } = useLogin();
   const [showPassword, setShowPassword] = useState(false);
 
@@ -125,23 +130,15 @@ export default function LoginView() {
           color: alpha(theme.palette.background.default, 0.9),
           imgUrl: '/assets/background/overlay_4.jpg'
         }),
-        height: 1
+        height: '90dvh'
       }}
     >
-      <Logo
-        sx={{
-          position: 'fixed',
-          top: { xs: 16, md: 24 },
-          left: { xs: 16, md: 24 }
-        }}
-      />
-
       <Stack alignItems="center" justifyContent="center" sx={{ height: 1 }}>
         <Card
           sx={{
             p: 5,
             width: 1,
-            maxWidth: 700
+            maxWidth: 600
           }}
         >
           <Typography variant="h4">Sign in to The Timeless Tutor</Typography>
@@ -163,20 +160,44 @@ export default function LoginView() {
               size="large"
               color="inherit"
               variant="outlined"
-              sx={{ borderColor: alpha(theme.palette.grey[500], 0.16) }}
+              sx={{
+                borderColor: alpha(theme.palette.grey[500], 0.16),
+                transition: 'all 0.3s ease-in-out',
+                ':hover': {
+                  transform: 'scale(1.05)'
+                }
+              }}
               onClick={handleGoogleClick}
             >
-              <Iconify icon="eva:google-fill" color="#DF3E30" />
+              <FcGoogle size={40} />
+              {mdUp && <Typography sx={{ ml: 1 }}>Sign in with Google</Typography>}
             </Button>
-
             <Button
               fullWidth
               size="large"
               color="inherit"
               variant="outlined"
-              sx={{ borderColor: alpha(theme.palette.grey[500], 0.16) }}
+              sx={{
+                borderColor: alpha(theme.palette.grey[500], 0.16),
+                backgroundColor: '#221d1d',
+                color: '#fff',
+                width: '50',
+                height: 60,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.3s ease-in-out',
+                ':hover': {
+                  color: '#fff',
+                  backgroundColor: '#221d1d',
+                  transform: 'scale(1.05)'
+                }
+              }}
             >
-              <Iconify icon="arcticons:worldcoin" color="#1877F2" />
+              <img src={WorldcoinLogo} alt="Worldcoin Logo" style={{ width: 60, height: 60 }} />
+              {mdUp && (
+                <Typography sx={{ ml: 1, whiteSpace: 'nowrap' }}>Sign in with Worldcoin</Typography>
+              )}
             </Button>
           </Stack>
 

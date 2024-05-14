@@ -11,14 +11,14 @@ import {
 
 function LandingHome() {
   return (
-    <div className="flex flex-col min-h-screen overflow-hidden px-2">
+    <div className="flex flex-col min-h-screen overflow-hidden">
       <Navbar />
       <div className="flex-1">
         <Hero />
         <Features />
         <Offers />
         <Categories />
-        <Testimonials />
+        {/* <Testimonials /> */}
         <CTA />
         <Footer />
       </div>

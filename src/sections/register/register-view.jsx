@@ -1,7 +1,6 @@
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { Controller, useForm } from 'react-hook-form';
 import ReCAPTCHA from 'react-google-recaptcha';
-
 import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 import Card from '@mui/material/Card';
@@ -15,6 +14,8 @@ import LoadingButton from '@mui/lab/LoadingButton';
 import { alpha, useTheme } from '@mui/material/styles';
 import InputAdornment from '@mui/material/InputAdornment';
 import Checkbox from '@mui/material/Checkbox';
+import { useMediaQuery } from '@mui/material';
+import { FcGoogle } from 'react-icons/fc';
 
 import { useRouter } from 'src/routes/hooks';
 
@@ -24,11 +25,14 @@ import Logo from 'src/components/logo';
 import Iconify from 'src/components/iconify';
 import { useRegister } from './useRegister';
 import { generateUniqueUsername } from '@/utils/helpers';
+import { WorldcoinLogo } from '@/assets/landing-assets';
+import { PhoneNumber } from '@/components/ui/phone-number-input';
 
 // ----------------------------------------------------------------------
 
 export default function RegisterView() {
   const theme = useTheme();
+  const mdUp = useMediaQuery(theme.breakpoints.up('md'));
   const { registerUser, isLoading } = useRegister();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
@@ -44,22 +48,21 @@ export default function RegisterView() {
 
   const {
     register,
+    control,
     handleSubmit,
     getValues,
     formState: { errors }
   } = useForm();
 
   const onSubmit = (formData) => {
+    console.log(formData);
     if (!captchaResponse) {
       setCaptchaError(true);
       return;
     }
     if (!formData) return;
 
-    const { firstName, lastName, email, password } = formData;
-
-    // Generate a unique username based on the email
-    const username = generateUniqueUsername(email);
+    const { firstName, lastName, email, phone, username, password } = formData;
 
     const data = {
       captcha_response: captchaResponse,
@@ -68,7 +71,7 @@ export default function RegisterView() {
       password,
       username,
       profile: {
-        phone: '1234567890',
+        phone,
         sub: '1',
         verified_at: new Date().toISOString().slice(0, 10) // Example: "2023-09-29"
       }
@@ -134,6 +137,42 @@ export default function RegisterView() {
             error={!!errors.lastName}
             helperText={errors?.lastName?.message}
             disabled={isLoading}
+          />
+        </Stack>
+        <Stack direction={{ xs: 'column', sm: 'row' }} spacing={2}>
+          <TextField
+            fullWidth
+            name="username"
+            label="Username"
+            {...register('username', {
+              required: 'Username is required',
+              minLength: {
+                value: 5,
+                message: 'Username must be at least 5 characters long'
+              }
+            })}
+            error={!!errors.username}
+            helperText={errors?.username?.message}
+            disabled={isLoading}
+          />
+          <Controller
+            name="phone"
+            control={control}
+            rules={{
+              required: 'Phone number is required',
+              pattern: {
+                value: /^\+?[1-9]\d{1,14}$/, // Make sure to use the correct regex for your use case
+                message: 'Please enter a valid phone number'
+              }
+            }}
+            render={({ field: { onChange, value }, fieldState: { error } }) => (
+              <PhoneNumber
+                value={value}
+                onChange={onChange}
+                error={!!error}
+                helperText={error ? error.message : null}
+              />
+            )}
           />
         </Stack>
 
@@ -256,27 +295,16 @@ export default function RegisterView() {
           color: alpha(theme.palette.background.default, 0.9),
           imgUrl: '/assets/background/overlay_4.jpg'
         }),
-        minHeight: '100vh', // Ensures full screen height
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center'
+        height: '90dvh'
       }}
     >
-      <Logo
-        sx={{
-          position: 'fixed',
-          top: { xs: 16, md: 24 },
-          left: { xs: 16, md: 24 }
-        }}
-      />
-
       <Stack alignItems="center" justifyContent="center" sx={{ height: 1 }}>
         <Card
           sx={{
             p: 5,
             width: 1,
             height: 1,
-            maxWidth: 700,
+            maxWidth: 600,
             overflowY: 'auto'
           }}
         >
@@ -299,20 +327,44 @@ export default function RegisterView() {
               size="large"
               color="inherit"
               variant="outlined"
-              sx={{ borderColor: alpha(theme.palette.grey[500], 0.16) }}
+              sx={{
+                borderColor: alpha(theme.palette.grey[500], 0.16),
+                transition: 'all 0.3s ease-in-out',
+                ':hover': {
+                  transform: 'scale(1.05)'
+                }
+              }}
               onClick={handleGoogleClick}
             >
-              <Iconify icon="eva:google-fill" color="#DF3E30" />
+              <FcGoogle size={40} />
+              {mdUp && <Typography sx={{ ml: 1 }}>Sign up with Google</Typography>}
             </Button>
-
             <Button
               fullWidth
               size="large"
               color="inherit"
               variant="outlined"
-              sx={{ borderColor: alpha(theme.palette.grey[500], 0.16) }}
+              sx={{
+                borderColor: alpha(theme.palette.grey[500], 0.16),
+                backgroundColor: '#221d1d',
+                color: '#fff',
+                width: '50',
+                height: 60,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transition: 'all 0.3s ease-in-out',
+                ':hover': {
+                  color: '#fff',
+                  backgroundColor: '#221d1d',
+                  transform: 'scale(1.05)'
+                }
+              }}
             >
-              <Iconify icon="arcticons:worldcoin" color="#1877F2" />
+              <img src={WorldcoinLogo} alt="Worldcoin Logo" style={{ width: 60, height: 60 }} />
+              {mdUp && (
+                <Typography sx={{ ml: 1, whiteSpace: 'nowrap' }}>Sign up with Worldcoin</Typography>
+              )}
             </Button>
           </Stack>
 

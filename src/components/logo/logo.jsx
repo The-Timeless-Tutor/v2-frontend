@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Link from '@mui/material/Link';
 
 import { RouterLink } from 'src/routes/components';
-import LogoPNG from '../../../public/assets/ttt-logo.png';
+import { logo } from '../../assets/landing-assets';
 
 const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
   const logoElement = (
@@ -16,11 +16,11 @@ const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
         width: 40,
         height: 40,
         display: 'inline-flex',
-        ...sx,
+        ...sx
       }}
       {...other}
     >
-      <img src={LogoPNG} alt="Logo" width="100%" height="100%" />
+      <img src={logo} alt="Logo" width="100%" height="100%" />
     </Box>
   );
 
@@ -35,7 +35,7 @@ const Logo = forwardRef(({ disabledLink = false, sx, ...other }, ref) => {
 
 Logo.propTypes = {
   disabledLink: PropTypes.bool,
-  sx: PropTypes.object,
+  sx: PropTypes.object
 };
 
 export default Logo;
