@@ -4,7 +4,7 @@ import { InfiniteMovingCards } from '../../components/ui/infinite-moving-cards';
 export default function Testimonials() {
   return (
     <div className="w-full bg-white py-8 px-2 md:py-16 md:px-8 shadow-lg">
-      <div className="md:max-w-[1480px] m-auto max-w-[600px]  px-4 md:px-0 text-center">
+      <div className="md:max-w-[1370px] m-auto max-w-[600px]  px-4 md:px-0 text-center">
         <h1 className="md:leading-[72px] text-3xl font-bold">
           Our <span className="text-brand">Testimonials</span>
         </h1>

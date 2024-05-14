@@ -24,7 +24,7 @@ const Navbar = () => {
         !top && 'bg-white backdrop-blur-sm shadow-lg'
       }`}
     >
-      <div className="md:max-w-[1480px] max-w-[600px] mx-auto w-full h-full flex justify-between items-center ">
+      <div className="md:max-w-[1370px] max-w-[600px] mx-auto w-full h-full flex justify-between items-center ">
         <Link to="/home">
           <img src={logo} className="h-[30px]" />
         </Link>

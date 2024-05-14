@@ -1,17 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { cta, Blob1 } from '../../assets/landing-assets';
+import { cta, backgroundBlobImage1 } from '../../assets/landing-assets';
 
 const CTA = () => {
   return (
-    <div className="w-full bg-[#f0f0f0] py-8 px-2 md:py-16 md:px-8 relative">
+    <div className="w-full bg-white py-8 px-2 md:py-16 md:px-8 relative">
       <img
-        src={Blob1}
+        src={backgroundBlobImage1}
         alt="Wave SVG"
         className="h-[500px] absolute bottom-0 right-0 blur-[20px] hidden md:flex opacity-30"
       />
-      <div className="md:max-w-[1480px] m-auto grid md:grid-cols-2 gap-8 max-w-[600px] items-center  px-4 md:px-0">
+      <div className="md:max-w-[1370px] m-auto grid md:grid-cols-2 gap-8 max-w-[600px] items-center  px-4 md:px-0">
         <img src={cta} className="w-[650px] mx-auto z-13" />
 
         <div>

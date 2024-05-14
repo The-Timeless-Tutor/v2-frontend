@@ -5,18 +5,26 @@ import {
   heroImg1,
   heroImg2,
   heroImg3,
-  Element1,
-  Element2,
+  backgroundElement1,
+  backgroundElement2,
   WavyLines
 } from '../../assets/landing-assets';
 
 const Hero = () => {
   return (
     <div className="w-full bg-white pt-24 px-2 md:px-8 relative">
-      <img src={Element1} alt="Wave SVG" className="absolute top-0 z-10 left-0 blur-[20px]" />
-      <img src={Element2} alt="Wave SVG" className="absolute top-0 z-10 right-0 blur-[20px]" />
+      <img
+        src={backgroundElement1}
+        alt="Wave SVG"
+        className="absolute top-0 z-10 left-0 blur-[20px]"
+      />
+      <img
+        src={backgroundElement2}
+        alt="Wave SVG"
+        className="absolute top-0 z-10 right-0 blur-[20px]"
+      />
       <img src={WavyLines} alt="Wave SVG" className="absolute top-0 z-10" />
-      <div className="flex flex-col justify-start gap-4 mx-auto md:max-w-[1480px] relative z-10">
+      <div className="flex flex-col justify-start gap-4 mx-auto md:max-w-[1370px] relative z-10">
         <div className="flex justify-center md:order-last order-first">
           <div className="relative w-full md:w-3/4 flex justify-center">
             {/* Left Image */}
